@@ -61,35 +61,58 @@ class Spinner:
 # Instantiating the spinner/loader class
 spinner = Spinner()
 
-
-
 # Scanners that will be used 
 tool_names = [("wafw00f","Wafw00f - Checks for Application Firewalls"),
               ("nmap","NMap - Fast Scan (Only Few Port Checks)"),
-              ("dmitry","Dmitry - Scans for emails using Google's passive search"),
+              ("theharvester","The Harvester - Scans for emails using Google's passive search"),
+              ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
+              ("whois","WHOis - Checks for Administrator's Contact Information"),
+              ("sslyze","SSLyze - Checks only for Heartbleed vulnerability"),
               ("lbd","LBD - Checks for DNS/HTTP Load Balancers")
-              ]
+             ]
+
+# Making the dictionary ordered (as it is)           
 tool_names = collections.OrderedDict(tool_names)
 
 # Command that is used to initiate the tool
-tool_cmd   = ["wafw00f","nmap -F","theharvester -l 50 -b google -d","lbd"]
-# Flags 
+tool_cmd   = ["wafw00f",
+              "nmap -F --open",
+              "theharvester -l 50 -b google -d",
+              "fierce -wordlist xxx -dns",
+              "whois",
+              "sslyze --heartbleed",
+              "lbd"]
+
 
 # Tool test conditions
 tool_cond = ["No WAF",
              "tcp open",
-             "[+] Emails found",
-             "does NOT use Load-balancing"]
+             "No emails found",
+             "Unsuccessful in zone transfer",
+             "No Data Found",
+             "Not vulnerable to Heartbleed",
+             "does NOT use Load-balancing",]
+
 # Tool positive response
 tool_pos = ["[+] Web Application Firewall Detected.",
             "[+] Common Ports are Closed.",
             "[+] No Email Addresses Found.",
+            "[+] Zone Transfer Failed.",
+            "[+] Whois Information Hidden.",
+            "[+] Not Prone to Heartbleed Vulnerability.",
             "[+] Load Balancer(s) Detected."]
+
 # Tool negative response
 tool_neg = ["[-] No Web Application Firewall Detected",
             "[-] Some ports are open. Perform a full-scan manually.",
             "[-] Few email addresses found.",
+            "[-] Zone Transfer Successful. DNS Configuration is weak.",
+            "[-] Whois Information Publicly Available.",
+            "[-] Heartbleed Vulnerability Found",
             "[-] No DNS/HTTP based Load Balancers Found."]
+
+# Tool Opcode (If pos fails and you still want to check for another condition)
+tool_opcode = [0,0,1,1,1,1,0]
 
 tool = 0
 
@@ -115,9 +138,15 @@ else:
         cmd = tool_cmd[tool]+" "+target+" > "+temp_file
         os.system(cmd)
         if tool_cond[tool] not in open(temp_file).read():
-            print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+            if tool_opcode[tool] == 0:
+                print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+            else:
+                print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
         else:
-            print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
+            if tool_opcode[tool] == 1:
+                print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+            else:
+                print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
         spinner.stop()
         tool=tool+1
         #os.system('setterm -cursor on')
