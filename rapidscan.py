@@ -62,7 +62,10 @@ class Spinner:
 spinner = Spinner()
 
 # Scanners that will be used 
-tool_names = [("wafw00f","Wafw00f - Checks for Application Firewalls"),
+tool_names = [
+              ("host","Host - Checks for existence of IPV6 address"),
+              ("uniscan","Uniscan - Checks for robots.txt & sitemap.xml"),
+              ("wafw00f","Wafw00f - Checks for Application Firewalls"),
               ("nmap","NMap - Fast Scan (Only Few Port Checks)"),
               ("theharvester","The Harvester - Scans for emails using Google's passive search"),
               ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
@@ -75,44 +78,60 @@ tool_names = [("wafw00f","Wafw00f - Checks for Application Firewalls"),
 tool_names = collections.OrderedDict(tool_names)
 
 # Command that is used to initiate the tool
-tool_cmd   = ["wafw00f",
-              "nmap -F --open",
-              "theharvester -l 50 -b google -d",
-              "fierce -wordlist xxx -dns",
-              "whois",
-              "sslyze --heartbleed",
-              "lbd"]
+tool_cmd   = [
+                "host",
+                "uniscan -e -u",
+                "wafw00f",
+                "nmap -F --open",
+                "theharvester -l 50 -b google -d",
+                "fierce -wordlist xxx -dns",
+                "whois",
+                "sslyze --heartbleed",
+                "lbd"
+             ]
 
 
 # Tool test conditions
-tool_cond = ["No WAF",
-             "tcp open",
-             "No emails found",
-             "Unsuccessful in zone transfer",
-             "No Data Found",
-             "Not vulnerable to Heartbleed",
-             "does NOT use Load-balancing",]
+tool_cond = [
+                "has IPv6",
+                "[+]",
+                "No WAF",
+                "tcp open",
+                "No emails found",
+                "Unsuccessful in zone transfer",
+                "No Data Found",
+                "Not vulnerable to Heartbleed",
+                "does NOT use Load-balancing"
+            ]
 
 # Tool positive response
-tool_pos = ["[+] Web Application Firewall Detected.",
-            "[+] Common Ports are Closed.",
-            "[+] No Email Addresses Found.",
-            "[+] Zone Transfer Failed.",
-            "[+] Whois Information Hidden.",
-            "[+] Not Prone to Heartbleed Vulnerability.",
-            "[+] Load Balancer(s) Detected."]
+tool_pos = [
+                "[+] Has an IPv6 Address.",
+                "[+] robots.txt/sitemap.xml not found.",
+                "[+] Web Application Firewall Detected.",
+                "[+] Common Ports are Closed.",
+                "[+] No Email Addresses Found.",
+                "[+] Zone Transfer Failed.",
+                "[+] Whois Information Hidden.",
+                "[+] Not Prone to Heartbleed Vulnerability.",
+                "[+] Load Balancer(s) Detected."
+           ]
 
 # Tool negative response
-tool_neg = ["[-] No Web Application Firewall Detected",
-            "[-] Some ports are open. Perform a full-scan manually.",
-            "[-] Few email addresses found.",
-            "[-] Zone Transfer Successful. DNS Configuration is weak.",
-            "[-] Whois Information Publicly Available.",
-            "[-] Heartbleed Vulnerability Found",
-            "[-] No DNS/HTTP based Load Balancers Found."]
+tool_neg = [
+                "[-] Does not have an IPv6 Address. It is good to have one.",
+                "[-] robots.txt/sitemap.xml found. Check those files for files or any information.",
+                "[-] No Web Application Firewall Detected",
+                "[-] Some ports are open. Perform a full-scan manually.",
+                "[-] Few email addresses found.",
+                "[-] Zone Transfer Successful. DNS Configuration is weak.",
+                "[-] Whois Information Publicly Available.",
+                "[-] Heartbleed Vulnerability Found",
+                "[-] No DNS/HTTP based Load Balancers Found."
+           ]
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [0,0,1,1,1,1,0]
+tool_opcode = [0,1,0,0,1,1,1,1,0]
 
 tool = 0
 
