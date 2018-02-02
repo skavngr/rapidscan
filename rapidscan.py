@@ -69,6 +69,7 @@ tool_names = [
               ("nmap","NMap - Fast Scan (Only Few Port Checks)"),
               ("theharvester","The Harvester - Scans for emails using Google's passive search"),
               ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
+              ("dnswalk","DNSWalk - Attempts Zone Transfer"),
               ("whois","WHOis - Checks for Administrator's Contact Information"),
               ("sslyze","SSLyze - Checks only for Heartbleed vulnerability"),
               ("lbd","LBD - Checks for DNS/HTTP Load Balancers")
@@ -77,19 +78,22 @@ tool_names = [
 # Making the dictionary ordered (as it is)           
 tool_names = collections.OrderedDict(tool_names)
 
-# Command that is used to initiate the tool
+# Command that is used to initiate the tool (with parameters and extra params)
 tool_cmd   = [
-                "host",
-                "uniscan -e -u",
-                "wafw00f",
-                "nmap -F --open",
-                "theharvester -l 50 -b google -d",
-                "fierce -wordlist xxx -dns",
-                "whois",
-                "sslyze --heartbleed",
-                "lbd"
+                ("host",""),
+                ("uniscan -e -u",""),
+                ("wafw00f",""),
+                ("nmap -F --open",""),
+                ("theharvester -l 50 -b google -d",""),
+                ("fierce -wordlist xxx -dns",""),
+                ("dnswalk -d","."),
+                ("whois",""),
+                ("sslyze --heartbleed",""),
+                ("lbd","")
              ]
 
+# Making the dictionary ordered (as it is)           
+tool_cmd = collections.OrderedDict(tool_cmd)
 
 # Tool test conditions
 tool_cond = [
@@ -98,7 +102,8 @@ tool_cond = [
                 "No WAF",
                 "tcp open",
                 "No emails found",
-                "Unsuccessful in zone transfer",
+                "Whoah, it worked",
+                "0 failures",
                 "No Data Found",
                 "Not vulnerable to Heartbleed",
                 "does NOT use Load-balancing"
@@ -111,7 +116,8 @@ tool_pos = [
                 "[+] Web Application Firewall Detected.",
                 "[+] Common Ports are Closed.",
                 "[+] No Email Addresses Found.",
-                "[+] Zone Transfer Failed.",
+                "[+] Zone Transfer using fierce Failed.",
+                "[+] Zone Transfer using dnswalk Failed.",
                 "[+] Whois Information Hidden.",
                 "[+] Not Prone to Heartbleed Vulnerability.",
                 "[+] Load Balancer(s) Detected."
@@ -124,18 +130,23 @@ tool_neg = [
                 "[-] No Web Application Firewall Detected",
                 "[-] Some ports are open. Perform a full-scan manually.",
                 "[-] Few email addresses found.",
-                "[-] Zone Transfer Successful. DNS Configuration is weak.",
+                "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately.",
+                "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately.",
                 "[-] Whois Information Publicly Available.",
                 "[-] Heartbleed Vulnerability Found",
                 "[-] No DNS/HTTP based Load Balancers Found."
            ]
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [0,1,0,0,1,1,1,1,0]
+tool_opcode = [1,1,0,0,1,0,0,1,1,0]
 
 tool = 0
 
-if len(sys.argv)<0 :
+# For accessing tool_cmd dictionary elements
+arg1 = 0
+arg2 = 1
+
+if len(sys.argv)<=0 :
     print "[-] Program needs atleast one argument, try again. Quitting now..."
     sys.exit(1)
 else:
@@ -149,12 +160,12 @@ else:
     
     #for tool in range(0,len(tool_cmd)) :
     for temp_key,temp_val in tool_names.items():
-        #print "[:] Deploying "+bcolors.WARNING+tool_names[tool]+bcolors.ENDC
         print "[:] Deploying "+bcolors.WARNING+temp_val+bcolors.ENDC
         spinner.start()
         #temp_file = "temp_"+tool_cmd[tool]
         temp_file = "temp_"+temp_key
-        cmd = tool_cmd[tool]+" "+target+" > "+temp_file
+        cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file
+        #print cmd
         os.system(cmd)
         if tool_cond[tool] not in open(temp_file).read():
             if tool_opcode[tool] == 0:
