@@ -1,4 +1,6 @@
-# rapidscan
+# rapidscan 
+- _scanner is still under development and right now supports 14 features._
+- _it is not a multithreaded software. will be coded in near future._
 
 > An automated hybrid security scanner that uses multiple available tools of Kali Linux and ***some custom coded checks*** to scan a target and generate findings spontaneously.
 
