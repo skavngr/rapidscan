@@ -6,7 +6,8 @@
 - :white_check_mark: ~Check for Drupal: Do a wget with user and search for drupal~
 - Slow-loris DoS Check: `nmap -p80,443 --script http-slowloris --max-parallelism 500` | check for Vulnerable
 - Poodle Vulnerability Check: `nmap -sV --version-light --script ssl-poodle -p 443`  | check for Vulnerable
-- Heartbleed Check with NMap; `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE
+- Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE
+- SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled
 
 
 ### To be checked
