@@ -4,6 +4,8 @@
 - ~Check for Illegal Characters on ASP.Net: /%7C~.aspx~
 - ~Check for Joomla: Do a wget with administrator and search for joomla~
 - ~Check for Drupal: Do a wget with user and search for drupal~
+- Slow-loris DoS Check: nmap -p80,443 --script http-slowloris --max-parallelism 500 | check for Vulnerable
+- Poodle Vulnerability Check: nmap -sV --version-light --script ssl-poodle -p 443  | check for Vulnerable
 
 
 ### To be checked
