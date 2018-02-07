@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 # Author: Shankar Damodaran
-# Tool: Rapidscan v1.0
+# Tool: RapidScan v1.0
 # Usage: ./rapidscan.py target.com
-# Description: This scanner automates the process of vulnerability scanning by using a multitude of available linux security tools. 
+# Description: This scanner automates the process of security scanning by using a multitude of available linux security tools and some custom scripts. 
 #
 
 # Importing the libraries
@@ -25,6 +25,7 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
+    CLEARLINE = '\033[F'
 
 
 # Initiliazing the idle loader/spinner class
@@ -63,9 +64,13 @@ spinner = Spinner()
 
 # Scanners that will be used 
 tool_names = [
-              ("host","Host - Checks for existence of IPV6 address"),
+              ("host","Host - Checks for existence of IPV6 address."),
+              ("aspnet_config_err", "ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."),
+              ("wp_check","WordPress Check - Checks for WordPress Installation."),
+              ("drp_check", "Drupal Check - Checks for Drupal Installation."),
+              ("joom_check", "Joomla Check - Checks for Joomla Installation."),
               ("uniscan","Uniscan - Checks for robots.txt & sitemap.xml"),
-              ("wafw00f","Wafw00f - Checks for Application Firewalls"),
+              ("wafw00f","Wafw00f - Checks for Application Firewalls."),
               ("nmap","NMap - Fast Scan (Only Few Port Checks)"),
               ("theharvester","The Harvester - Scans for emails using Google's passive search"),
               ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
@@ -81,6 +86,10 @@ tool_names = collections.OrderedDict(tool_names)
 # Command that is used to initiate the tool (with parameters and extra params)
 tool_cmd   = [
                 ("host",""),
+                ("wget -O temp_aspnet_config_err","/%7C~.aspx"),
+                ("wget -O temp_wp_check","/wp-admin"),
+                ("wget -O temp_drp_check","/user"),
+                ("wget -O temp_joom_check","/administrator"),
                 ("uniscan -e -u",""),
                 ("wafw00f",""),
                 ("nmap -F --open",""),
@@ -98,6 +107,10 @@ tool_cmd = collections.OrderedDict(tool_cmd)
 # Tool test conditions
 tool_cond = [
                 "has IPv6",
+                "Server Error",
+                "wp-login",
+                "drupal",
+                "joomla",
                 "[+]",
                 "No WAF",
                 "tcp open",
@@ -112,6 +125,10 @@ tool_cond = [
 # Tool positive response
 tool_pos = [
                 "[+] Has an IPv6 Address.",
+                "[+] No Misconfiguration Found.",
+                "[+] No WordPress Installation Found.",
+                "[+] No Drupal Installation Found.",
+                "[+] No Joomla Installation Found.",
                 "[+] robots.txt/sitemap.xml not found.",
                 "[+] Web Application Firewall Detected.",
                 "[+] Common Ports are Closed.",
@@ -126,7 +143,11 @@ tool_pos = [
 # Tool negative response
 tool_neg = [
                 "[-] Does not have an IPv6 Address. It is good to have one.",
-                "[-] robots.txt/sitemap.xml found. Check those files for files or any information.",
+                "[-] ASP.Net is misconfigured to throw server stack errors on screen.",
+                "[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version.",
+                "[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version.",
+                "[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version.",
+                "[-] robots.txt/sitemap.xml found. Check those files for any information.",
                 "[-] No Web Application Firewall Detected",
                 "[-] Some ports are open. Perform a full-scan manually.",
                 "[-] Few email addresses found.",
@@ -138,7 +159,7 @@ tool_neg = [
            ]
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [1,1,0,0,1,0,0,1,1,0]
+tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,1,1,0]
 
 tool = 0
 
@@ -158,24 +179,25 @@ else:
     # Creating a temp directory for too reports
     # os.system('mkdir temp')
     
-    #for tool in range(0,len(tool_cmd)) :
     for temp_key,temp_val in tool_names.items():
         print "[:] Deploying "+bcolors.WARNING+temp_val+bcolors.ENDC
         spinner.start()
-        #temp_file = "temp_"+tool_cmd[tool]
         temp_file = "temp_"+temp_key
-        cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file
-        #print cmd
+        cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
         os.system(cmd)
         if tool_cond[tool] not in open(temp_file).read():
             if tool_opcode[tool] == 0:
+                print bcolors.CLEARLINE
                 print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
             else:
+                print bcolors.CLEARLINE
                 print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
         else:
             if tool_opcode[tool] == 1:
+                print bcolors.CLEARLINE
                 print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
             else:
+                print bcolors.CLEARLINE
                 print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
         spinner.stop()
         tool=tool+1
