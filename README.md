@@ -15,6 +15,10 @@
 
 - `./rapidscan.py example.com`
 
+## Output
+
+![output of rapidscan](https://github.com/skavngr/rapidscan/blob/master/rapidscan.PNG)
+
 ## Contribution
 - https://gist.github.com/MarcDiethelm/7303312
 
