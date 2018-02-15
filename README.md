@@ -1,4 +1,11 @@
 # rapidscan 
+
+                               __         __
+                              /__)_   '_/(  _ _
+                             / ( (//)/(/__)( (//)
+                                  /
+                            =====================
+
 - _scanner is still under development and right now supports 14 features._
 - _it is not a multi-threaded program, may be coded in near future depends on the need._
 
