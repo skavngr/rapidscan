@@ -40,7 +40,7 @@
 
 ## Output
 
-![output of rapidscan](https://github.com/skavngr/rapidscan/blob/master/rapidscan.PNG)
+![output of rapidscan](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan.PNG)
 
 ## Contribution
 - https://gist.github.com/MarcDiethelm/7303312
