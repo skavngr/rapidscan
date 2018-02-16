@@ -214,7 +214,7 @@ else:
     if target == '--update':
         print "RapidScan is updating.. Please wait..."
         spinner.start()
-        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > tempx 2>&1')
+        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
         spinner.stop()
         print "RapidScan updated to latest version."
         # Do the thing
