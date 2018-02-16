@@ -88,6 +88,7 @@ tool_names = [
               ("nmap_poodle","NMap (POODLE) - Checks only for Poodle vulnerability,"),
               ("nmap_ccs","NMap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
               ("nmap_freak","NMap (FREAK) - Checks only for FREAK vulnerability."),
+              ("nmap_logjam","NMap (LOGJAM) - Checks for LOGJAM vulnerability."),
               ("lbd","LBD - Checks for DNS/HTTP Load Balancers.")
              ]
 
@@ -115,6 +116,7 @@ tool_cmd   = [
                 ("nmap -p 443 --script ssl-poodle",""),
                 ("nmap -p 443 --script ssl-ccs-injection",""),
                 ("nmap -p 443 --script ssl-enum-ciphers",""),
+                ("nmap -p 443 --script ssl-dh-params",""),
                 ("lbd","")
              ]
 
@@ -138,6 +140,7 @@ tool_cond = [
                 "XSS filter is disabled",
                 "vulnerable",
                 "Server is vulnerable to Heartbleed",
+                "vulnerable",
                 "vulnerable",
                 "vulnerable",
                 "vulnerable",
@@ -166,6 +169,7 @@ tool_pos = [
                 "[+] Not Prone to POODLE Vulnerability.",
                 "[+] Not Prone to OpenSSL CCS Injection.",
                 "[+] Not Prone to FREAK Vulnerability.",
+                "[+] Not Prone to LOGJAM Vulnerability.",
                 "[+] Load Balancer(s) Detected."
            ]
 
@@ -190,11 +194,12 @@ tool_neg = [
                 "[-] POODLE Vulnerability Detected.",
                 "[-] OpenSSL CCS Injection Detected.",
                 "[-] FREAK Vulnerability Detected.",
+                "[-] LOGJAM Vulnerability Found.",
                 "[-] No DNS/HTTP based Load Balancers Found."
            ]
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]
+tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
 
 tool = 0
 
@@ -209,7 +214,8 @@ if len(sys.argv)<=0 :
     print "[-] Program needs atleast one argument, try again. Quitting now..."
     sys.exit(1)
 else:
-    target = sys.argv[1]
+    target = sys.argv[1].lower()
+    
     
     if target == '--update':
         print "RapidScan is updating.. Please wait..."
@@ -231,6 +237,14 @@ else:
         os.system('setterm -cursor off')
         print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" + bcolors.ENDC
         
+        print("""\
+                               __         __
+                              /__)_   '_/(  _ _
+                             / ( (//)/(/__)( (//)
+                                  /
+                            =====================
+                            
+                            """)
 
         
         for temp_key,temp_val in tool_names.items():
