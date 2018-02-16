@@ -1,19 +1,22 @@
-### Features (Yet to be added)
+### Features
 
-- :white_check_mark: ~Check for WordPress: Do a wget with wp-admin and grep the source (check for login/wp-login) curl -s http://somepage.com | grep whatever~
-- :white_check_mark: ~Check for Illegal Characters on ASP.Net: /%7C~.aspx~
-- :white_check_mark: ~Check for Joomla: Do a wget with administrator and search for joomla~
-- :white_check_mark: ~Check for Drupal: Do a wget with user and search for drupal~
-- :white_check_mark: ~SSL FREAK Check: `nmap  --script ssl-enum-ciphers -p 443` | least strength: broken~
-- :white_check_mark: ~SSL CCS Injection: `nmap -p 443 --script ssl-ccs-injection` | check for Vulnerable~
-- :white_check_mark: Slow-loris DoS Check: `nmap -p80,443 --script http-slowloris --max-parallelism 500` | check for Vulnerable~
-- :white_check_mark: ~Poodle Vulnerability Check: `nmap -sV --version-light --script ssl-poodle -p 443`  | check for Vulnerable~
-- :white_check_mark: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
-- SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled
+- :heavy_exclamation_mark: Firewalking: https://nmap.org/nsedoc/scripts/firewalk.html
+- :heavy_exclamation_mark: SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled
+- :heavy_exclamation_mark: Check for git: Do a wget and check for .git under root
+- :thumbsup: ~Check for WordPress: Do a wget with wp-admin and grep the source (check for login/wp-login) curl -s http://somepage.com | grep whatever~
+- :thumbsup: ~Check for Illegal Characters on ASP.Net: /%7C~.aspx~
+- :thumbsup: ~Check for Joomla: Do a wget with administrator and search for joomla~
+- :thumbsup: ~Check for Drupal: Do a wget with user and search for drupal~
+- :thumbsup: ~SSL FREAK Check: `nmap  --script ssl-enum-ciphers -p 443` | least strength: broken~
+- :thumbsup: ~SSL CCS Injection: `nmap -p 443 --script ssl-ccs-injection` | check for Vulnerable~
+- :thumbsup: ~Slow-loris DoS Check: `nmap -p80,443 --script http-slowloris --max-parallelism 500` | check for Vulnerable~
+- :thumbsup: ~Poodle Vulnerability Check: `nmap -sV --version-light --script ssl-poodle -p 443`  | check for Vulnerable~
+- :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 
 
-### To be checked
+
+### Program Exceptions Checks
 
 - WARNING: Could not connect (timeout); discarding corresponding tasks. | SSLyze
 - [-] Searching in Google:
