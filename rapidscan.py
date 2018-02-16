@@ -213,7 +213,10 @@ else:
     
     if target == '--update':
         print "RapidScan is updating.. Please wait..."
-        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py')
+        spinner.start()
+        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > tempx 2>&1')
+        spinner.stop()
+        print "RapidScan updated to latest version."
         # Do the thing
     elif target == '--help':
         print "Information:"
