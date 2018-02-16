@@ -1,9 +1,14 @@
 #!/usr/bin/python
-
-# Author: Shankar Damodaran
-# Tool: RapidScan v1.0
-# Usage: ./rapidscan.py target.com
-# Description: This scanner automates the process of security scanning by using a multitude of available linux security tools and some custom scripts. 
+#                               __         __
+#                              /__)_   '_/(  _ _
+#                             / ( (//)/(/__)( (//)
+#                                  /
+#
+# Author:      Shankar Damodaran
+# Tool:        RapidScan
+# Usage: .     /rapidscan.py target.com
+# Description: This scanner automates the process of security scanning by using a 
+#              multitude of available linux security tools and some custom scripts. 
 #
 
 # Importing the libraries
@@ -72,12 +77,18 @@ tool_names = [
               ("uniscan","Uniscan - Checks for robots.txt & sitemap.xml"),
               ("wafw00f","Wafw00f - Checks for Application Firewalls."),
               ("nmap","NMap - Fast Scan (Only Few Port Checks)"),
-              ("theharvester","The Harvester - Scans for emails using Google's passive search"),
+              ("theharvester","The Harvester - Scans for emails using Google's passive search."),
               ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
-              ("dnswalk","DNSWalk - Attempts Zone Transfer"),
-              ("whois","WHOis - Checks for Administrator's Contact Information"),
-              ("sslyze","SSLyze - Checks only for Heartbleed vulnerability"),
-              ("lbd","LBD - Checks for DNS/HTTP Load Balancers")
+              ("dnswalk","DNSWalk - Attempts Zone Transfer."),
+              ("whois","WHOis - Checks for Administrator's Contact Information."),
+              ("nmap_header","NMap (XSS Filter Check) - Checks if XSS Protection Header is present."),
+              ("nmap_sloris","NMap (Slowloris DoS) - Checks for Slowloris Denial of Service Vulnerability."),
+              ("sslyze","SSLyze - Checks only for Heartbleed vulnerability,"),
+              ("nmap_hbleed","NMap (Heartbleed) - Checks only for Heartbleed vulnerability,"),
+              ("nmap_poodle","NMap (POODLE) - Checks only for Poodle vulnerability,"),
+              ("nmap_ccs","NMap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
+              ("nmap_freak","NMap (FREAK) - Checks only for FREAK vulnerability."),
+              ("lbd","LBD - Checks for DNS/HTTP Load Balancers.")
              ]
 
 # Making the dictionary ordered (as it is)           
@@ -97,7 +108,13 @@ tool_cmd   = [
                 ("fierce -wordlist xxx -dns",""),
                 ("dnswalk -d","."),
                 ("whois",""),
+                ("nmap -p80 --script http-security-headers",""),
+                ("nmap -p80,443 --script http-slowloris --max-parallelism 500",""),
                 ("sslyze --heartbleed",""),
+                ("nmap -p 443 --script ssl-heartbleed",""),
+                ("nmap -p 443 --script ssl-poodle",""),
+                ("nmap -p 443 --script ssl-ccs-injection",""),
+                ("nmap -p 443 --script ssl-enum-ciphers",""),
                 ("lbd","")
              ]
 
@@ -117,8 +134,14 @@ tool_cond = [
                 "No emails found",
                 "Whoah, it worked",
                 "0 failures",
-                "No Data Found",
-                "Not vulnerable to Heartbleed",
+                "Admin Email:",
+                "XSS filter is disabled",
+                "vulnerable",
+                "Server is vulnerable to Heartbleed",
+                "vulnerable",
+                "vulnerable",
+                "vulnerable",
+                "vulnerable",
                 "does NOT use Load-balancing"
             ]
 
@@ -136,7 +159,13 @@ tool_pos = [
                 "[+] Zone Transfer using fierce Failed.",
                 "[+] Zone Transfer using dnswalk Failed.",
                 "[+] Whois Information Hidden.",
-                "[+] Not Prone to Heartbleed Vulnerability.",
+                "[+] XSS Protection Filter is Enabled.",
+                "[+] Not Vulnerable to Slowloris Denial of Service.",
+                "[+] Not Prone to HEARTBLEED Vulnerability.",
+                "[+] Not Prone to HEARTBLEED Vulnerability.",
+                "[+] Not Prone to POODLE Vulnerability.",
+                "[+] Not Prone to OpenSSL CCS Injection.",
+                "[+] Not Prone to FREAK Vulnerability.",
                 "[+] Load Balancer(s) Detected."
            ]
 
@@ -154,12 +183,18 @@ tool_neg = [
                 "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately.",
                 "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately.",
                 "[-] Whois Information Publicly Available.",
-                "[-] Heartbleed Vulnerability Found",
+                "[-] XSS Protection Filter is Disabled.",
+                "[-] Vulnerable to Slowloris Denial of Service.",
+                "[-] HEARTBLEED Vulnerability Found.",
+                "[-] HEARTBLEED Vulnerability Found.",
+                "[-] POODLE Vulnerability Detected.",
+                "[-] OpenSSL CCS Injection Detected.",
+                "[-] FREAK Vulnerability Detected.",
                 "[-] No DNS/HTTP based Load Balancers Found."
            ]
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,1,1,0]
+tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0]
 
 tool = 0
 
@@ -167,39 +202,57 @@ tool = 0
 arg1 = 0
 arg2 = 1
 
+
+
+
 if len(sys.argv)<=0 :
     print "[-] Program needs atleast one argument, try again. Quitting now..."
     sys.exit(1)
 else:
     target = sys.argv[1]
-    os.system('clear')
-    os.system('setterm -cursor off')
-    print bcolors.BOLD + "RapidScan v1.0 | Initiating tools and scanning parameters for " + target+ "...\n" + bcolors.ENDC
     
-    # Creating a temp directory for too reports
-    # os.system('mkdir temp')
+    if target == '--update':
+        print "RapidScan is updating.. Please wait..."
+        os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py')
+        # Do the thing
+    elif target == '--help':
+        print "Information:"
+        print "------------"
+        print "./rapidscan.py --update: Updates the scanner to the latest version."
+        print "./rapidscan.py --help:   Displays this help context."
+        # Do the other thing
+    else:
     
-    for temp_key,temp_val in tool_names.items():
-        print "[:] Deploying "+bcolors.WARNING+temp_val+bcolors.ENDC
-        spinner.start()
-        temp_file = "temp_"+temp_key
-        cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
-        os.system(cmd)
-        if tool_cond[tool] not in open(temp_file).read():
-            if tool_opcode[tool] == 0:
-                print bcolors.CLEARLINE
-                print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
-            else:
-                print bcolors.CLEARLINE
-                print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
-        else:
-            if tool_opcode[tool] == 1:
-                print bcolors.CLEARLINE
-                print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
-            else:
-                print bcolors.CLEARLINE
-                print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
-        spinner.stop()
-        tool=tool+1
-        #os.system('setterm -cursor on')
+        os.system('rm te*') # Clearing previous scan files
+        os.system('clear')
+        os.system('setterm -cursor off')
+        print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" + bcolors.ENDC
         
+
+        
+        for temp_key,temp_val in tool_names.items():
+            print "[:] Deploying "+bcolors.WARNING+temp_val+bcolors.ENDC
+            spinner.start()
+            temp_file = "temp_"+temp_key
+            cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
+            os.system(cmd)
+            if tool_cond[tool] not in open(temp_file).read():
+                if tool_opcode[tool] == 0:
+                    print bcolors.CLEARLINE
+                    print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+                else:
+                    print bcolors.CLEARLINE
+                    print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
+            else:
+                if tool_opcode[tool] == 1:
+                    print bcolors.CLEARLINE
+                    print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+                else:
+                    print bcolors.CLEARLINE
+                    print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
+            spinner.stop()
+            tool=tool+1
+            #os.system('setterm -cursor on')
+
+        os.system('rm te*') # Clearing previous scan files
+
