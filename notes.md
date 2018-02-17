@@ -1,5 +1,7 @@
 ### Features
 
+- :heavy_exclamation_mark: Checks if domain is spoofed/hijacked: `golismero scan example.com -e dns_malware` | No vulnerabilities found.
+- :heavy_exclamation_mark: Try implementing Grabber (XSS, SQLi..)
 - :heavy_exclamation_mark: Firewalking: https://nmap.org/nsedoc/scripts/firewalk.html
 - :heavy_exclamation_mark: SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled
 - :heavy_exclamation_mark: Check for git: Do a wget and check for .git under root
@@ -13,8 +15,8 @@
 - :thumbsup: ~Poodle Vulnerability Check: `nmap -sV --version-light --script ssl-poodle -p 443`  | check for Vulnerable~
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
-
-
+### Dig Deeper
+- xsser and golismero, sslyze, bed, doona
 
 ### Program Exceptions Checks
 
