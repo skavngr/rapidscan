@@ -6,13 +6,12 @@
                                   /
                             =====================
                             
-> An automated hybrid security scanner that uses multiple available tools of Kali Linux and ***some custom coded checks*** to scan a target and generate findings spontaneously.
+## Evolution:
+> Being a pentester for years, sometimes its quite a fuss to run different security scanning tools and there are chances you may miss out some. Also, you may come across a particular vulnerability that may or may not be a false positive, to confirm this; a different tool that does a same vulnerability check maybe used to zero-in on that vulnerability. <p>Enter **RapidScan**.
 ---
 ### FYI:
 - _scanner is still under development and right now supports **21** checks._
 - _it is not a multi-threaded program, may be coded in near future._
-
-
 
 ## Tests For
 - :white_check_mark: DNS/HTTP Load Balancers.
