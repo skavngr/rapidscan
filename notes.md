@@ -16,10 +16,11 @@
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 ### Dig Deeper
-- xsser and golismero, sslyze, bed, doona
+- xsser, golismero, sslyze, bed, doona, grabber
 
 ### Program Exceptions Checks
 
+- **Implement Keyboard Interrupts and Instant Quit.**
 - WARNING: Could not connect (timeout); discarding corresponding tasks. | SSLyze
 - [-] Searching in Google:
 HTTPConnectionPool(host='www.google.com', port=80): Max retries exceeded with url: /search?num=100&start=0&hl=en&meta=&q=%40%22example.com%22 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb721708c>: Failed to establish a new connection: [Errno -2] Name or service not known',))
