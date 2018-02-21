@@ -32,7 +32,7 @@ def helper():
         print "\nInteractive:"
         print "-----------"
         print "Ctrl+C: Skips current test."
-        print "Ctrl+Z: Quits RapidScan."
+        print "Ctrl+Z: Quits RapidScan.\n"
    
     
 # Initializing the color module class
@@ -45,7 +45,7 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-    CLEARLINE = '\033[F'
+    CLEARLINE = '\033[L'
 
 
 # Initiliazing the idle loader/spinner class
@@ -98,12 +98,12 @@ tool_names = [
             ("whois","WHOis - Checks for Administrator's Contact Information."),
             ("nmap_header","NMap (XSS Filter Check) - Checks if XSS Protection Header is present."),
             ("nmap_sloris","NMap (Slowloris DoS) - Checks for Slowloris Denial of Service Vulnerability."),
-            ("sslyze","SSLyze - Checks only for Heartbleed vulnerability,"),
-            ("nmap_hbleed","NMap (Heartbleed) - Checks only for Heartbleed vulnerability,"),
-            ("nmap_poodle","NMap (POODLE) - Checks only for Poodle vulnerability,"),
+            ("sslyze","SSLyze - Checks only for Heartbleed Vulnerability."),
+            ("nmap_hbleed","NMap (Heartbleed) - Checks only for Heartbleed Vulnerability."),
+            ("nmap_poodle","NMap (POODLE) - Checks only for Poodle Vulnerability."),
             ("nmap_ccs","NMap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
-            ("nmap_freak","NMap (FREAK) - Checks only for FREAK vulnerability."),
-            ("nmap_logjam","NMap (LOGJAM) - Checks for LOGJAM vulnerability."),
+            ("nmap_freak","NMap (FREAK) - Checks only for FREAK Vulnerability."),
+            ("nmap_logjam","NMap (LOGJAM) - Checks for LOGJAM Vulnerability."),
             ("lbd","LBD - Checks for DNS/HTTP Load Balancers.")
             ]
 
@@ -138,6 +138,57 @@ tool_cmd   = [
 # Making the dictionary ordered (as it is)           
 tool_cmd = collections.OrderedDict(tool_cmd)
 
+# Tool Responses (Begins)
+tool_resp   = [
+                ("[+] Has an IPv6 Address.",
+                    "[-] Does not have an IPv6 Address. It is good to have one."),
+                ("[+] No Misconfiguration Found.",
+                    "[-] ASP.Net is misconfigured to throw server stack errors on screen."),
+                ("[+] No WordPress Installation Found.",
+                    "[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version."),
+                ("[+] No Drupal Installation Found.",
+                    "[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version."),
+                ("[+] No Joomla Installation Found.",
+                    "[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version."),
+                ("[+] robots.txt/sitemap.xml not Found.",
+                    "[-] robots.txt/sitemap.xml found. Check those files for any information."),
+                ("[+] Web Application Firewall Detected.",
+                    "[-] No Web Application Firewall Detected"),
+                ("[+] Common Ports are Closed.",
+                    "[-] Some ports are open. Perform a full-scan manually."),
+                ("[+] No Email Addresses Found.",
+                    "[-] Email Addresses Found."),
+                ("[+] Zone Transfer using fierce Failed.",
+                    "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."),
+                ("[+] Zone Transfer using dnswalk Failed.",
+                    "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately."),
+                ("[+] Whois Information Hidden.",
+                    "[-] Whois Information Publicly Available."),
+                ("[+] XSS Protection Filter is Enabled.",
+                    "[-] XSS Protection Filter is Disabled."),
+                ("[+] Not Vulnerable to Slowloris Denial of Service.",
+                    "[-] Vulnerable to Slowloris Denial of Service."),
+                ("[+] Not Prone to HEARTBLEED Vulnerability.",
+                    "[-] HEARTBLEED Vulnerability Found with SSLyze."),
+                ("[+] Not Prone to HEARTBLEED Vulnerability.",
+                    "[-] HEARTBLEED Vulnerability Found with NMap."),
+                ("[+] Not Prone to POODLE Vulnerability.",
+                    "[-] POODLE Vulnerability Detected."),
+                ("[+] Not Prone to OpenSSL CCS Injection.",
+                    "[-] OpenSSL CCS Injection Detected."),
+                ("[+] Not Prone to FREAK Vulnerability.",
+                    "[-] FREAK Vulnerability Detected."),
+                ("[+] Not Prone to LOGJAM Vulnerability.",
+                    "[-] LOGJAM Vulnerability Found."),
+                ("[+] Load Balancer(s) Detected.",
+                    "[-] No DNS/HTTP based Load Balancers Found.")
+            ]
+
+# Making the dictionary ordered (as it is)           
+tool_resp = collections.OrderedDict(tool_resp)
+# Tool Responses (Ends)
+
+
 # Tool test conditions
 tool_cond = [
                 "has IPv6",
@@ -163,58 +214,11 @@ tool_cond = [
                 "does NOT use Load-balancing"
             ]
 
-# Tool positive response
-tool_pos = [
-                "[+] Has an IPv6 Address.",
-                "[+] No Misconfiguration Found.",
-                "[+] No WordPress Installation Found.",
-                "[+] No Drupal Installation Found.",
-                "[+] No Joomla Installation Found.",
-                "[+] robots.txt/sitemap.xml not found.",
-                "[+] Web Application Firewall Detected.",
-                "[+] Common Ports are Closed.",
-                "[+] No Email Addresses Found.",
-                "[+] Zone Transfer using fierce Failed.",
-                "[+] Zone Transfer using dnswalk Failed.",
-                "[+] Whois Information Hidden.",
-                "[+] XSS Protection Filter is Enabled.",
-                "[+] Not Vulnerable to Slowloris Denial of Service.",
-                "[+] Not Prone to HEARTBLEED Vulnerability.",
-                "[+] Not Prone to HEARTBLEED Vulnerability.",
-                "[+] Not Prone to POODLE Vulnerability.",
-                "[+] Not Prone to OpenSSL CCS Injection.",
-                "[+] Not Prone to FREAK Vulnerability.",
-                "[+] Not Prone to LOGJAM Vulnerability.",
-                "[+] Load Balancer(s) Detected."
-        ]
-
-# Tool negative response
-tool_neg = [
-                "[-] Does not have an IPv6 Address. It is good to have one.",
-                "[-] ASP.Net is misconfigured to throw server stack errors on screen.",
-                "[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version.",
-                "[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version.",
-                "[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version.",
-                "[-] robots.txt/sitemap.xml found. Check those files for any information.",
-                "[-] No Web Application Firewall Detected",
-                "[-] Some ports are open. Perform a full-scan manually.",
-                "[-] Few email addresses found.",
-                "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately.",
-                "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately.",
-                "[-] Whois Information Publicly Available.",
-                "[-] XSS Protection Filter is Disabled.",
-                "[-] Vulnerable to Slowloris Denial of Service.",
-                "[-] HEARTBLEED Vulnerability Found.",
-                "[-] HEARTBLEED Vulnerability Found.",
-                "[-] POODLE Vulnerability Detected.",
-                "[-] OpenSSL CCS Injection Detected.",
-                "[-] FREAK Vulnerability Detected.",
-                "[-] LOGJAM Vulnerability Found.",
-                "[-] No DNS/HTTP based Load Balancers Found."
-        ]
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
 tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
+
+
 
 tool = 0
 
@@ -237,10 +241,11 @@ else:
         os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
         spinner.stop()
         print "RapidScan updated to latest version."
+        sys.exit(1)
         
     elif target == '--help':
         helper()
-        
+        sys.exit(1)
     else:
     
         os.system('rm te*') # Clearing previous scan files
@@ -274,22 +279,27 @@ else:
                 
             if runTest == 1:
                 spinner.stop()
+                
                 if tool_cond[tool] not in open(temp_file).read():
                     if tool_opcode[tool] == 0:
-                        print bcolors.CLEARLINE
-                        print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+                        #print bcolors.CLEARLINE
+                        print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
-                        print bcolors.CLEARLINE
-                        print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
+                        #print bcolors.CLEARLINE
+                        print "\t"+bcolors.FAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
                 else:
                     if tool_opcode[tool] == 1:
-                        print bcolors.CLEARLINE
-                        print "\t"+bcolors.OKGREEN + tool_pos[tool] + bcolors.ENDC
+                        #print bcolors.CLEARLINE
+                        print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
-                        print bcolors.CLEARLINE
-                        print "\t"+bcolors.FAIL + tool_neg[tool] + bcolors.ENDC
+                        #print bcolors.CLEARLINE
+                        print "\t"+bcolors.FAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
+                
+                #print "\033[K", "\r"
+                #sys.stdout.flush()
                 print "\t"+bcolors.BOLD + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
+                
                 runTest = 1
                 spinner.stop()
             
