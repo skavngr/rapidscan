@@ -1,8 +1,8 @@
 ### Features
 
+- :heavy_exclamation_mark: Check for open directories with Dirbuster: `dirb http://example.com`
 - :heavy_exclamation_mark: Checks if domain is spoofed/hijacked: `golismero scan example.com -e dns_malware` | No vulnerabilities found.
 - :heavy_exclamation_mark: Try implementing Grabber (XSS, SQLi..)
-- :heavy_exclamation_mark: Firewalking: https://nmap.org/nsedoc/scripts/firewalk.html
 - :heavy_exclamation_mark: SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled
 - :heavy_exclamation_mark: Check for git: Do a wget and check for .git under root
 - :thumbsup: ~Check for WordPress: Do a wget with wp-admin and grep the source (check for login/wp-login) curl -s http://somepage.com | grep whatever~
@@ -20,8 +20,8 @@
 
 ### Program Exceptions Checks
 
-- **Implement Keyboard Interrupts and Instant Quit.**
+- Clear process traces and Ctrl+C hold crashes.
+- :thumbsup: ~Implement Keyboard Interrupts and Instant Quit.~
 - WARNING: Could not connect (timeout); discarding corresponding tasks. | SSLyze
 - [-] Searching in Google:
 HTTPConnectionPool(host='www.google.com', port=80): Max retries exceeded with url: /search?num=100&start=0&hl=en&meta=&q=%40%22example.com%22 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb721708c>: Failed to establish a new connection: [Errno -2] Name or service not known',))
-
