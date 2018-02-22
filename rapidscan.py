@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 #                               __         __
 #                              /__)_   '_/(  _ _
 #                             / ( (//)/(/__)( (//)
@@ -21,6 +22,28 @@ import threading
 import collections
 import signal
 
+# Initializing the color module class
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    BADFAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    CLEARLINE = '\033[L'
+    CRIT_BG = '\033[41m'
+    SAFE_BG = '\033[42m'
+    MEDIUM_BG = '\033[43m'
+    LOW_BG = '\033[44m'
+    
+
+# Legends (Yet to code)    
+proc_high = bcolors.BADFAIL + "█" + bcolors.ENDC
+proc_med  = bcolors.WARNING + "█" + bcolors.ENDC
+proc_low  = bcolors.OKGREEN + "█" + bcolors.ENDC
+
 
 # RapidScan Help Context
 def helper():
@@ -33,20 +56,7 @@ def helper():
         print "-----------"
         print "Ctrl+C: Skips current test."
         print "Ctrl+Z: Quits RapidScan.\n"
-   
-    
-# Initializing the color module class
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    CLEARLINE = '\033[L'
-
+ 
 
 # Initiliazing the idle loader/spinner class
 class Spinner:
@@ -85,25 +95,25 @@ spinner = Spinner()
 # Scanners that will be used 
 tool_names = [
             ("host","Host - Checks for existence of IPV6 address."),
-            ("aspnet_config_err", "ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."),
+            ("aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."),
             ("wp_check","WordPress Checker - Checks for WordPress Installation."),
             ("drp_check", "Drupal Checker - Checks for Drupal Installation."),
             ("joom_check", "Joomla Checker - Checks for Joomla Installation."),
             ("uniscan","Uniscan - Checks for robots.txt & sitemap.xml"),
             ("wafw00f","Wafw00f - Checks for Application Firewalls."),
-            ("nmap","NMap - Fast Scan (Only Few Port Checks)"),
+            ("nmap","Nmap - Fast Scan (Only Few Port Checks)"),
             ("theharvester","The Harvester - Scans for emails using Google's passive search."),
             ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
             ("dnswalk","DNSWalk - Attempts Zone Transfer."),
             ("whois","WHOis - Checks for Administrator's Contact Information."),
-            ("nmap_header","NMap (XSS Filter Check) - Checks if XSS Protection Header is present."),
-            ("nmap_sloris","NMap (Slowloris DoS) - Checks for Slowloris Denial of Service Vulnerability."),
+            ("nmap_header","Nmap (XSS Filter Check) - Checks if XSS Protection Header is present."),
+            ("nmap_sloris","Nmap (Slowloris DoS) - Checks for Slowloris Denial of Service Vulnerability."),
             ("sslyze","SSLyze - Checks only for Heartbleed Vulnerability."),
-            ("nmap_hbleed","NMap (Heartbleed) - Checks only for Heartbleed Vulnerability."),
-            ("nmap_poodle","NMap (POODLE) - Checks only for Poodle Vulnerability."),
-            ("nmap_ccs","NMap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
-            ("nmap_freak","NMap (FREAK) - Checks only for FREAK Vulnerability."),
-            ("nmap_logjam","NMap (LOGJAM) - Checks for LOGJAM Vulnerability."),
+            ("nmap_hbleed","Nmap (Heartbleed) - Checks only for Heartbleed Vulnerability."),
+            ("nmap_poodle","Nmap (POODLE) - Checks only for Poodle Vulnerability."),
+            ("nmap_ccs","Nmap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
+            ("nmap_freak","Nmap (FREAK) - Checks only for FREAK Vulnerability."),
+            ("nmap_logjam","Nmap (LOGJAM) - Checks for LOGJAM Vulnerability."),
             ("lbd","LBD - Checks for DNS/HTTP Load Balancers.")
             ]
 
@@ -168,10 +178,10 @@ tool_resp   = [
                     "[-] XSS Protection Filter is Disabled."),
                 ("[+] Not Vulnerable to Slowloris Denial of Service.",
                     "[-] Vulnerable to Slowloris Denial of Service."),
-                ("[+] Not Prone to HEARTBLEED Vulnerability.",
+                ("[+] Not Prone to HEARTBLEED Vulnerability with SSLyze.",
                     "[-] HEARTBLEED Vulnerability Found with SSLyze."),
-                ("[+] Not Prone to HEARTBLEED Vulnerability.",
-                    "[-] HEARTBLEED Vulnerability Found with NMap."),
+                ("[+] Not Prone to HEARTBLEED Vulnerability with Nmap.",
+                    "[-] HEARTBLEED Vulnerability Found with Nmap."),
                 ("[+] Not Prone to POODLE Vulnerability.",
                     "[-] POODLE Vulnerability Detected."),
                 ("[+] Not Prone to OpenSSL CCS Injection.",
@@ -286,14 +296,14 @@ else:
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
                         #print bcolors.CLEARLINE
-                        print "\t"+bcolors.FAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
+                        print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
                 else:
                     if tool_opcode[tool] == 1:
                         #print bcolors.CLEARLINE
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
                         #print bcolors.CLEARLINE
-                        print "\t"+bcolors.FAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
+                        print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
                 
                 #print "\033[K", "\r"
