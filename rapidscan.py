@@ -103,17 +103,22 @@ tool_names = [
             ("wafw00f","Wafw00f - Checks for Application Firewalls."),
             ("nmap","Nmap - Fast Scan (Only Few Port Checks)"),
             ("theharvester","The Harvester - Scans for emails using Google's passive search."),
+            ("dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers."),
             ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
             ("dnswalk","DNSWalk - Attempts Zone Transfer."),
             ("whois","WHOis - Checks for Administrator's Contact Information."),
             ("nmap_header","Nmap (XSS Filter Check) - Checks if XSS Protection Header is present."),
             ("nmap_sloris","Nmap (Slowloris DoS) - Checks for Slowloris Denial of Service Vulnerability."),
-            ("sslyze","SSLyze - Checks only for Heartbleed Vulnerability."),
+            ("sslyze_hbleed","SSLyze - Checks only for Heartbleed Vulnerability."),
             ("nmap_hbleed","Nmap (Heartbleed) - Checks only for Heartbleed Vulnerability."),
             ("nmap_poodle","Nmap (POODLE) - Checks only for Poodle Vulnerability."),
             ("nmap_ccs","Nmap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
             ("nmap_freak","Nmap (FREAK) - Checks only for FREAK Vulnerability."),
             ("nmap_logjam","Nmap (LOGJAM) - Checks for LOGJAM Vulnerability."),
+            ("sslyze_ocsp","SSLyze - Checks for OCSP Stapling."),
+            ("sslyze_zlib","SSLyze - Checks for ZLib Deflate Compression."),
+            ("sslyze_reneg","SSLyze - Checks for Secure Renegotiation Support and Client Renegotiation."),
+            ("sslyze_resum","SSLyze - Checks for Session Resumption Support with (Session IDs/TLS Tickets)."),
             ("lbd","LBD - Checks for DNS/HTTP Load Balancers.")
             ]
 
@@ -131,6 +136,7 @@ tool_cmd   = [
                 ("wafw00f",""),
                 ("nmap -F --open",""),
                 ("theharvester -l 50 -b google -d",""),
+                ("dnsrecon -d",""),
                 ("fierce -wordlist xxx -dns",""),
                 ("dnswalk -d","."),
                 ("whois",""),
@@ -142,6 +148,10 @@ tool_cmd   = [
                 ("nmap -p 443 --script ssl-ccs-injection",""),
                 ("nmap -p 443 --script ssl-enum-ciphers",""),
                 ("nmap -p 443 --script ssl-dh-params",""),
+                ("sslyze --certinfo=basic",""),
+                ("sslyze --compression",""),
+                ("sslyze --reneg",""),
+                ("sslyze --resum",""),
                 ("lbd","")
             ]
 
@@ -168,6 +178,8 @@ tool_resp   = [
                     "[-] Some ports are open. Perform a full-scan manually."),
                 ("[+] No Email Addresses Found.",
                     "[-] Email Addresses Found."),
+                ("[+] Zone Transfer using DNSRecon Failed.",
+                    "[-] Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately."),
                 ("[+] Zone Transfer using fierce Failed.",
                     "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."),
                 ("[+] Zone Transfer using dnswalk Failed.",
@@ -190,6 +202,14 @@ tool_resp   = [
                     "[-] FREAK Vulnerability Detected."),
                 ("[+] Not Prone to LOGJAM Vulnerability.",
                     "[-] LOGJAM Vulnerability Found."),
+                ("[+] OCSP Response was not sent by Server.",
+                    "[-] Unsuccessful OCSP Response."),
+                ("[+] Deflate Compression is Disabled.",
+                    "[-] Server supports Deflate Compression."),
+                ("[+] Secure Renegotiation is supported.",
+                    "[-] Secure Renegotiation is unsupported."),
+                ("[+] Session Resumption is supported.",
+                    "[-] Secure Resumption unsupported with (Sessions IDs/TLS Tickets)."),
                 ("[+] Load Balancer(s) Detected.",
                     "[-] No DNS/HTTP based Load Balancers Found.")
             ]
@@ -210,6 +230,7 @@ tool_cond = [
                 "No WAF",
                 "tcp open",
                 "No emails found",
+                "[+] Zone Transfer was successful!!",
                 "Whoah, it worked",
                 "0 errors",
                 "Admin Email:",
@@ -221,13 +242,16 @@ tool_cond = [
                 "vulnerable",
                 "vulnerable",
                 "vulnerable",
+                "ERROR - OCSP response status is not successful",
+                "VULNERABLE - Server supports Deflate compression",
+                "vulnerable",
+                "vulnerable",
                 "does NOT use Load-balancing"
             ]
 
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0]
-
+tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
 
 tool = 0
@@ -245,7 +269,7 @@ else:
     target = sys.argv[1].lower()
     
     
-    if target == '--update':
+    if target == '--update' or target == '-u' or target == '--u':
         print "RapidScan is updating.. Please wait..."
         spinner.start()
         os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
@@ -253,7 +277,7 @@ else:
         print "RapidScan updated to latest version."
         sys.exit(1)
         
-    elif target == '--help':
+    elif target == '--help' or target == '-h' or target == '--h':
         helper()
         sys.exit(1)
     else:
