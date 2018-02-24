@@ -15,18 +15,21 @@
 > Being a pentester for years, sometimes its quite a fuss to run different security scanning tools and there are chances you may miss out some. Also, you may come across a particular vulnerability that may or may not be a false positive, to confirm this; a different tool that does a same vulnerability check maybe used to zero-in on that vulnerability. <p>Enter **RapidScan**.
 ---
 ### FYI:
-- _software is still under development and currently supports **21** checks._
-- _it is not a multi-threaded program, may be coded in near future._
+- _software is **still under development** and currently supports **25** vulnerability checks._
+- _parallel processing not yet implemented, may be coded as more checks gets introduced._
 
-## Tests For
+## Tests Fort
 - :white_check_mark: DNS/HTTP Load Balancers.
 - :white_check_mark: Web Application Firewalls.
 - :white_check_mark: Checks for Joomla, WordPress and Drupal
-- :white_check_mark: SSL Vulnerabilities (_Heartbleed, FREAK, POODLE, CCS Injection, LOGJAM_).
+- :white_check_mark: SSL Vulnerabilities (_HEARTBLEED, FREAK, POODLE, CCS Injection, LOGJAM_).
 - :white_check_mark: Commonly Opened Ports.
-- :white_check_mark: DNS Zone Transfers using multiple tools (_Fierce, DNSWalk_).
+- :white_check_mark: DNS Zone Transfers using multiple tools (_Fierce, DNSWalk, DNSRecon_).
 - :white_check_mark: Robots.txt and Sitemap Availability.
 - & more coming up...
+
+## Requirements
+- Kali Linux 2.0 or Rolling Distro. (_The latest, the better the tool performs._)
 
 ## Usage
 **Download the script**
