@@ -1,9 +1,11 @@
 ### Features
 
+- :heavy_exclamation_mark: Check for emails with Dmitry: `dmitry -e yahoo.com` | Found 0 E-Mail(s)
+- :heavy_exclamation_mark: Check for subdomains with Dmitry: `dmitry -s yahoo.com` | Found 0 possible subdomain(s)
 - :heavy_exclamation_mark: Check for open directories with Dirbuster: `dirb http://example.com`
 - :heavy_exclamation_mark: Checks if domain is spoofed/hijacked: `golismero scan example.com -e dns_malware` | No vulnerabilities found.
-- :heavy_exclamation_mark: Try implementing Grabber (XSS, SQLi..)
-- :heavy_exclamation_mark: SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled
+- :heavy_exclamation_mark: Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED
+- :thumbsup: ~SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled~
 - :heavy_exclamation_mark: Check for git: Do a wget and check for .git under root
 - :thumbsup: ~Check for WordPress: Do a wget with wp-admin and grep the source (check for login/wp-login) curl -s http://somepage.com | grep whatever~
 - :thumbsup: ~Check for Illegal Characters on ASP.Net: /%7C~.aspx~
@@ -16,7 +18,10 @@
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 ### Dig Deeper
-- xsser, golismero, sslyze, bed, doona, grabber
+- xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP, 
+- `blindElephant.py http://192.168.1.252/wp wordpress` aftermath check
+- `dmitry -n example.com` not retrieving.
+
 
 ### Program Exceptions Checks
 
