@@ -12,7 +12,17 @@
                             =====================
                             
 ## Evolution:
-> Being a pentester for years, sometimes its quite a fuss to run different security scanning tools and there are chances you may miss out some. Also, you may come across a particular vulnerability that may or may not be a false positive, to confirm this; a different tool that does a same vulnerability check maybe used to zero-in on that vulnerability. <p>Enter **RapidScan**.
+> Being a pentester for years, its quite a fuss to run dozens of security scanning tools and there are chances you may miss out some. Unless you are a pro at automating stuff, it is a herculean task to run all tools manually. The ultimate goal of this software is to solve that problem.<p>Enter **RapidScan**.
+
+## Why RapidScan?
+- **one-step installation**.
+- **executes a multitude of security scanning tools**, does other **custom coded checks** and **prints the results spontaneously**.
+- saves a lot of time, **indeed a lot time!**.
+- **checks for same vulnerabilities with multiple tools** to help you **zero-in on false positives** effectively.
+- **legends** to help you which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_under development_)
+- **vulnerability definitions** guides you what the vulnerability actually is and the threat it can pose. (_under development_)
+- **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
+
 ---
 ### FYI:
 - _software is **still under development** and currently supports **25** vulnerability checks._
@@ -29,7 +39,7 @@
 - & more coming up...
 
 ## Requirements
-- Kali Linux 2.0 or Rolling Distro. (_The latest, the better the tool performs._)
+- Kali Linux 2.0 or Rolling Distro. (_the latest the distro, the better the tool performs._)
 
 ## Usage
 **Download the script**
