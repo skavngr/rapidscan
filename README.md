@@ -12,18 +12,18 @@
                             =====================
                             
 ## Evolution:
-> Being a pentester for years and when it comes to security engagements, its quite a fuss to perform _**binge-tool-scanning**_ (_run scanning tools one after the other_) sans automation and **time** plays a critical asset. Unless you are a pro at automating stuff, it is a herculean task to perform this for each and every engagement. The ultimate goal of this program is to solve this problem through automation by running multiple tools, effectively judge certain false-positives and collectively correlating results under one roof.<p>Enter **RapidScan**.
+> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run scanning tools one after the other_) sans automation while **time** plays a critical asset. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **by running multiple tools, effectively judge false-positives** and **collectively correlate results** and **saves your precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
 - **executes a multitude of security scanning tools**, does other **custom coded checks** and **prints the results spontaneously**.
-- some of the tools include `nmap, dnsrecon, wafw00f, uniscan, sslyze, fierce, lbd, theharvester, dnswalk` etc executes under one roof.
+- some of the tools include `nmap, dnsrecon, wafw00f, uniscan, sslyze, fierce, lbd, theharvester, dnswalk` etc executes under one entity.
 - saves a lot of time, **indeed a lot time!**.
 - **checks for same vulnerabilities with multiple tools** to help you **zero-in on false positives** effectively.
 - **legends** to help you which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_under development_)
 - **vulnerability definitions** guides you what the vulnerability actually is and the threat it can pose. (_under development_)
 - **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
-- **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development)
+- **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development_)
 
 ---
 ### FYI:
