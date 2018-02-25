@@ -12,7 +12,7 @@
                             =====================
                             
 ## Evolution:
-> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run scanning tools one after the other_) sans automation while **time** plays a critical asset. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **by running multiple tools, effectively judge false-positives** and **collectively correlate results** and **saves your precious time**; all these under one roof.<p>Enter **RapidScan**.
+> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run scanning tools one after the other_) sans automation while **time** plays a critical asset. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **by running multiple scanning tools to discover vulnerabilities, effectively judge false-positives** , **collectively correlate results** and **saving your precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
@@ -44,11 +44,8 @@
 - Kali Linux 2.0 or Rolling Distro. (_the latest the distro, the better the tool performs._)
 
 ## Usage
-**Download the script**
-- `wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py`
-
-**Change the executable permission**
-- `chmod 777 rapidscan.py`
+**Download the script and give executable permissions**
+- `wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py`
 
 **Run the script**
 - `./rapidscan.py example.com`
