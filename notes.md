@@ -1,12 +1,13 @@
 ### Features
-
+- :heavy_exclamation_mark: Bruteforcing DNS with Golismero(timeconsuming yellow): `golismero scan cohnreznick.com -e brute_dns` | Possible subdomain leak
+- :heavy_exclamation_mark: Checking zone transfers with DNSenum: `dnsenum google.com` | corrupt (not successful)
+- :heavy_exclamation_mark: Subdomain BruteForcing with Fierce: `fierce -dns example.com` | Found 1 entries (usually **www**.example.com) will be included, so have to skip it.
 - :heavy_exclamation_mark: Check for emails with Dmitry: `dmitry -e yahoo.com` | Found 0 E-Mail(s)
 - :heavy_exclamation_mark: Check for subdomains with Dmitry: `dmitry -s yahoo.com` | Found 0 possible subdomain(s)
-- :heavy_exclamation_mark: Check for open directories with Dirbuster: `dirb http://example.com`
-- :heavy_exclamation_mark: Checks if domain is spoofed/hijacked: `golismero scan example.com -e dns_malware` | No vulnerabilities found.
 - :heavy_exclamation_mark: Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED
+- :heavy_exclamation_mark: Checks if domain is spoofed/hijacked: `golismero scan example.com -e dns_malware` | No vulnerabilities found.
+- :heavy_exclamation_mark: Check for open directories with Dirbuster: `dirb http://example.com`
 - :thumbsup: ~SSL Compression Enabled: `sslyze --compression target.com` | Compression disabled~
-- :heavy_exclamation_mark: Check for git: Do a wget and check for .git under root
 - :thumbsup: ~Check for WordPress: Do a wget with wp-admin and grep the source (check for login/wp-login) curl -s http://somepage.com | grep whatever~
 - :thumbsup: ~Check for Illegal Characters on ASP.Net: /%7C~.aspx~
 - :thumbsup: ~Check for Joomla: Do a wget with administrator and search for joomla~
@@ -18,9 +19,12 @@
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 ### Dig Deeper
-- xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP, 
+- `xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP,` 
+- Unavailable Tools: `sublist3r, w3af, goofile`
 - `blindElephant.py http://192.168.1.252/wp wordpress` aftermath check
 - `dmitry -n example.com` not retrieving.
+- `dnsenum --enum --noreverse example.com` google blocking your queries. (try somewhere else)
+- `thc-ssl-dos -l 100 192.168.1.208 443 --accept` gets only ips as input. write an alternative.
 
 
 ### Program Exceptions Checks
