@@ -1,5 +1,12 @@
 ### Features
-- :heavy_exclamation_mark: Bruteforcing DNS with Golismero(timeconsuming yellow): `golismero scan cohnreznick.com -e brute_dns` | Possible subdomain leak
+- :heavy_exclamation_mark: Golismero SQLMap: `golismero -e sqlmap scan example.com` | No vulnerabilities found.
+- :heavy_exclamation_mark: XSSer Checks: `xsser --all=http://example.com` | Could not find any vulnerability!
+- :heavy_exclamation_mark: Golismero SSL Scans: `golismero -e sslscan scan example.com` | Occurrence ID
+- :heavy_exclamation_mark: Golismero Zone Transfer: `golismero -e zone_transfer scan example.com` | DNS zone transfer successful
+- :heavy_exclamation_mark: Golismero Nikto Scan: `golismero -e nikto scan example.com` | Nikto found 0 vulnerabilities
+- :heavy_exclamation_mark: Golismero Brute URL Predictables: `golismero -e brute_url_predictables scan example.com` | No vulnerabilities found.
+- :heavy_exclamation_mark: Golismero HeartBleed Check: `golismero -e heartbleed scan example.com` | No vulnerabilities found.
+- :heavy_exclamation_mark: Bruteforcing DNS with Golismero(timeconsuming yellow): `golismero scan example.com -e brute_dns` | Possible subdomain leak
 - :heavy_exclamation_mark: Checking zone transfers with DNSenum: `dnsenum google.com` | corrupt (not successful)
 - :heavy_exclamation_mark: Subdomain BruteForcing with Fierce: `fierce -dns example.com` | Found 1 entries (usually **www**.example.com) will be included, so have to skip it.
 - :heavy_exclamation_mark: Check for emails with Dmitry: `dmitry -e yahoo.com` | Found 0 E-Mail(s)
@@ -23,9 +30,11 @@
 - Unavailable Tools: `sublist3r, w3af, goofile`
 - `blindElephant.py http://192.168.1.252/wp wordpress` aftermath check
 - `dmitry -n example.com` not retrieving.
+- `dirbuster -u http://example.com -H` looks for a directory wordlist under the same directory.
 - `dnsenum --enum --noreverse example.com` google blocking your queries. (try somewhere else)
-- `thc-ssl-dos -l 100 192.168.1.208 443 --accept` gets only ips as input. write an alternative.
-
+- `thc-ssl-dos -l 100 192.168.1.208 443 --accept` gets only ips as input. write an alternative | `dig +short example.com | grep -m 1 ""`
+- `wapiti example.com` | does all checks and shows count of each vulnerabilities found in table.
+- `doona -t vinothbabu.com -k -m HTTP` | 23/37   [POST / HTTP/1.0XAXAX] .........................................Problem (3) occured with POST / HTTP/1.0XAXAX (965)
 
 ### Program Exceptions Checks
 
