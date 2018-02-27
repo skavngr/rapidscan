@@ -286,9 +286,9 @@ else:
         newversion_hash = subprocess.check_output(cmd, shell=True)
         newversion_hash = newversion_hash.strip()
         if oldversion_hash == newversion_hash :
-            print "\nYou have the latest version of RapidScan."
+            print "\t"+ bcolors.OKBLUE +"You already have the latest version of RapidScan." + bcolors.ENDC
         else:
-            print "\nRapidScan successfully updated to the latest version."
+            print "\t"+ bcolors.OKGREEN +"RapidScan successfully updated to the latest version." +bcolors.ENDC
         spinner.stop()
         sys.exit(1)
         
@@ -345,8 +345,6 @@ else:
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
                 
-                #print "\033[K", "\r"
-                #sys.stdout.flush()
                 print "\t"+bcolors.BOLD + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
                 
                 runTest = 1
