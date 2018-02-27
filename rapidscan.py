@@ -286,11 +286,10 @@ else:
         newversion_hash = subprocess.check_output(cmd, shell=True)
         newversion_hash = newversion_hash.strip()
         if oldversion_hash == newversion_hash :
-            print "You have the latest version of RapidScan."
+            print "\nYou have the latest version of RapidScan."
         else:
-            print "RapidScan successfully updated to the latest version."
+            print "\nRapidScan successfully updated to the latest version."
         spinner.stop()
-        print "RapidScan updated to latest version."
         sys.exit(1)
         
     elif target == '--help' or target == '-h' or target == '--h':
