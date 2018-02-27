@@ -22,6 +22,12 @@ import threading
 import collections
 import signal
 
+
+#os.system('sha1sum rapidscan.py | grep .... | cut -c 1-40')
+
+#sys.exit(1)
+
+
 # Initializing the color module class
 class bcolors:
     HEADER = '\033[95m'
@@ -272,7 +278,17 @@ else:
     if target == '--update' or target == '-u' or target == '--u':
         print "RapidScan is updating.. Please wait..."
         spinner.start()
+        
+        cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
+        oldversion_hash = subprocess.check_output(cmd, shell=True)
+        oldversion_hash = val.strip()
         os.system('wget -N https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py -O rapidscan.py > /dev/null 2>&1')
+        newversion_hash = subprocess.check_output(cmd, shell=True)
+        newversion_hash = val.strip()
+        if oldversion_hash == newversion_hash
+            print "You have the latest version of RapidScan."
+        else
+            print "RapidScan successfully updated to the latest version."
         spinner.stop()
         print "RapidScan updated to latest version."
         sys.exit(1)
