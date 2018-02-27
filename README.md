@@ -12,7 +12,7 @@
                             =====================
                             
 ## Evolution:
-> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run scanning tools one after the other_) sans automation while **time** plays a critical asset. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **by running multiple scanning tools to discover vulnerabilities, effectively judge false-positives** , **collectively correlate results** and **saving your precious time**; all these under one roof.<p>Enter **RapidScan**.
+> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives** , **collectively correlate results** and **saves the precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
@@ -51,8 +51,8 @@
 - `./rapidscan.py example.com`
 
 ## Help
-- `--update`: Updates the scanner to latest version.
-- `--help`:   Displays the help context.
+- `./rapidscan.py --update`: Updates the scanner to latest version.
+- `./rapidscan.py --help`:   Displays the help context.
 
 ## Output
 
