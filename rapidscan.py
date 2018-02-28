@@ -125,7 +125,12 @@ tool_names = [
             ("sslyze_zlib","SSLyze - Checks for ZLib Deflate Compression."),
             ("sslyze_reneg","SSLyze - Checks for Secure Renegotiation Support and Client Renegotiation."),
             ("sslyze_resum","SSLyze - Checks for Session Resumption Support with (Session IDs/TLS Tickets)."),
-            ("lbd","LBD - Checks for DNS/HTTP Load Balancers.")
+            ("lbd","LBD - Checks for DNS/HTTP Load Balancers."),
+            ("golismero_dns_malware","Golismero - Checks if the domain is spoofed or hijacked."),
+            ("golismero_heartbleed","Golismero - Checks only for Heartbleed Vulnerability."),
+            ("golismero_brute_url_predictables","Golismero - BruteForces for certain files on the Domain."),
+            ("golismero_brute_directories","Golismero - BruteForces for certain directories on the Domain."),
+            ("golismero_sqlmap","Golismero -SQLMap (Retrieves only the DB Banner)")
             ]
 
 # Making the dictionary ordered (as it is)           
@@ -158,7 +163,12 @@ tool_cmd   = [
                 ("sslyze --compression",""),
                 ("sslyze --reneg",""),
                 ("sslyze --resum",""),
-                ("lbd","")
+                ("lbd",""),
+                ("golismero -e dns_malware scan",""),
+                ("golismero -e heartbleed scan",""),
+                ("golismero -e brute_url_predictables scan",""),
+                ("golismero -e brute_directories scan",""),
+                ("golismero -e sqlmap scan","")
             ]
 
 # Making the dictionary ordered (as it is)           
@@ -217,7 +227,18 @@ tool_resp   = [
                 ("[+] Session Resumption is supported.",
                     "[-] Secure Resumption unsupported with (Sessions IDs/TLS Tickets)."),
                 ("[+] Load Balancer(s) Detected.",
-                    "[-] No DNS/HTTP based Load Balancers Found.")
+                    "[-] No DNS/HTTP based Load Balancers Found."),
+                ("[+] Domain is not spoofed/hijacked.",
+                    "[-] Domain is spoofed/hijacked."),
+                ("[+] Not Prone to HEARTBLEED Vulnerability with Golismero.",
+                    "[-] HEARTBLEED Vulnerability Found with Golismero."),
+                ("[+] No Files Found with Golismero BruteForce.",
+                    "[-] Files Found with Golismero BruteForce."),
+                ("[+] No Directories Found with Golismero BruteForce.",
+                    "[-] Directories Found with Golismero BruteForce."),
+                ("[+] Could not retrieve the DB Banner with SQLMap.",
+                    "[-] DB Banner retrieved with SQLMap.")
+                
             ]
 
 # Making the dictionary ordered (as it is)           
@@ -252,12 +273,17 @@ tool_cond = [
                 "VULNERABLE - Server supports Deflate compression",
                 "vulnerable",
                 "vulnerable",
-                "does NOT use Load-balancing"
+                "does NOT use Load-balancing",
+                "No vulnerabilities found",
+                "No vulnerabilities found",
+                "No vulnerabilities found",
+                "No vulnerabilities found",
+                "No vulnerabilities found"
             ]
 
 
 # Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1]
 
 
 tool = 0
@@ -276,7 +302,7 @@ else:
     
     
     if target == '--update' or target == '-u' or target == '--u':
-        print "RapidScan is updating.. Please wait..."
+        print "RapidScan is updating....Please wait."
         spinner.start()
         
         cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
@@ -331,17 +357,13 @@ else:
                 
                 if tool_cond[tool] not in open(temp_file).read():
                     if tool_opcode[tool] == 0:
-                        #print bcolors.CLEARLINE
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
-                        #print bcolors.CLEARLINE
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
                 else:
                     if tool_opcode[tool] == 1:
-                        #print bcolors.CLEARLINE
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
-                        #print bcolors.CLEARLINE
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
                 
