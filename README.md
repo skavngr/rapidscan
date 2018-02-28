@@ -12,12 +12,12 @@
                             =====================
                             
 ## Evolution:
-> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives** , **collectively correlate results** and **saves the precious time**; all these under one roof.<p>Enter **RapidScan**.
+> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives** , **collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
 - **executes a multitude of security scanning tools**, does other **custom coded checks** and **prints the results spontaneously**.
-- some of the tools include `nmap, dnsrecon, wafw00f, uniscan, sslyze, fierce, lbd, theharvester, dnswalk` etc executes under one entity.
+- some of the tools include `nmap, dnsrecon, wafw00f, uniscan, sslyze, fierce, lbd, theharvester, dnswalk, golismero` etc executes under one entity.
 - saves a lot of time, **indeed a lot time!**.
 - **checks for same vulnerabilities with multiple tools** to help you **zero-in on false positives** effectively.
 - **legends** to help you which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_under development_)
@@ -27,7 +27,7 @@
 
 ---
 ### FYI:
-- _program is still under development, **works** and currently supports **25** vulnerability checks._
+- _program is still under development, **works** and currently supports **30** vulnerability checks._
 - _parallel processing is not yet implemented, may be coded as more checks gets introduced._
 
 ## Tests For
