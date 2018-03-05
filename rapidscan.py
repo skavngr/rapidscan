@@ -23,6 +23,13 @@ import collections
 import signal
 
 
+#print("FAILED...")
+#sys.stdout.write("\033[F") #back to previous line
+#sys.stdout.write("\033[K") #clear line
+#print("SUCCESS!")
+
+#sys.exit(1)
+
 #os.system('sha1sum rapidscan.py | grep .... | cut -c 1-40')
 
 #sys.exit(1)
@@ -62,6 +69,11 @@ def helper():
         print "-----------"
         print "Ctrl+C: Skips current test."
         print "Ctrl+Z: Quits RapidScan.\n"
+
+# Clears Line
+def clear():
+        sys.stdout.write("\033[F")
+        sys.stdout.write("\033[K") 
  
 
 # Initiliazing the idle loader/spinner class
@@ -87,6 +99,7 @@ class Spinner:
                 sys.stdout.write('\b')
                 sys.stdout.flush()
         except (KeyboardInterrupt, SystemExit):
+            clear()
             print "\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
 
@@ -99,6 +112,7 @@ class Spinner:
             self.busy = False
             time.sleep(self.delay)
         except (KeyboardInterrupt, SystemExit):
+            clear()
             print "\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
 # End ofloader/spinner class        
@@ -310,7 +324,7 @@ else:
     
     
     if target == '--update' or target == '-u' or target == '--u':
-        print "RapidScan is updating....Please wait."
+        print "RapidScan is updating....Please wait.\n"
         spinner.start()
         
         cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
@@ -320,8 +334,10 @@ else:
         newversion_hash = subprocess.check_output(cmd, shell=True)
         newversion_hash = newversion_hash.strip()
         if oldversion_hash == newversion_hash :
+            clear()
             print "\t"+ bcolors.OKBLUE +"You already have the latest version of RapidScan." + bcolors.ENDC
         else:
+            clear()
             print "\t"+ bcolors.OKGREEN +"RapidScan successfully updated to the latest version." +bcolors.ENDC
         spinner.stop()
         sys.exit(1)
@@ -348,7 +364,7 @@ else:
 
         
         for temp_key,temp_val in tool_names.items():
-            print "[:] Deploying "+bcolors.WARNING+temp_val+bcolors.ENDC
+            print "[:] Deploying "+bcolors.OKBLUE+temp_val+"\n"+bcolors.ENDC
             spinner.start()
             temp_file = "temp_"+temp_key
             cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
@@ -365,17 +381,21 @@ else:
                 
                 if tool_cond[tool] not in open(temp_file).read():
                     if tool_opcode[tool] == 0:
+                        clear()
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
+                        clear()
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
                 else:
                     if tool_opcode[tool] == 1:
+                        clear()
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
+                        clear()
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
-                
-                print "\t"+bcolors.OKBLUE + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
+                clear()
+                print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
                 
                 runTest = 1
                 spinner.stop()
