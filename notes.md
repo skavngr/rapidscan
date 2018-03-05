@@ -10,6 +10,15 @@
 - :heavy_exclamation_mark: Check for emails with Dmitry: `dmitry -e yahoo.com` | Found 0 E-Mail(s)
 - :heavy_exclamation_mark: Check for subdomains with Dmitry: `dmitry -s yahoo.com` | Found 0 possible subdomain(s)
 - :heavy_exclamation_mark: Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED
+- :heavy_exclamation_mark: Golismero Webservers Fingerprint: `golismero -e fingerprint_web scan example.com` | No vulnerabilities found.
+- :heavy_exclamation_mark: Subdomains brute force with DNSMap: `dnsmap example.com` | #1
+- :heavy_exclamation_mark: Uniscan File Brute Forcer: `uniscan -w -u example.com` | [+]
+- :heavy_exclamation_mark: Uniscan Directory Brute Forcer: `uniscan -q -u example.com` | [+]
+- :heavy_exclamation_mark: Uniscan Mini Stress Tester: `uniscan -r -u example.com` | [+]
+- :heavy_exclamation_mark: Uniscan Checks for LFI, RFI and RCE: `uniscan -s -u example.com` | [+]
+- :heavy_exclamation_mark: Uniscan Checks for XSS, SQLi, BSQLi & a few checks: `uniscan -d -u example.com` | [+]
+
+
 - :thumbsup: ~Golismero Brute Force Directories: `golismero -e brute_directories scan example.com` | No vulnerabilities found.~
 - :thumbsup: ~Golismero SQLMap: `golismero -e sqlmap scan example.com` | No vulnerabilities found.~
 - :thumbsup: ~Golismero Brute URL Predictables: `golismero -e brute_url_predictables scan example.com` | No vulnerabilities found.~
@@ -27,7 +36,7 @@
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 ### Dig Deeper
-- `xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP,` 
+- `amap, xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP,` 
 - Unavailable Tools: `sublist3r, w3af, goofile`
 - `blindElephant.py http://192.168.1.252/wp wordpress` aftermath check
 - `dmitry -n example.com` not retrieving.
