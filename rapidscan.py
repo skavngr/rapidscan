@@ -79,20 +79,28 @@ class Spinner:
         if delay and float(delay): self.delay = delay
 
     def spinner_task(self):
-        while self.busy:
-            sys.stdout.write(next(self.spinner_generator))
-            sys.stdout.flush()
-            time.sleep(self.delay)
-            sys.stdout.write('\b')
-            sys.stdout.flush()
+        try:
+            while self.busy:
+                sys.stdout.write(next(self.spinner_generator))
+                sys.stdout.flush()
+                time.sleep(self.delay)
+                sys.stdout.write('\b')
+                sys.stdout.flush()
+        except (KeyboardInterrupt, SystemExit):
+            print "\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
+            sys.exit(1)
 
     def start(self):
         self.busy = True
         threading.Thread(target=self.spinner_task).start()
 
     def stop(self):
-        self.busy = False
-        time.sleep(self.delay)
+        try:
+            self.busy = False
+            time.sleep(self.delay)
+        except (KeyboardInterrupt, SystemExit):
+            print "\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
+            sys.exit(1)
 # End ofloader/spinner class        
 
 # Instantiating the spinner/loader class
@@ -367,7 +375,7 @@ else:
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
                 
-                print "\t"+bcolors.BOLD + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
+                print "\t"+bcolors.OKBLUE + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
                 
                 runTest = 1
                 spinner.stop()
