@@ -7,7 +7,7 @@
 #
 # Author:      Shankar Damodaran
 # Tool:        RapidScan
-# Usage: .     /rapidscan.py target.com
+# Usage:       ./rapidscan.py example.com (or) python rapidsan.py example.com
 # Description: This scanner automates the process of security scanning by using a 
 #              multitude of available linux security tools and some custom scripts. 
 #
@@ -23,18 +23,6 @@ import collections
 import signal
 
 
-#print("FAILED...")
-#sys.stdout.write("\033[F") #back to previous line
-#sys.stdout.write("\033[K") #clear line
-#print("SUCCESS!")
-
-#sys.exit(1)
-
-#os.system('sha1sum rapidscan.py | grep .... | cut -c 1-40')
-
-#sys.exit(1)
-
-
 # Initializing the color module class
 class bcolors:
     HEADER = '\033[95m'
@@ -45,30 +33,35 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-    CLEARLINE = '\033[L'
     CRIT_BG = '\033[41m'
     SAFE_BG = '\033[42m'
     MEDIUM_BG = '\033[43m'
     LOW_BG = '\033[44m'
     
 
-# Legends (Yet to code)    
-proc_high = bcolors.BADFAIL + "█" + bcolors.ENDC
-proc_med  = bcolors.WARNING + "█" + bcolors.ENDC
-proc_low  = bcolors.OKGREEN + "█" + bcolors.ENDC
+# Legends  
+proc_high = bcolors.BADFAIL + "●" + bcolors.ENDC
+proc_med  = bcolors.WARNING + "●" + bcolors.ENDC
+proc_low  = bcolors.OKGREEN + "●" + bcolors.ENDC
 
 
 # RapidScan Help Context
 def helper():
         print "\nInformation:"
-        print "------------"
+        print "-------------"
         print "./rapidscan.py example.com: Scans the domain example.com"
         print "./rapidscan.py --update   : Updates the scanner to the latest version."
         print "./rapidscan.py --help     : Displays this help context."
         print "\nInteractive:"
-        print "-----------"
+        print "------------"
         print "Ctrl+C: Skips current test."
-        print "Ctrl+Z: Quits RapidScan.\n"
+        print "Ctrl+Z: Quits RapidScan."
+        print "\nLegends:"
+        print "--------"
+        print "["+proc_high+"]    : Scan process may take longer times (not predictable)."
+        print "["+proc_med+"]    : Scan process may take less than 10 minutes."
+        print "["+proc_low+"]    : Scan process may take less than a minute or two.\n"
+        
 
 # Clears Line
 def clear():
@@ -84,7 +77,7 @@ class Spinner:
     @staticmethod
     def spinning_cursor():
         while 1: 
-            for cursor in '|/-\\': yield cursor
+            for cursor in '|/\\': yield cursor
 
     def __init__(self, delay=None):
         self.spinner_generator = self.spinning_cursor()
@@ -120,7 +113,7 @@ class Spinner:
 # Instantiating the spinner/loader class
 spinner = Spinner()
 
-# Scanners that will be used 
+# Scanners that will be used and filename rotation 
 tool_names = [
             ("host","Host - Checks for existence of IPV6 address."),
             ("aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."),
@@ -268,44 +261,41 @@ tool_resp = collections.OrderedDict(tool_resp)
 # Tool Responses (Ends)
 
 
-# Tool test conditions
-tool_cond = [
-                "has IPv6",
-                "Server Error",
-                "wp-login",
-                "drupal",
-                "joomla",
-                "[+]",
-                "No WAF",
-                "tcp open",
-                "No emails found",
-                "[+] Zone Transfer was successful!!",
-                "Whoah, it worked",
-                "0 errors",
-                "Admin Email:",
-                "XSS filter is disabled",
-                "vulnerable",
-                "Server is vulnerable to Heartbleed",
-                "vulnerable",
-                "vulnerable",
-                "vulnerable",
-                "vulnerable",
-                "vulnerable",
-                "ERROR - OCSP response status is not successful",
-                "VULNERABLE - Server supports Deflate compression",
-                "vulnerable",
-                "vulnerable",
-                "does NOT use Load-balancing",
-                "No vulnerabilities found",
-                "No vulnerabilities found",
-                "No vulnerabilities found",
-                "No vulnerabilities found",
-                "No vulnerabilities found"
+
+# Tool Status (Reponse Data + Response Code (if status check fails and you still got to push it + Legends)
+tool_status = [
+                ["has IPv6",1,proc_low],
+                ["Server Error",0,proc_low],
+                ["wp-login",0,proc_low],
+                ["drupal",0,proc_low],
+                ["joomla",0,proc_low],
+                ["[+]",0,proc_low],
+                ["No WAF",0,proc_low],
+                ["tcp open",0,proc_med],
+                ["No emails found",1,proc_med],
+                ["[+] Zone Transfer was successful!!",0,proc_low],
+                ["Whoah, it worked",0,proc_low],
+                ["0 errors",0,proc_low],
+                ["Admin Email:",0,proc_low],
+                ["XSS filter is disabled",0,proc_low],
+                ["vulnerable",0,proc_high],
+                ["Server is vulnerable to Heartbleed",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["ERROR - OCSP response status is not successful",0,proc_low],
+                ["VULNERABLE - Server supports Deflate compression",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["vulnerable",0,proc_low],
+                ["does NOT use Load-balancing",0,proc_med],
+                ["No vulnerabilities found",1,proc_low],
+                ["No vulnerabilities found",1,proc_low],
+                ["No vulnerabilities found",1,proc_low],
+                ["No vulnerabilities found",1,proc_low],
+                ["No vulnerabilities found",1,proc_low]
             ]
-
-
-# Tool Opcode (If pos fails and you still want to check for another condition)
-tool_opcode = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1]
 
 
 tool = 0
@@ -316,6 +306,7 @@ runTest = 1
 # For accessing tool_cmd dictionary elements
 arg1 = 0
 arg2 = 1
+arg3 = 2
 
 if len(sys.argv) == 1 :
     helper()
@@ -351,7 +342,7 @@ else:
         os.system('clear')
         os.system('setterm -cursor off')
         
-        print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" + bcolors.ENDC
+        print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" 
         
         print("""\
                                   __         __
@@ -362,9 +353,10 @@ else:
                             
                             """)
 
+        print bcolors.ENDC
         
         for temp_key,temp_val in tool_names.items():
-            print "[:] Deploying "+bcolors.OKBLUE+temp_val+"\n"+bcolors.ENDC
+            print "["+tool_status[tool][arg3]+"] Deploying "+bcolors.OKBLUE+temp_val+"\n"+bcolors.ENDC
             spinner.start()
             temp_file = "temp_"+temp_key
             cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
@@ -379,15 +371,15 @@ else:
             if runTest == 1:
                 spinner.stop()
                 
-                if tool_cond[tool] not in open(temp_file).read():
-                    if tool_opcode[tool] == 0:
+                if tool_status[tool][arg1] not in open(temp_file).read():
+                    if tool_status[tool][arg2] == 0:
                         clear()
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
                         clear()
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
                 else:
-                    if tool_opcode[tool] == 1:
+                    if tool_status[tool][arg2] == 1:
                         clear()
                         print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
                     else:
