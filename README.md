@@ -20,7 +20,7 @@
 - some of the tools include `nmap, dnsrecon, wafw00f, uniscan, sslyze, fierce, lbd, theharvester, dnswalk, golismero` etc executes under one entity.
 - saves a lot of time, **indeed a lot time!**.
 - **checks for same vulnerabilities with multiple tools** to help you **zero-in on false positives** effectively.
-- **legends** to help you which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_under development_)
+- **legends** to help you which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_~under development~_)
 - **vulnerability definitions** guides you what the vulnerability actually is and the threat it can pose. (_under development_)
 - **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
 - **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development_)
@@ -51,8 +51,8 @@
 - `./rapidscan.py example.com`
 
 ## Help
-- `./rapidscan.py --update`: Updates the scanner to latest version.
-- `./rapidscan.py --help`:   Displays the help context.
+- `./rapidscan.py --update`: updates the scanner to latest version.
+- `./rapidscan.py --help`:   displays the help context.
 
 ## Output
 
