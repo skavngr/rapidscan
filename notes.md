@@ -37,7 +37,7 @@
 
 ### Dig Deeper
 - `amap, xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP,` 
-- Unavailable Tools: `sublist3r, w3af, goofile`
+- Unavailable Tools: `sublist3r, w3af, goofile, crowbar`
 - `blindElephant.py http://192.168.1.252/wp wordpress` aftermath check
 - `dmitry -n example.com` not retrieving.
 - `dirbuster -u http://example.com -H` looks for a directory wordlist under the same directory.
@@ -48,7 +48,7 @@
 
 ### Program Exceptions Checks
 
-- Clear process traces and Ctrl+C hold crashes.
+- :thumbsup: ~Clear process traces and Ctrl+C hold crashes.~
 - :thumbsup: ~Implement Keyboard Interrupts and Instant Quit.~
 - WARNING: Could not connect (timeout); discarding corresponding tasks. | SSLyze
 - [-] Searching in Google:
