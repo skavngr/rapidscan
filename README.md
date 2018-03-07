@@ -12,7 +12,7 @@
                             =====================
                             
 ## Evolution:
-> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives** , **collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
+> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives, collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
@@ -24,6 +24,7 @@
 - **vulnerability definitions** guides you what the vulnerability actually is and the threat it can pose. (_under development_)
 - **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
 - **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development_)
+- **artificial intelligence** to deploy tools automatically depending upon the issues found. for eg; automates the launch of `wpscan` and `plecost` tools when a wordpress installation is found.(_under development_)
 
 ---
 ### FYI:
