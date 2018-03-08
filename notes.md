@@ -1,14 +1,5 @@
 ### Features
-- :heavy_exclamation_mark: Check for open directories with Dirbuster: `dirb http://example.com`
-- :heavy_exclamation_mark: XSSer Checks: `xsser --all=http://example.com` | Could not find any vulnerability!
-- :heavy_exclamation_mark: Golismero SSL Scans: `golismero -e sslscan scan example.com` | Occurrence ID
-- :heavy_exclamation_mark: Golismero Zone Transfer: `golismero -e zone_transfer scan example.com` | DNS zone transfer successful
-- :heavy_exclamation_mark: Golismero Nikto Scan: `golismero -e nikto scan example.com` | Nikto found 0 vulnerabilities
-- :heavy_exclamation_mark: Bruteforcing DNS with Golismero(timeconsuming yellow): `golismero scan example.com -e brute_dns` | Possible subdomain leak
-- :heavy_exclamation_mark: Checking zone transfers with DNSenum: `dnsenum google.com` | corrupt (not successful)
-- :heavy_exclamation_mark: Subdomain BruteForcing with Fierce: `fierce -dns example.com` | Found 1 entries (usually **www**.example.com) will be included, so have to skip it.
-- :heavy_exclamation_mark: Check for emails with Dmitry: `dmitry -e yahoo.com` | Found 0 E-Mail(s)
-- :heavy_exclamation_mark: Check for subdomains with Dmitry: `dmitry -s yahoo.com` | Found 0 possible subdomain(s)
+
 - :heavy_exclamation_mark: Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED
 - :heavy_exclamation_mark: Golismero Webservers Fingerprint: `golismero -e fingerprint_web scan example.com` | No vulnerabilities found.
 - :heavy_exclamation_mark: Subdomains brute force with DNSMap: `dnsmap example.com` | #1
@@ -33,9 +24,16 @@
 - :heavy_exclamation_mark: Nikto Injectable Paths: `nikto -Plugins "paths" -host example.com` | 0 item(s) reported
 
 
-
-
-
+- :thumbsup: ~Check for open directories with Dirbuster: `dirb http://example.com`~
+- :thumbsup: ~XSSer Checks: `xsser --all=http://example.com` | Could not find any vulnerability!~
+- :thumbsup: ~Golismero SSL Scans: `golismero -e sslscan scan example.com` | Occurrence ID~
+- :thumbsup: ~Golismero Zone Transfer: `golismero -e zone_transfer scan example.com` | DNS zone transfer successful~
+- :thumbsup: ~Golismero Nikto Scan: `golismero -e nikto scan example.com` | Nikto found 0 vulnerabilities~
+- :thumbsup: ~Bruteforcing DNS with Golismero(timeconsuming yellow): `golismero scan example.com -e brute_dns` | Possible subdomain leak~
+- :thumbsup: ~Checking zone transfers with DNSenum: `dnsenum google.com` | corrupt (not successful)~
+- :thumbsup: ~Subdomain BruteForcing with Fierce: `fierce -dns example.com` | Found 1 entries (usually **www**.example.com) will be included, so have to skip it.~
+- :thumbsup: ~Check for emails with Dmitry: `dmitry -e yahoo.com` | Found 0 E-Mail(s)~
+- :thumbsup: ~Check for subdomains with Dmitry: `dmitry -s yahoo.com` | Found 0 possible subdomain(s)~
 - :thumbsup: ~Golismero Brute Force Directories: `golismero -e brute_directories scan example.com` | No vulnerabilities found.~
 - :thumbsup: ~Golismero SQLMap: `golismero -e sqlmap scan example.com` | No vulnerabilities found.~
 - :thumbsup: ~Golismero Brute URL Predictables: `golismero -e brute_url_predictables scan example.com` | No vulnerabilities found.~
