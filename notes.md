@@ -17,6 +17,23 @@
 - :heavy_exclamation_mark: Uniscan Mini Stress Tester: `uniscan -r -u example.com` | [+]
 - :heavy_exclamation_mark: Uniscan Checks for LFI, RFI and RCE: `uniscan -s -u example.com` | [+]
 - :heavy_exclamation_mark: Uniscan Checks for XSS, SQLi, BSQLi & a few checks: `uniscan -d -u example.com` | [+]
+- :heavy_exclamation_mark: Nikto XSS Expect Header Check: `nikto -Plugins "apache_expect_xss" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto Subdomain Bruter: `nikto -Plugins "subdomain" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto ShellShock Bug Check: `nikto -Plugins "shellshock" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto Internal IP Leak: `nikto -Plugins "cookies" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto HTTP PUT DEL Test: `nikto -Plugins "put_del_test" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto Headers Check: `nikto -Plugins "headers" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto MS10-070 Check: `nikto -Plugins "ms10-070" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto Server Issues: `nikto -Plugins "msgs" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto Server Outdated Checks: `nikto -Plugins "outdated" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto HTTP Options Checks: `nikto -Plugins "httpoptions" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto CGI Directories Enum: `nikto -Plugins "cgi" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto SSL Checks: `nikto -Plugins "ssl" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto File Checks: `nikto -Plugins "sitefiles" -host example.com` | 0 item(s) reported
+- :heavy_exclamation_mark: Nikto Injectable Paths: `nikto -Plugins "paths" -host example.com` | 0 item(s) reported
+
+
+
 
 
 - :thumbsup: ~Golismero Brute Force Directories: `golismero -e brute_directories scan example.com` | No vulnerabilities found.~
