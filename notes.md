@@ -1,5 +1,7 @@
 ### Features
-
+- :heavy_exclamation_mark: Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp
+- :heavy_exclamation_mark: Nmap FTP Check: `nmap -p21 --open <host>` | 21/open tcp
+- :heavy_exclamation_mark: Nmap STUXNET Check: `nmap --script stuxnet-detect -p 445 <host>` | 445/open tcp
 - :heavy_exclamation_mark: Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED
 - :heavy_exclamation_mark: Golismero Webservers Fingerprint: `golismero -e fingerprint_web scan example.com` | No vulnerabilities found.
 - :heavy_exclamation_mark: Subdomains brute force with DNSMap: `dnsmap example.com` | #1
