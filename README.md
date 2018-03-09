@@ -20,25 +20,26 @@
 - some of the tools include `nmap, dnsrecon, wafw00f, uniscan, sslyze, fierce, lbd, theharvester, dnswalk, golismero` etc executes under one entity.
 - saves a lot of time, **indeed a lot time!**.
 - **checks for same vulnerabilities with multiple tools** to help you **zero-in on false positives** effectively.
-- **legends** to help you which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_~under development~_)
+- **legends** to help you understand which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_~**under development**~_)
 - **vulnerability definitions** guides you what the vulnerability actually is and the threat it can pose. (_under development_)
 - **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
 - **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development_)
-- **artificial intelligence** to deploy tools automatically depending upon the issues found. for eg; automates the launch of `wpscan` and `plecost` tools when a wordpress installation is found.(_under development_)
+- **artificial intelligence** to deploy tools automatically depending upon the issues found. for eg; automates the launch of `wpscan` and `plecost` tools when a wordpress installation is found. (_under development_)
 
 ---
 ### FYI:
-- _program is still under development, **works** and currently supports **30** vulnerability checks._
+- _program is still under development, **works** and currently supports :four::zero: vulnerability checks._
 - _parallel processing is not yet implemented, may be coded as more checks gets introduced._
 
 ## Tests For
-- :white_check_mark: DNS/HTTP Load Balancers.
-- :white_check_mark: Web Application Firewalls.
-- :white_check_mark: Checks for Joomla, WordPress and Drupal
-- :white_check_mark: SSL Vulnerabilities (_HEARTBLEED, FREAK, POODLE, CCS Injection, LOGJAM_).
-- :white_check_mark: Commonly Opened Ports.
-- :white_check_mark: DNS Zone Transfers using multiple tools (_Fierce, DNSWalk, DNSRecon_).
-- :white_check_mark: Robots.txt and Sitemap Availability.
+- :heavy_check_mark: DNS/HTTP Load Balancers & Web Application Firewalls.
+- :heavy_check_mark: Checks for Joomla, WordPress and Drupal
+- :heavy_check_mark: SSL related Vulnerabilities (_HEARTBLEED, FREAK, POODLE, CCS Injection, LOGJAM, OCSP Stapling_).
+- :heavy_check_mark: Commonly Opened Ports.
+- :heavy_check_mark: DNS Zone Transfers using multiple tools (_Fierce, DNSWalk, DNSRecon, DNSEnum_).
+- :heavy_check_mark: Sub-Domains Brute Forcing.
+- :heavy_check_mark: Open Directory/File Brute Forcing.
+- :heavy_check_mark: Shallow XSS, SQLi and BSQLi Banners.
 - & more coming up...
 
 ## Requirements
