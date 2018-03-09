@@ -145,7 +145,17 @@ tool_names = [
             ("golismero_heartbleed","Golismero - Checks only for Heartbleed Vulnerability."),
             ("golismero_brute_url_predictables","Golismero - BruteForces for certain files on the Domain."),
             ("golismero_brute_directories","Golismero - BruteForces for certain directories on the Domain."),
-            ("golismero_sqlmap","Golismero -SQLMap (Retrieves only the DB Banner)")
+            ("golismero_sqlmap","Golismero - SQLMap (Retrieves only the DB Banner)"),
+            ("dirb","DirB - Brutes the target for Open Directories."),
+            ("xsser","XSSer - Checks for Cross-Site Scripting (XSS) Attacks."),
+            ("golismero_ssl_scan","Golismero SSL Scans - Performs SSL related Scans."),
+            ("golismero_zone_transfer","Golismero Zone Transfer - Attempts Zone Transfer."),
+            ("golismero_nikto","Golismero Nikto Scans - Uses Nikto Plugin to detect vulnerabilities."),
+            ("golismero_brute_subdomains","Golismero Subdomains Bruter - Brute Forces Subdomain Discovery."),
+            ("dnsenum_zone_transfer","DNSEnum - Attempts Zone Transfer."),
+            ("fierce_brute_subdomains","Fierce Subdomains Bruter - Brute Forces Subdomain Discovery."),
+            ("dmitry_email","DMitry - Passively Harvests Emails from the Domain."),
+            ("dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain.")
             ]
 
 # Making the dictionary ordered (as it is)           
@@ -153,37 +163,47 @@ tool_names = collections.OrderedDict(tool_names)
 
 # Command that is used to initiate the tool (with parameters and extra params)
 tool_cmd   = [
-                ("host",""),
-                ("wget -O temp_aspnet_config_err","/%7C~.aspx"),
-                ("wget -O temp_wp_check","/wp-admin"),
-                ("wget -O temp_drp_check","/user"),
-                ("wget -O temp_joom_check","/administrator"),
-                ("uniscan -e -u",""),
-                ("wafw00f",""),
-                ("nmap -F --open",""),
-                ("theharvester -l 50 -b google -d",""),
-                ("dnsrecon -d",""),
-                ("fierce -wordlist xxx -dns",""),
-                ("dnswalk -d","."),
-                ("whois",""),
-                ("nmap -p80 --script http-security-headers",""),
-                ("nmap -p80,443 --script http-slowloris --max-parallelism 500",""),
-                ("sslyze --heartbleed",""),
-                ("nmap -p 443 --script ssl-heartbleed",""),
-                ("nmap -p 443 --script ssl-poodle",""),
-                ("nmap -p 443 --script ssl-ccs-injection",""),
-                ("nmap -p 443 --script ssl-enum-ciphers",""),
-                ("nmap -p 443 --script ssl-dh-params",""),
-                ("sslyze --certinfo=basic",""),
-                ("sslyze --compression",""),
-                ("sslyze --reneg",""),
-                ("sslyze --resum",""),
-                ("lbd",""),
-                ("golismero -e dns_malware scan",""),
-                ("golismero -e heartbleed scan",""),
-                ("golismero -e brute_url_predictables scan",""),
-                ("golismero -e brute_directories scan",""),
-                ("golismero -e sqlmap scan","")
+                ("host ",""),
+                ("wget -O temp_aspnet_config_err ","/%7C~.aspx"),
+                ("wget -O temp_wp_check ","/wp-admin"),
+                ("wget -O temp_drp_check ","/user"),
+                ("wget -O temp_joom_check ","/administrator"),
+                ("uniscan -e -u ",""),
+                ("wafw00f ",""),
+                ("nmap -F --open ",""),
+                ("theharvester -l 50 -b google -d ",""),
+                ("dnsrecon -d ",""),
+                ("fierce -wordlist xxx -dns ",""),
+                ("dnswalk -d ","."),
+                ("whois ",""),
+                ("nmap -p80 --script http-security-headers ",""),
+                ("nmap -p80,443 --script http-slowloris --max-parallelism 500 ",""),
+                ("sslyze --heartbleed ",""),
+                ("nmap -p 443 --script ssl-heartbleed ",""),
+                ("nmap -p 443 --script ssl-poodle ",""),
+                ("nmap -p 443 --script ssl-ccs-injection ",""),
+                ("nmap -p 443 --script ssl-enum-ciphers ",""),
+                ("nmap -p 443 --script ssl-dh-params ",""),
+                ("sslyze --certinfo=basic ",""),
+                ("sslyze --compression ",""),
+                ("sslyze --reneg ",""),
+                ("sslyze --resum ",""),
+                ("lbd ",""),
+                ("golismero -e dns_malware scan ",""),
+                ("golismero -e heartbleed scan ",""),
+                ("golismero -e brute_url_predictables scan ",""),
+                ("golismero -e brute_directories scan ",""),
+                ("golismero -e sqlmap scan ",""),
+                ("dirb http://"," -fi"),
+                ("xsser --all=http://",""),
+                ("golismero -e sslscan scan ",""),
+                ("golismero -e zone_transfer scan ",""),
+                ("golismero -e nikto scan ",""),
+                ("golismero -e brute_dns scan ",""),
+                ("dnsenum ",""),
+                ("fierce -dns ",""),
+                ("dmitry -e ",""),
+                ("dmitry -s ","")
             ]
 
 # Making the dictionary ordered (as it is)           
@@ -252,7 +272,27 @@ tool_resp   = [
                 ("[+] No Directories Found with Golismero BruteForce.",
                     "[-] Directories Found with Golismero BruteForce."),
                 ("[+] Could not retrieve the DB Banner with SQLMap.",
-                    "[-] DB Banner retrieved with SQLMap.")
+                    "[-] DB Banner retrieved with SQLMap."),
+                ("[+] Could not find Open Directories with DirB.",
+                    "[-] Open Directories Found with DirB."),
+                ("[+] Found XSS vulnerabilities with XSSer.",
+                    "[-] XSSer did not find any XSS vulnerabilities."),
+                ("[+] Golismero could not find any SSL related vulnerabilities.",
+                    "[-] Found SSL related vulnerabilities with Golismero."),
+                ("[+] Zone Transfer Failed with Golismero.",
+                    "[-] Zone Transfer Successful with Golismero."),
+                ("[+] Golismero Nikto Plugin coud not find any vulnerabilities.",
+                    "[-] Golismero Nikto Plugin found vulnerabilities."),
+                ("[+] Found Subdomains with Golismero.",
+                    "[-] No Subdomains were discovered with Golismero."),
+                ("[+] Zone Transfer using DNSEnum Failed.",
+                    "[-] Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately."),
+                ("[+] No Subdomains were discovered with Fierce.",
+                    "[-] Found Subdomains with Fierce."),
+                ("[+] DMitry could not find any Email Addresses.",
+                    "[-] Email Addresses discovered with DMitry."),
+                ("[+] DMitry could not find any Subdomains.",
+                    "[-] Subdomains discovered with DMitry."),
                 
             ]
 
@@ -294,16 +334,26 @@ tool_status = [
                 ["No vulnerabilities found",1,proc_low],
                 ["No vulnerabilities found",1,proc_low],
                 ["No vulnerabilities found",1,proc_low],
-                ["No vulnerabilities found",1,proc_low]
+                ["No vulnerabilities found",1,proc_low],
+                ["FOUND: 0",1,proc_high],
+                ["Could not find any vulnerability!",1,proc_med],
+                ["Occurrence ID",0,proc_low],
+                ["DNS zone transfer successful",0,proc_low],
+                ["Nikto found 0 vulnerabilities",1,proc_med],
+                ["Possible subdomain leak",0,proc_high],
+                ["AXFR record query failed:",1,proc_low],
+                ["Found 1 entries",1,proc_high],
+                ["Found 0 E-Mail(s)",1,proc_low],
+                ["Found 0 possible subdomain(s)",1,proc_low]
             ]
 
 
-tool = 0
+tool = 0 #0
 
 # Run Test
 runTest = 1 
 
-# For accessing tool_cmd dictionary elements
+# For accessing list/dictionary elements
 arg1 = 0
 arg2 = 1
 arg3 = 2
@@ -317,7 +367,6 @@ else:
     if target == '--update' or target == '-u' or target == '--u':
         print "RapidScan is updating....Please wait.\n"
         spinner.start()
-        
         cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
         oldversion_hash = subprocess.check_output(cmd, shell=True)
         oldversion_hash = oldversion_hash.strip()
@@ -359,7 +408,7 @@ else:
             print "["+tool_status[tool][arg3]+"] Deploying "+bcolors.OKBLUE+temp_val+"\n"+bcolors.ENDC
             spinner.start()
             temp_file = "temp_"+temp_key
-            cmd = tool_cmd.items()[tool][arg1]+" "+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
+            cmd = tool_cmd.items()[tool][arg1]+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
            
             try:
                 subprocess.check_output(cmd, shell=True)
@@ -387,8 +436,7 @@ else:
                         print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
             else:
                 clear()
-                print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC
-                
+                print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
                 runTest = 1
                 spinner.stop()
             
