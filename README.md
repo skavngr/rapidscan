@@ -3,16 +3,11 @@
 [![GitHub stars](https://img.shields.io/github/stars/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/stargazers)
 [![GitHub license](https://img.shields.io/github/license/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/blob/master/LICENSE)
 
-# rapidscan 
+# :diamonds: RapidScan - _The Multi-Tool Security Scanner_
 
-                               __         __
-                              /__)_   '_/(  _ _
-                             / ( (//)/(/__)( (//)
-                                  /
-                            =====================
-                            
+                          
 ## Evolution:
-> Being a pentester for years and when it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives, collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
+> Being a pentester for years and as it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives, collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
