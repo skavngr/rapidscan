@@ -21,6 +21,8 @@ import time
 import threading
 import collections
 import signal
+import random
+
 
 
 # Initializing the color module class
@@ -115,189 +117,185 @@ spinner = Spinner()
 
 # Scanners that will be used and filename rotation 
 tool_names = [
-            ("host","Host - Checks for existence of IPV6 address."),
-            ("aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."),
-            ("wp_check","WordPress Checker - Checks for WordPress Installation."),
-            ("drp_check", "Drupal Checker - Checks for Drupal Installation."),
-            ("joom_check", "Joomla Checker - Checks for Joomla Installation."),
-            ("uniscan","Uniscan - Checks for robots.txt & sitemap.xml"),
-            ("wafw00f","Wafw00f - Checks for Application Firewalls."),
-            ("nmap","Nmap - Fast Scan (Only Few Port Checks)"),
-            ("theharvester","The Harvester - Scans for emails using Google's passive search."),
-            ("dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers."),
-            ("fierce","Fierce - Attempts Zone Transfer (No Brute Forcing)"),
-            ("dnswalk","DNSWalk - Attempts Zone Transfer."),
-            ("whois","WHOis - Checks for Administrator's Contact Information."),
-            ("nmap_header","Nmap (XSS Filter Check) - Checks if XSS Protection Header is present."),
-            ("nmap_sloris","Nmap (Slowloris DoS) - Checks for Slowloris Denial of Service Vulnerability."),
-            ("sslyze_hbleed","SSLyze - Checks only for Heartbleed Vulnerability."),
-            ("nmap_hbleed","Nmap (Heartbleed) - Checks only for Heartbleed Vulnerability."),
-            ("nmap_poodle","Nmap (POODLE) - Checks only for Poodle Vulnerability."),
-            ("nmap_ccs","Nmap (OpenSSL CCS Injection) - Checks only for CCS Injection."),
-            ("nmap_freak","Nmap (FREAK) - Checks only for FREAK Vulnerability."),
-            ("nmap_logjam","Nmap (LOGJAM) - Checks for LOGJAM Vulnerability."),
-            ("sslyze_ocsp","SSLyze - Checks for OCSP Stapling."),
-            ("sslyze_zlib","SSLyze - Checks for ZLib Deflate Compression."),
-            ("sslyze_reneg","SSLyze - Checks for Secure Renegotiation Support and Client Renegotiation."),
-            ("sslyze_resum","SSLyze - Checks for Session Resumption Support with (Session IDs/TLS Tickets)."),
-            ("lbd","LBD - Checks for DNS/HTTP Load Balancers."),
-            ("golismero_dns_malware","Golismero - Checks if the domain is spoofed or hijacked."),
-            ("golismero_heartbleed","Golismero - Checks only for Heartbleed Vulnerability."),
-            ("golismero_brute_url_predictables","Golismero - BruteForces for certain files on the Domain."),
-            ("golismero_brute_directories","Golismero - BruteForces for certain directories on the Domain."),
-            ("golismero_sqlmap","Golismero - SQLMap (Retrieves only the DB Banner)"),
-            ("dirb","DirB - Brutes the target for Open Directories."),
-            ("xsser","XSSer - Checks for Cross-Site Scripting (XSS) Attacks."),
-            ("golismero_ssl_scan","Golismero SSL Scans - Performs SSL related Scans."),
-            ("golismero_zone_transfer","Golismero Zone Transfer - Attempts Zone Transfer."),
-            ("golismero_nikto","Golismero Nikto Scans - Uses Nikto Plugin to detect vulnerabilities."),
-            ("golismero_brute_subdomains","Golismero Subdomains Bruter - Brute Forces Subdomain Discovery."),
-            ("dnsenum_zone_transfer","DNSEnum - Attempts Zone Transfer."),
-            ("fierce_brute_subdomains","Fierce Subdomains Bruter - Brute Forces Subdomain Discovery."),
-            ("dmitry_email","DMitry - Passively Harvests Emails from the Domain."),
-            ("dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain.")
+                ["host","Host - Checks for existence of IPV6 address."],
+                ["aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."],
+                ["wp_check","WordPress Checker - Checks for WordPress Installation."],
+                ["drp_check", "Drupal Checker - Checks for Drupal Installation."],
+                ["joom_check", "Joomla Checker - Checks for Joomla Installation."],
+                ["uniscan","Uniscan - Checks for robots.txt & sitemap.xml"],
+                ["wafw00f","Wafw00f - Checks for Application Firewalls."],
+                ["nmap","Nmap - Fast Scan [Only Few Port Checks]"],
+                ["theharvester","The Harvester - Scans for emails using Google's passive search."],
+                ["dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers."],
+                ["fierce","Fierce - Attempts Zone Transfer [No Brute Forcing]"],
+                ["dnswalk","DNSWalk - Attempts Zone Transfer."],
+                ["whois","WHOis - Checks for Administrator's Contact Information."],
+                ["nmap_header","Nmap [XSS Filter Check] - Checks if XSS Protection Header is present."],
+                ["nmap_sloris","Nmap [Slowloris DoS] - Checks for Slowloris Denial of Service Vulnerability."],
+                ["sslyze_hbleed","SSLyze - Checks only for Heartbleed Vulnerability."],
+                ["nmap_hbleed","Nmap [Heartbleed] - Checks only for Heartbleed Vulnerability."],
+                ["nmap_poodle","Nmap [POODLE] - Checks only for Poodle Vulnerability."],
+                ["nmap_ccs","Nmap [OpenSSL CCS Injection] - Checks only for CCS Injection."],
+                ["nmap_freak","Nmap [FREAK] - Checks only for FREAK Vulnerability."],
+                ["nmap_logjam","Nmap [LOGJAM] - Checks for LOGJAM Vulnerability."],
+                ["sslyze_ocsp","SSLyze - Checks for OCSP Stapling."],
+                ["sslyze_zlib","SSLyze - Checks for ZLib Deflate Compression."],
+                ["sslyze_reneg","SSLyze - Checks for Secure Renegotiation Support and Client Renegotiation."],
+                ["sslyze_resum","SSLyze - Checks for Session Resumption Support with [Session IDs/TLS Tickets]."],
+                ["lbd","LBD - Checks for DNS/HTTP Load Balancers."],
+                ["golismero_dns_malware","Golismero - Checks if the domain is spoofed or hijacked."],
+                ["golismero_heartbleed","Golismero - Checks only for Heartbleed Vulnerability."],
+                ["golismero_brute_url_predictables","Golismero - BruteForces for certain files on the Domain."],
+                ["golismero_brute_directories","Golismero - BruteForces for certain directories on the Domain."],
+                ["golismero_sqlmap","Golismero - SQLMap [Retrieves only the DB Banner]"],
+                ["dirb","DirB - Brutes the target for Open Directories."],
+                ["xsser","XSSer - Checks for Cross-Site Scripting [XSS] Attacks."],
+                ["golismero_ssl_scan","Golismero SSL Scans - Performs SSL related Scans."],
+                ["golismero_zone_transfer","Golismero Zone Transfer - Attempts Zone Transfer."],
+                ["golismero_nikto","Golismero Nikto Scans - Uses Nikto Plugin to detect vulnerabilities."],
+                ["golismero_brute_subdomains","Golismero Subdomains Bruter - Brute Forces Subdomain Discovery."],
+                ["dnsenum_zone_transfer","DNSEnum - Attempts Zone Transfer."],
+                ["fierce_brute_subdomains","Fierce Subdomains Bruter - Brute Forces Subdomain Discovery."],
+                ["dmitry_email","DMitry - Passively Harvests Emails from the Domain."],
+                ["dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain."]
             ]
 
-# Making the dictionary ordered (as it is)           
-tool_names = collections.OrderedDict(tool_names)
+
+
 
 # Command that is used to initiate the tool (with parameters and extra params)
 tool_cmd   = [
-                ("host ",""),
-                ("wget -O temp_aspnet_config_err ","/%7C~.aspx"),
-                ("wget -O temp_wp_check ","/wp-admin"),
-                ("wget -O temp_drp_check ","/user"),
-                ("wget -O temp_joom_check ","/administrator"),
-                ("uniscan -e -u ",""),
-                ("wafw00f ",""),
-                ("nmap -F --open ",""),
-                ("theharvester -l 50 -b google -d ",""),
-                ("dnsrecon -d ",""),
-                ("fierce -wordlist xxx -dns ",""),
-                ("dnswalk -d ","."),
-                ("whois ",""),
-                ("nmap -p80 --script http-security-headers ",""),
-                ("nmap -p80,443 --script http-slowloris --max-parallelism 500 ",""),
-                ("sslyze --heartbleed ",""),
-                ("nmap -p 443 --script ssl-heartbleed ",""),
-                ("nmap -p 443 --script ssl-poodle ",""),
-                ("nmap -p 443 --script ssl-ccs-injection ",""),
-                ("nmap -p 443 --script ssl-enum-ciphers ",""),
-                ("nmap -p 443 --script ssl-dh-params ",""),
-                ("sslyze --certinfo=basic ",""),
-                ("sslyze --compression ",""),
-                ("sslyze --reneg ",""),
-                ("sslyze --resum ",""),
-                ("lbd ",""),
-                ("golismero -e dns_malware scan ",""),
-                ("golismero -e heartbleed scan ",""),
-                ("golismero -e brute_url_predictables scan ",""),
-                ("golismero -e brute_directories scan ",""),
-                ("golismero -e sqlmap scan ",""),
-                ("dirb http://"," -fi"),
-                ("xsser --all=http://",""),
-                ("golismero -e sslscan scan ",""),
-                ("golismero -e zone_transfer scan ",""),
-                ("golismero -e nikto scan ",""),
-                ("golismero -e brute_dns scan ",""),
-                ("dnsenum ",""),
-                ("fierce -dns ",""),
-                ("dmitry -e ",""),
-                ("dmitry -s ","")
+                ["host ",""],
+                ["wget -O temp_aspnet_config_err ","/%7C~.aspx"],
+                ["wget -O temp_wp_check ","/wp-admin"],
+                ["wget -O temp_drp_check ","/user"],
+                ["wget -O temp_joom_check ","/administrator"],
+                ["uniscan -e -u ",""],
+                ["wafw00f ",""],
+                ["nmap -F --open ",""],
+                ["theharvester -l 50 -b google -d ",""],
+                ["dnsrecon -d ",""],
+                ["fierce -wordlist xxx -dns ",""],
+                ["dnswalk -d ","."],
+                ["whois ",""],
+                ["nmap -p80 --script http-security-headers ",""],
+                ["nmap -p80,443 --script http-slowloris --max-parallelism 500 ",""],
+                ["sslyze --heartbleed ",""],
+                ["nmap -p 443 --script ssl-heartbleed ",""],
+                ["nmap -p 443 --script ssl-poodle ",""],
+                ["nmap -p 443 --script ssl-ccs-injection ",""],
+                ["nmap -p 443 --script ssl-enum-ciphers ",""],
+                ["nmap -p 443 --script ssl-dh-params ",""],
+                ["sslyze --certinfo=basic ",""],
+                ["sslyze --compression ",""],
+                ["sslyze --reneg ",""],
+                ["sslyze --resum ",""],
+                ["lbd ",""],
+                ["golismero -e dns_malware scan ",""],
+                ["golismero -e heartbleed scan ",""],
+                ["golismero -e brute_url_predictables scan ",""],
+                ["golismero -e brute_directories scan ",""],
+                ["golismero -e sqlmap scan ",""],
+                ["dirb http://"," -fi"],
+                ["xsser --all=http://",""],
+                ["golismero -e sslscan scan ",""],
+                ["golismero -e zone_transfer scan ",""],
+                ["golismero -e nikto scan ",""],
+                ["golismero -e brute_dns scan ",""],
+                ["dnsenum ",""],
+                ["fierce -dns ",""],
+                ["dmitry -e ",""],
+                ["dmitry -s ",""]
             ]
 
-# Making the dictionary ordered (as it is)           
-tool_cmd = collections.OrderedDict(tool_cmd)
 
 # Tool Responses (Begins)
 tool_resp   = [
-                ("[+] Has an IPv6 Address.",
-                    "[-] Does not have an IPv6 Address. It is good to have one."),
-                ("[+] No Misconfiguration Found.",
-                    "[-] ASP.Net is misconfigured to throw server stack errors on screen."),
-                ("[+] No WordPress Installation Found.",
-                    "[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version."),
-                ("[+] No Drupal Installation Found.",
-                    "[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version."),
-                ("[+] No Joomla Installation Found.",
-                    "[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version."),
-                ("[+] robots.txt/sitemap.xml not Found.",
-                    "[-] robots.txt/sitemap.xml found. Check those files for any information."),
-                ("[+] Web Application Firewall Detected.",
-                    "[-] No Web Application Firewall Detected"),
-                ("[+] Common Ports are Closed.",
-                    "[-] Some ports are open. Perform a full-scan manually."),
-                ("[+] No Email Addresses Found.",
-                    "[-] Email Addresses Found."),
-                ("[+] Zone Transfer using DNSRecon Failed.",
-                    "[-] Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately."),
-                ("[+] Zone Transfer using fierce Failed.",
-                    "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."),
-                ("[+] Zone Transfer using dnswalk Failed.",
-                    "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately."),
-                ("[+] Whois Information Hidden.",
-                    "[-] Whois Information Publicly Available."),
-                ("[+] XSS Protection Filter is Enabled.",
-                    "[-] XSS Protection Filter is Disabled."),
-                ("[+] Not Vulnerable to Slowloris Denial of Service.",
-                    "[-] Vulnerable to Slowloris Denial of Service."),
-                ("[+] Not Prone to HEARTBLEED Vulnerability with SSLyze.",
-                    "[-] HEARTBLEED Vulnerability Found with SSLyze."),
-                ("[+] Not Prone to HEARTBLEED Vulnerability with Nmap.",
-                    "[-] HEARTBLEED Vulnerability Found with Nmap."),
-                ("[+] Not Prone to POODLE Vulnerability.",
-                    "[-] POODLE Vulnerability Detected."),
-                ("[+] Not Prone to OpenSSL CCS Injection.",
-                    "[-] OpenSSL CCS Injection Detected."),
-                ("[+] Not Prone to FREAK Vulnerability.",
-                    "[-] FREAK Vulnerability Detected."),
-                ("[+] Not Prone to LOGJAM Vulnerability.",
-                    "[-] LOGJAM Vulnerability Found."),
-                ("[+] OCSP Response was not sent by Server.",
-                    "[-] Unsuccessful OCSP Response."),
-                ("[+] Deflate Compression is Disabled.",
-                    "[-] Server supports Deflate Compression."),
-                ("[+] Secure Renegotiation is supported.",
-                    "[-] Secure Renegotiation is unsupported."),
-                ("[+] Session Resumption is supported.",
-                    "[-] Secure Resumption unsupported with (Sessions IDs/TLS Tickets)."),
-                ("[+] Load Balancer(s) Detected.",
-                    "[-] No DNS/HTTP based Load Balancers Found."),
-                ("[+] Domain is not spoofed/hijacked.",
-                    "[-] Domain is spoofed/hijacked."),
-                ("[+] Not Prone to HEARTBLEED Vulnerability with Golismero.",
-                    "[-] HEARTBLEED Vulnerability Found with Golismero."),
-                ("[+] No Files Found with Golismero BruteForce.",
-                    "[-] Files Found with Golismero BruteForce."),
-                ("[+] No Directories Found with Golismero BruteForce.",
-                    "[-] Directories Found with Golismero BruteForce."),
-                ("[+] Could not retrieve the DB Banner with SQLMap.",
-                    "[-] DB Banner retrieved with SQLMap."),
-                ("[+] Could not find Open Directories with DirB.",
-                    "[-] Open Directories Found with DirB."),
-                ("[+] Found XSS vulnerabilities with XSSer.",
-                    "[-] XSSer did not find any XSS vulnerabilities."),
-                ("[+] Golismero could not find any SSL related vulnerabilities.",
-                    "[-] Found SSL related vulnerabilities with Golismero."),
-                ("[+] Zone Transfer Failed with Golismero.",
-                    "[-] Zone Transfer Successful with Golismero."),
-                ("[+] Golismero Nikto Plugin coud not find any vulnerabilities.",
-                    "[-] Golismero Nikto Plugin found vulnerabilities."),
-                ("[+] Found Subdomains with Golismero.",
-                    "[-] No Subdomains were discovered with Golismero."),
-                ("[+] Zone Transfer using DNSEnum Failed.",
-                    "[-] Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately."),
-                ("[+] No Subdomains were discovered with Fierce.",
-                    "[-] Found Subdomains with Fierce."),
-                ("[+] DMitry could not find any Email Addresses.",
-                    "[-] Email Addresses discovered with DMitry."),
-                ("[+] DMitry could not find any Subdomains.",
-                    "[-] Subdomains discovered with DMitry."),
+                ["[+] Has an IPv6 Address.",
+                    "[-] Does not have an IPv6 Address. It is good to have one."],
+                ["[+] No Misconfiguration Found.",
+                    "[-] ASP.Net is misconfigured to throw server stack errors on screen."],
+                ["[+] No WordPress Installation Found.",
+                    "[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version."],
+                ["[+] No Drupal Installation Found.",
+                    "[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version."],
+                ["[+] No Joomla Installation Found.",
+                    "[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version."],
+                ["[+] robots.txt/sitemap.xml not Found.",
+                    "[-] robots.txt/sitemap.xml found. Check those files for any information."],
+                ["[+] Web Application Firewall Detected.",
+                    "[-] No Web Application Firewall Detected"],
+                ["[+] Common Ports are Closed.",
+                    "[-] Some ports are open. Perform a full-scan manually."],
+                ["[+] No Email Addresses Found.",
+                    "[-] Email Addresses Found."],
+                ["[+] Zone Transfer using DNSRecon Failed.",
+                    "[-] Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately."],
+                ["[+] Zone Transfer using fierce Failed.",
+                    "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."],
+                ["[+] Zone Transfer using dnswalk Failed.",
+                    "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately."],
+                ["[+] Whois Information Hidden.",
+                    "[-] Whois Information Publicly Available."],
+                ["[+] XSS Protection Filter is Enabled.",
+                    "[-] XSS Protection Filter is Disabled."],
+                ["[+] Not Vulnerable to Slowloris Denial of Service.",
+                    "[-] Vulnerable to Slowloris Denial of Service."],
+                ["[+] Not Prone to HEARTBLEED Vulnerability with SSLyze.",
+                    "[-] HEARTBLEED Vulnerability Found with SSLyze."],
+                ["[+] Not Prone to HEARTBLEED Vulnerability with Nmap.",
+                    "[-] HEARTBLEED Vulnerability Found with Nmap."],
+                ["[+] Not Prone to POODLE Vulnerability.",
+                    "[-] POODLE Vulnerability Detected."],
+                ["[+] Not Prone to OpenSSL CCS Injection.",
+                    "[-] OpenSSL CCS Injection Detected."],
+                ["[+] Not Prone to FREAK Vulnerability.",
+                    "[-] FREAK Vulnerability Detected."],
+                ["[+] Not Prone to LOGJAM Vulnerability.",
+                    "[-] LOGJAM Vulnerability Found."],
+                ["[+] OCSP Response was not sent by Server.",
+                    "[-] Unsuccessful OCSP Response."],
+                ["[+] Deflate Compression is Disabled.",
+                    "[-] Server supports Deflate Compression."],
+                ["[+] Secure Renegotiation is supported.",
+                    "[-] Secure Renegotiation is unsupported."],
+                ["[+] Session Resumption is supported.",
+                    "[-] Secure Resumption unsupported with [Sessions IDs/TLS Tickets]."],
+                ["[+] Load Balancer(s) Detected.",
+                    "[-] No DNS/HTTP based Load Balancers Found."],
+                ["[+] Domain is not spoofed/hijacked.",
+                    "[-] Domain is spoofed/hijacked."],
+                ["[+] Not Prone to HEARTBLEED Vulnerability with Golismero.",
+                    "[-] HEARTBLEED Vulnerability Found with Golismero."],
+                ["[+] No Files Found with Golismero BruteForce.",
+                    "[-] Files Found with Golismero BruteForce."],
+                ["[+] No Directories Found with Golismero BruteForce.",
+                    "[-] Directories Found with Golismero BruteForce."],
+                ["[+] Could not retrieve the DB Banner with SQLMap.",
+                    "[-] DB Banner retrieved with SQLMap."],
+                ["[+] Could not find Open Directories with DirB.",
+                    "[-] Open Directories Found with DirB."],
+                ["[+] Found XSS vulnerabilities with XSSer.",
+                    "[-] XSSer did not find any XSS vulnerabilities."],
+                ["[+] Golismero could not find any SSL related vulnerabilities.",
+                    "[-] Found SSL related vulnerabilities with Golismero."],
+                ["[+] Zone Transfer Failed with Golismero.",
+                    "[-] Zone Transfer Successful with Golismero."],
+                ["[+] Golismero Nikto Plugin coud not find any vulnerabilities.",
+                    "[-] Golismero Nikto Plugin found vulnerabilities."],
+                ["[+] Found Subdomains with Golismero.",
+                    "[-] No Subdomains were discovered with Golismero."],
+                ["[+] Zone Transfer using DNSEnum Failed.",
+                    "[-] Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately."],
+                ["[+] No Subdomains were discovered with Fierce.",
+                    "[-] Found Subdomains with Fierce."],
+                ["[+] DMitry could not find any Email Addresses.",
+                    "[-] Email Addresses discovered with DMitry."],
+                ["[+] DMitry could not find any Subdomains.",
+                    "[-] Subdomains discovered with DMitry."],
                 
             ]
 
-# Making the dictionary ordered (as it is)           
-tool_resp = collections.OrderedDict(tool_resp)
 # Tool Responses (Ends)
 
 
@@ -348,7 +346,18 @@ tool_status = [
             ]
 
 
-tool = 0 #0
+# Shuffling Scan Order (starts)
+
+scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
+random.shuffle(scan_shuffle)
+tool_names, tool_cmd, tool_resp, tool_status = zip(*scan_shuffle)
+
+# Shuffling Scan Order (ends)
+
+
+
+# Tool Head Pointer: (can be increased but certain tools will be skipped) 
+tool = 0
 
 # Run Test
 runTest = 1 
@@ -404,11 +413,11 @@ else:
 
         print bcolors.ENDC
         
-        for temp_key,temp_val in tool_names.items():
-            print "["+tool_status[tool][arg3]+"] Deploying "+bcolors.OKBLUE+temp_val+"\n"+bcolors.ENDC
+        while(tool < len(tool_names)):    
+            print "["+tool_status[tool][arg3]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+"\n"+bcolors.ENDC
             spinner.start()
-            temp_file = "temp_"+temp_key
-            cmd = tool_cmd.items()[tool][arg1]+target+tool_cmd.items()[tool][arg2]+" > "+temp_file+" 2>&1"
+            temp_file = "temp_"+tool_names[tool][arg1]
+            cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
            
             try:
                 subprocess.check_output(cmd, shell=True)
@@ -423,17 +432,17 @@ else:
                 if tool_status[tool][arg1] not in open(temp_file).read():
                     if tool_status[tool][arg2] == 0:
                         clear()
-                        print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
+                        print "\t"+bcolors.OKGREEN + tool_resp[tool][arg1] + bcolors.ENDC
                     else:
                         clear()
-                        print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
+                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg2] + bcolors.ENDC
                 else:
                     if tool_status[tool][arg2] == 1:
                         clear()
-                        print "\t"+bcolors.OKGREEN + tool_resp.items()[tool][arg1] + bcolors.ENDC
+                        print "\t"+bcolors.OKGREEN + tool_resp[tool][arg1] + bcolors.ENDC
                     else:
                         clear()
-                        print "\t"+bcolors.BADFAIL + tool_resp.items()[tool][arg2] + bcolors.ENDC
+                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg2] + bcolors.ENDC
             else:
                 clear()
                 print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
