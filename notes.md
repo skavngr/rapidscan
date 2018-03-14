@@ -1,31 +1,29 @@
 ### Features
-- :heavy_exclamation_mark: Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp
-- :heavy_exclamation_mark: Nmap FTP Check: `nmap -p21 --open <host>` | 21/open tcp
-- :heavy_exclamation_mark: Nmap STUXNET Check: `nmap --script stuxnet-detect -p 445 <host>` | 445/open tcp
-- :heavy_exclamation_mark: Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED
-- :heavy_exclamation_mark: Golismero Webservers Fingerprint: `golismero -e fingerprint_web scan example.com` | No vulnerabilities found.
-- :heavy_exclamation_mark: Subdomains brute force with DNSMap: `dnsmap example.com` | #1
-- :heavy_exclamation_mark: Uniscan File Brute Forcer: `uniscan -w -u example.com` | [+]
-- :heavy_exclamation_mark: Uniscan Directory Brute Forcer: `uniscan -q -u example.com` | [+]
-- :heavy_exclamation_mark: Uniscan Mini Stress Tester: `uniscan -r -u example.com` | [+]
-- :heavy_exclamation_mark: Uniscan Checks for LFI, RFI and RCE: `uniscan -s -u example.com` | [+]
-- :heavy_exclamation_mark: Uniscan Checks for XSS, SQLi, BSQLi & a few checks: `uniscan -d -u example.com` | [+]
-- :heavy_exclamation_mark: Nikto XSS Expect Header Check: `nikto -Plugins "apache_expect_xss" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto Subdomain Bruter: `nikto -Plugins "subdomain" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto ShellShock Bug Check: `nikto -Plugins "shellshock" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto Internal IP Leak: `nikto -Plugins "cookies" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto HTTP PUT DEL Test: `nikto -Plugins "put_del_test" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto Headers Check: `nikto -Plugins "headers" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto MS10-070 Check: `nikto -Plugins "ms10-070" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto Server Issues: `nikto -Plugins "msgs" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto Server Outdated Checks: `nikto -Plugins "outdated" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto HTTP Options Checks: `nikto -Plugins "httpoptions" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto CGI Directories Enum: `nikto -Plugins "cgi" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto SSL Checks: `nikto -Plugins "ssl" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto File Checks: `nikto -Plugins "sitefiles" -host example.com` | 0 item(s) reported
-- :heavy_exclamation_mark: Nikto Injectable Paths: `nikto -Plugins "paths" -host example.com` | 0 item(s) reported
-
-
+- :thumbsup: ~Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp~
+- :thumbsup: ~Nmap FTP Check: `nmap -p21 --open <host>` | 21/open tcp~
+- :thumbsup: ~Nmap STUXNET Check: `nmap --script stuxnet-detect -p 445 <host>` | 445/open tcp~
+- :thumbsup: ~Checks for WebDAV on home directory: `davtest -url http://192.168.1.209` | SUCCEED~
+- :thumbsup: ~Golismero Webservers Fingerprint: `golismero -e fingerprint_web scan example.com` | No vulnerabilities found.~
+- :thumbsup: ~Uniscan File Brute Forcer: `uniscan -w -u example.com` | [+]~
+- :thumbsup: ~Uniscan Directory Brute Forcer: `uniscan -q -u example.com` | [+]~
+- :thumbsup: ~Uniscan Mini Stress Tester: `uniscan -r -u example.com` | [+]~
+- :thumbsup: ~Uniscan Checks for LFI, RFI and RCE: `uniscan -s -u example.com` | [+]~
+- :thumbsup: ~Uniscan Checks for XSS, SQLi, BSQLi & a few checks: `uniscan -d -u example.com` | [+]~
+- :thumbsup: ~Nikto XSS Expect Header Check: `nikto -Plugins "apache_expect_xss" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto Subdomain Bruter: `nikto -Plugins "subdomain" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto ShellShock Bug Check: `nikto -Plugins "shellshock" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto Internal IP Leak: `nikto -Plugins "cookies" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto HTTP PUT DEL Test: `nikto -Plugins "put_del_test" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto Headers Check: `nikto -Plugins "headers" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto MS10-070 Check: `nikto -Plugins "ms10-070" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto Server Issues: `nikto -Plugins "msgs" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto Server Outdated Checks: `nikto -Plugins "outdated" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto HTTP Options Checks: `nikto -Plugins "httpoptions" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto CGI Directories Enum: `nikto -Plugins "cgi" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto SSL Checks: `nikto -Plugins "ssl" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto File Checks: `nikto -Plugins "sitefiles" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Nikto Injectable Paths: `nikto -Plugins "paths" -host example.com` | 0 item(s) reported~
+- :thumbsup: ~Subdomains brute force with DNSMap: `dnsmap example.com` | #1~
 - :thumbsup: ~Check for open directories with Dirbuster: `dirb http://example.com`~
 - :thumbsup: ~XSSer Checks: `xsser --all=http://example.com` | Could not find any vulnerability!~
 - :thumbsup: ~Golismero SSL Scans: `golismero -e sslscan scan example.com` | Occurrence ID~
@@ -53,6 +51,7 @@
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 ### Dig Deeper
+- research `dnsmap` log for internal ip leak. [+] 20 (sub)domains and 20 IP address(es) found [+] 4 internal IP address(es) disclosed [+] completion time: 1568 second(s)
 - `amap, xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP,` 
 - Unavailable Tools: `sublist3r, w3af, goofile, crowbar`
 - `blindElephant.py http://192.168.1.252/wp wordpress` aftermath check
