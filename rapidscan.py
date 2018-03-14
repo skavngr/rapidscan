@@ -24,6 +24,24 @@ import signal
 import random
 
 
+# Scan Time Elapser
+intervals = (
+    ('h', 3600),    
+    ('m', 60),
+    ('s', 1),
+    )
+
+def display_time(seconds, granularity=1):
+    result = []
+
+    for name, count in intervals:
+        value = seconds // count
+        value = round(value)
+        if value:
+            seconds -= value * count
+            result.append("...completed in {}{}".format(int(value), name))
+    return ', '.join(result[:granularity])
+
 
 # Initializing the color module class
 class bcolors:
@@ -157,7 +175,32 @@ tool_names = [
                 ["dnsenum_zone_transfer","DNSEnum - Attempts Zone Transfer."],
                 ["fierce_brute_subdomains","Fierce Subdomains Bruter - Brute Forces Subdomain Discovery."],
                 ["dmitry_email","DMitry - Passively Harvests Emails from the Domain."],
-                ["dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain."]
+                ["dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain."],
+                ["nmap_telnet","Nmap [TELNET] - Checks if TELNET service is running."],
+                ["nmap_ftp","Nmap [FTP] - Checks if FTP service is running."],
+                ["nmap_stuxnet","Nmap [STUXNET] - Checks if the host is affected by STUXNET Worm."],
+                ["webdav","WebDAV - Checks if WEBDAV enabled on Home directory."],
+                ["golismero_finger","Golismero - Does a fingerprint on the Domain."],
+                ["uniscan_filebrute","Uniscan - Brutes for Filenames on the Domain."],
+                ["uniscan_dirbrute", "Uniscan - Brutes Directories on the Domain."],
+                ["uniscan_ministresser", "Uniscan - Stress Tests the Domain."],
+                ["uniscan_rfi","Uniscan - Checks for LFI, RFI and RCE."],#50
+                ["uniscan_xss","Uniscan - Checks for XSS, SQLi, BSQLi & Other Checks."],
+                ["nikto_xss","Nikto - Checks for Apache Expect XSS Header."],
+                ["nikto_subrute","Nikto - Brutes Subdomains."],
+                ["nikto_shellshock","Nikto - Checks for Shellshock Bug."],
+                ["nikto_internalip","Nikto - Checks for Internal IP Leak."],
+                ["nikto_putdel","Nikto - Checks for HTTP PUT DEL."],
+                ["nikto_headers","Nikto - Checks the Domain Headers."],
+                ["nikto_ms01070","Nikto - Checks for MS10-070 Vulnerability."],
+                ["nikto_servermsgs","Nikto - Checks for Server Issues."],
+                ["nikto_outdated","Nikto - Checks if Server is Outdated."],
+                ["nikto_httpoptions","Nikto - Checks for HTTP Options on the Domain."],
+                ["nikto_cgi","Nikto - Enumerates CGI Directories."],
+                ["nikto_ssl","Nikto - Performs SSL Checks."],
+                ["nikto_sitefiles","Nikto - Checks for any interesting files on the Domain."],
+                ["nikto_paths","Nikto - Checks for Injectable Paths."],
+                ["dnsmap_brute","DNSMap - Brutes Subdomains."]
             ]
 
 
@@ -181,11 +224,11 @@ tool_cmd   = [
                 ["nmap -p80 --script http-security-headers ",""],
                 ["nmap -p80,443 --script http-slowloris --max-parallelism 500 ",""],
                 ["sslyze --heartbleed ",""],
-                ["nmap -p 443 --script ssl-heartbleed ",""],
-                ["nmap -p 443 --script ssl-poodle ",""],
-                ["nmap -p 443 --script ssl-ccs-injection ",""],
-                ["nmap -p 443 --script ssl-enum-ciphers ",""],
-                ["nmap -p 443 --script ssl-dh-params ",""],
+                ["nmap -p443 --script ssl-heartbleed ",""],
+                ["nmap -p443 --script ssl-poodle ",""],
+                ["nmap -p443 --script ssl-ccs-injection ",""],
+                ["nmap -p443 --script ssl-enum-ciphers ",""],
+                ["nmap -p443 --script ssl-dh-params ",""],
                 ["sslyze --certinfo=basic ",""],
                 ["sslyze --compression ",""],
                 ["sslyze --reneg ",""],
@@ -205,7 +248,32 @@ tool_cmd   = [
                 ["dnsenum ",""],
                 ["fierce -dns ",""],
                 ["dmitry -e ",""],
-                ["dmitry -s ",""]
+                ["dmitry -s ",""],
+                ["nmap -p23 --open ",""],
+                ["nmap -p21 --open ",""],
+                ["nmap --script stuxnet-detect -p 445 ",""],
+                ["davtest -url http://",""],
+                ["golismero -e fingerprint_web scan ",""],
+                ["uniscan -w -u ",""],
+                ["uniscan -q -u ",""],
+                ["uniscan -r -u ",""],
+                ["uniscan -s -u ",""],
+                ["uniscan -d -u ",""],
+                ["nikto -Plugins 'apache_expect_xss' -host ",""],
+                ["nikto -Plugins 'subdomain' -host ",""],
+                ["nikto -Plugins 'shellshock' -host ",""],
+                ["nikto -Plugins 'cookies' -host ",""],
+                ["nikto -Plugins 'put_del_test' -host ",""],
+                ["nikto -Plugins 'headers' -host ",""],
+                ["nikto -Plugins 'ms10-070' -host ",""],
+                ["nikto -Plugins 'msgs' -host ",""],
+                ["nikto -Plugins 'outdated' -host ",""],
+                ["nikto -Plugins 'httpoptions' -host ",""],
+                ["nikto -Plugins 'cgi' -host ",""],
+                ["nikto -Plugins 'ssl' -host ",""],
+                ["nikto -Plugins 'sitefiles' -host ",""],
+                ["nikto -Plugins 'paths' -host ",""],
+                ["dnsmap ",""]
             ]
 
 
@@ -252,6 +320,31 @@ tool_resp   = [
                 ["[-] Found Subdomains with Fierce."],
                 ["[-] Email Addresses discovered with DMitry."],
                 ["[-] Subdomains discovered with DMitry."],
+                ["[-] Telnet Service Detected."],
+                ["[-] FTP Service Detected."],
+                ["[-] Vulnerable to STUXNET."],
+                ["[-] WebdAV Enabled."],
+                ["[-] Found some vulnerabilities."],
+                ["[-] Open Files Found with Uniscan."],
+                ["[-] Open Directories Found with Uniscan."],
+                ["[-] Vulnerable to Stress Tests."],
+                ["[-] Uniscan detected possible LFI, RFI or RCE."],
+                ["[-] Uniscan detected possible XSS, SQLi, BSQLi."],
+                ["[-] Apache Expect XSS Header not present."],
+                ["[-] Found Subdomains with Nikto."],
+                ["[-] Webserver vulnerable to Shellshock Bug."],
+                ["[-] Webserver leaks Internal IP."],
+                ["[-] HTTP PUT DEL Methods Enabled."],
+                ["[-] Some vulnerable headers exposed."],
+                ["[-] Webserver vulnerable to MS10-070."],
+                ["[-] Some issues found on the Webserver."],
+                ["[-] Webserver is Outdated."],
+                ["[-] Some issues found with HTTP Options."],
+                ["[-] CGI Directories Enumerated."],
+                ["[-] Vulnerabilities reported in SSL Scans."],
+                ["[-] Interesting Files Detected."],
+                ["[-] Injectable Paths Detected."],
+                ["[-] Found Subdomains with DNSMap."]
                 
             ]
 
@@ -301,7 +394,32 @@ tool_status = [
                 ["AXFR record query failed:",1,proc_low," < 45s","dnsenumzt"],
                 ["Found 1 entries",1,proc_high," < 75m","fierce2"],
                 ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1"],
-                ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2"]
+                ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2"],
+                ["23/open tcp",0,proc_low," < 15s","nmaptelnet"],
+                ["21/open tcp",0,proc_low," < 15s","nmapftp"],
+                ["445/open tcp",0,proc_low," < 20s","nmapstux"],
+                ["SUCCEED",1,proc_low," < 30s","webdav"],
+                ["No vulnerabilities found.",1,proc_low,"golism10"],
+                ["[+]",0,proc_med," <  2m","uniscan2"],
+                ["[+]",0,proc_med," <  5m","uniscan3"],
+                ["[+]",0,proc_med," <  9m","uniscan4"],
+                ["[+]",0,proc_med," <  8m","uniscan5"],
+                ["[+]",0,proc_med," <  9m","uniscan6"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto1"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto2"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto3"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto4"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto5"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto6"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto7"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto8"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto9"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto10"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto11"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto12"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto13"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto14"],
+                ["#1",0,proc_high," < 30m","dnsmap_brute"]
             ]
 
 
@@ -372,10 +490,14 @@ else:
                             """)
 
         print bcolors.ENDC
-        
+        print "Last Updated: March 14th 2018"
+        print "Version Info: 0.15b"
+        print "-----------------------------\n"
         while(tool < len(tool_names)):    
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+"\n"+bcolors.ENDC
+            #print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC
             spinner.start()
+            scan_start = time.time()
             temp_file = "temp_"+tool_names[tool][arg1]
             cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
            
@@ -387,28 +509,35 @@ else:
                 runTest = 1
                 
             if runTest == 1:
-                spinner.stop()
-                
-                if tool_status[tool][arg1] not in open(temp_file).read():
-                    if tool_status[tool][arg2] == 0:
-                        clear()
+                    spinner.stop()
+                    scan_stop = time.time()
+                    elapsed = scan_stop - scan_start
+                    #print elapsed
+                    #print "\n"
+                    #print display_time(elapsed)
+                    #sys.exit(1)
+                    if tool_status[tool][arg1] not in open(temp_file).read():
+                        if tool_status[tool][arg2] == 0:
+                            clear()
+                        else:
+                            clear()
+                            print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
                     else:
-                        clear()
-                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
-                else:
-                    if tool_status[tool][arg2] == 1:
-                        clear()
-                    else:
-                        clear()
-                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                        if tool_status[tool][arg2] == 1:
+                            clear()
+                        else:
+                            clear()
+                            print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
             else:
-                clear()
-                print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
-                runTest = 1
-                spinner.stop()
+                    clear()
+                    print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
+                    runTest = 1
+                    spinner.stop()
             
             tool=tool+1
             
         os.system('setterm -cursor on')
         os.system('rm te*') # Clearing previous scan files
 
+
+            
