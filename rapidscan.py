@@ -49,20 +49,20 @@ proc_low  = bcolors.OKGREEN + "●" + bcolors.ENDC
 
 # RapidScan Help Context
 def helper():
-        print "\nInformation:"
-        print "-------------"
-        print "./rapidscan.py example.com: Scans the domain example.com"
-        print "./rapidscan.py --update   : Updates the scanner to the latest version."
-        print "./rapidscan.py --help     : Displays this help context."
-        print "\nInteractive:"
-        print "------------"
-        print "Ctrl+C: Skips current test."
-        print "Ctrl+Z: Quits RapidScan."
-        print "\nLegends:"
-        print "--------"
-        print "["+proc_high+"]    : Scan process may take longer times (not predictable)."
-        print "["+proc_med+"]    : Scan process may take less than 10 minutes."
-        print "["+proc_low+"]    : Scan process may take less than a minute or two.\n"
+        print "\n\tInformation:"
+        print "\t-------------"
+        print "\t./rapidscan.py example.com: Scans the domain example.com"
+        print "\t./rapidscan.py --update   : Updates the scanner to the latest version."
+        print "\t./rapidscan.py --help     : Displays this help context."
+        print "\n\tInteractive:"
+        print "\t------------"
+        print "\tCtrl+C: Skips current test."
+        print "\tCtrl+Z: Quits RapidScan."
+        print "\n\tLegends:"
+        print "\t--------"
+        print "\t["+proc_high+"]: Scan process may take longer times (not predictable)."
+        print "\t["+proc_med+"]: Scan process may take less than 10 minutes."
+        print "\t["+proc_low+"]: Scan process may take less than a minute or two.\n"
         
 
 # Clears Line
@@ -211,88 +211,47 @@ tool_cmd   = [
 
 # Tool Responses (Begins)
 tool_resp   = [
-                ["[+] Has an IPv6 Address.",
-                    "[-] Does not have an IPv6 Address. It is good to have one."],
-                ["[+] No Misconfiguration Found.",
-                    "[-] ASP.Net is misconfigured to throw server stack errors on screen."],
-                ["[+] No WordPress Installation Found.",
-                    "[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version."],
-                ["[+] No Drupal Installation Found.",
-                    "[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version."],
-                ["[+] No Joomla Installation Found.",
-                    "[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version."],
-                ["[+] robots.txt/sitemap.xml not Found.",
-                    "[-] robots.txt/sitemap.xml found. Check those files for any information."],
-                ["[+] Web Application Firewall Detected.",
-                    "[-] No Web Application Firewall Detected"],
-                ["[+] Common Ports are Closed.",
-                    "[-] Some ports are open. Perform a full-scan manually."],
-                ["[+] No Email Addresses Found.",
-                    "[-] Email Addresses Found."],
-                ["[+] Zone Transfer using DNSRecon Failed.",
-                    "[-] Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately."],
-                ["[+] Zone Transfer using fierce Failed.",
-                    "[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."],
-                ["[+] Zone Transfer using dnswalk Failed.",
-                    "[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately."],
-                ["[+] Whois Information Hidden.",
-                    "[-] Whois Information Publicly Available."],
-                ["[+] XSS Protection Filter is Enabled.",
-                    "[-] XSS Protection Filter is Disabled."],
-                ["[+] Not Vulnerable to Slowloris Denial of Service.",
-                    "[-] Vulnerable to Slowloris Denial of Service."],
-                ["[+] Not Prone to HEARTBLEED Vulnerability with SSLyze.",
-                    "[-] HEARTBLEED Vulnerability Found with SSLyze."],
-                ["[+] Not Prone to HEARTBLEED Vulnerability with Nmap.",
-                    "[-] HEARTBLEED Vulnerability Found with Nmap."],
-                ["[+] Not Prone to POODLE Vulnerability.",
-                    "[-] POODLE Vulnerability Detected."],
-                ["[+] Not Prone to OpenSSL CCS Injection.",
-                    "[-] OpenSSL CCS Injection Detected."],
-                ["[+] Not Prone to FREAK Vulnerability.",
-                    "[-] FREAK Vulnerability Detected."],
-                ["[+] Not Prone to LOGJAM Vulnerability.",
-                    "[-] LOGJAM Vulnerability Found."],
-                ["[+] OCSP Response was not sent by Server.",
-                    "[-] Unsuccessful OCSP Response."],
-                ["[+] Deflate Compression is Disabled.",
-                    "[-] Server supports Deflate Compression."],
-                ["[+] Secure Renegotiation is supported.",
-                    "[-] Secure Renegotiation is unsupported."],
-                ["[+] Session Resumption is supported.",
-                    "[-] Secure Resumption unsupported with [Sessions IDs/TLS Tickets]."],
-                ["[+] Load Balancer(s) Detected.",
-                    "[-] No DNS/HTTP based Load Balancers Found."],
-                ["[+] Domain is not spoofed/hijacked.",
-                    "[-] Domain is spoofed/hijacked."],
-                ["[+] Not Prone to HEARTBLEED Vulnerability with Golismero.",
-                    "[-] HEARTBLEED Vulnerability Found with Golismero."],
-                ["[+] No Files Found with Golismero BruteForce.",
-                    "[-] Files Found with Golismero BruteForce."],
-                ["[+] No Directories Found with Golismero BruteForce.",
-                    "[-] Directories Found with Golismero BruteForce."],
-                ["[+] Could not retrieve the DB Banner with SQLMap.",
-                    "[-] DB Banner retrieved with SQLMap."],
-                ["[+] Could not find Open Directories with DirB.",
-                    "[-] Open Directories Found with DirB."],
-                ["[+] Found XSS vulnerabilities with XSSer.",
-                    "[-] XSSer did not find any XSS vulnerabilities."],
-                ["[+] Golismero could not find any SSL related vulnerabilities.",
-                    "[-] Found SSL related vulnerabilities with Golismero."],
-                ["[+] Zone Transfer Failed with Golismero.",
-                    "[-] Zone Transfer Successful with Golismero."],
-                ["[+] Golismero Nikto Plugin coud not find any vulnerabilities.",
-                    "[-] Golismero Nikto Plugin found vulnerabilities."],
-                ["[+] Found Subdomains with Golismero.",
-                    "[-] No Subdomains were discovered with Golismero."],
-                ["[+] Zone Transfer using DNSEnum Failed.",
-                    "[-] Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately."],
-                ["[+] No Subdomains were discovered with Fierce.",
-                    "[-] Found Subdomains with Fierce."],
-                ["[+] DMitry could not find any Email Addresses.",
-                    "[-] Email Addresses discovered with DMitry."],
-                ["[+] DMitry could not find any Subdomains.",
-                    "[-] Subdomains discovered with DMitry."],
+                ["[-] Does not have an IPv6 Address. It is good to have one."],
+                ["[-] ASP.Net is misconfigured to throw server stack errors on screen."],
+                ["[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version."],
+                ["[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version."],
+                ["[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version."],
+                ["[-] robots.txt/sitemap.xml found. Check those files for any information."],
+                ["[-] No Web Application Firewall Detected"],
+                ["[-] Some ports are open. Perform a full-scan manually."],
+                ["[-] Email Addresses Found."],
+                ["[-] Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately."],
+                ["[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."],
+                ["[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately."],
+                ["[-] Whois Information Publicly Available."],
+                ["[-] XSS Protection Filter is Disabled."],
+                ["[-] Vulnerable to Slowloris Denial of Service."],
+                ["[-] HEARTBLEED Vulnerability Found with SSLyze."],
+                ["[-] HEARTBLEED Vulnerability Found with Nmap."],
+                ["[-] POODLE Vulnerability Detected."],
+                ["[-] OpenSSL CCS Injection Detected."],
+                ["[-] FREAK Vulnerability Detected."],
+                ["[-] LOGJAM Vulnerability Detected."],
+                ["[-] Unsuccessful OCSP Response."],
+                ["[-] Server supports Deflate Compression."],
+                ["[-] Secure Renegotiation is unsupported."],
+                ["[-] Secure Resumption unsupported with (Sessions IDs/TLS Tickets)."],
+                ["[-] No DNS/HTTP based Load Balancers Found."],
+                ["[-] Domain is spoofed/hijacked."],
+                ["[-] HEARTBLEED Vulnerability Found with Golismero."],
+                ["[-] Open Files Found with Golismero BruteForce."],
+                ["[-] Open Directories Found with Golismero BruteForce."],
+                ["[-] DB Banner retrieved with SQLMap."],
+                ["[-] Open Directories Found with DirB."],
+                ["[-] XSSer found XSS vulnerabilities."],
+                ["[-] Found SSL related vulnerabilities with Golismero."],
+                ["[-] Zone Transfer Successful with Golismero. Reconfigure DNS immediately."],
+                ["[-] Golismero Nikto Plugin found vulnerabilities."],
+                ["[-] Found Subdomains with Golismero."],
+                ["[-] Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately."],
+                ["[-] Found Subdomains with Fierce."],
+                ["[-] Email Addresses discovered with DMitry."],
+                ["[-] Subdomains discovered with DMitry."],
                 
             ]
 
@@ -302,47 +261,47 @@ tool_resp   = [
 
 # Tool Status (Reponse Data + Response Code (if status check fails and you still got to push it + Legends)
 tool_status = [
-                ["has IPv6",1,proc_low],
-                ["Server Error",0,proc_low],
-                ["wp-login",0,proc_low],
-                ["drupal",0,proc_low],
-                ["joomla",0,proc_low],
-                ["[+]",0,proc_low],
-                ["No WAF",0,proc_low],
-                ["tcp open",0,proc_med],
-                ["No emails found",1,proc_med],
-                ["[+] Zone Transfer was successful!!",0,proc_low],
-                ["Whoah, it worked",0,proc_low],
-                ["0 errors",0,proc_low],
-                ["Admin Email:",0,proc_low],
-                ["XSS filter is disabled",0,proc_low],
-                ["vulnerable",0,proc_high],
-                ["Server is vulnerable to Heartbleed",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["ERROR - OCSP response status is not successful",0,proc_low],
-                ["VULNERABLE - Server supports Deflate compression",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["vulnerable",0,proc_low],
-                ["does NOT use Load-balancing",0,proc_med],
-                ["No vulnerabilities found",1,proc_low],
-                ["No vulnerabilities found",1,proc_low],
-                ["No vulnerabilities found",1,proc_low],
-                ["No vulnerabilities found",1,proc_low],
-                ["No vulnerabilities found",1,proc_low],
-                ["FOUND: 0",1,proc_high],
-                ["Could not find any vulnerability!",1,proc_med],
-                ["Occurrence ID",0,proc_low],
-                ["DNS zone transfer successful",0,proc_low],
-                ["Nikto found 0 vulnerabilities",1,proc_med],
-                ["Possible subdomain leak",0,proc_high],
-                ["AXFR record query failed:",1,proc_low],
-                ["Found 1 entries",1,proc_high],
-                ["Found 0 E-Mail(s)",1,proc_low],
-                ["Found 0 possible subdomain(s)",1,proc_low]
+                ["has IPv6",1,proc_low," < 15s","ipv6"],
+                ["Server Error",0,proc_low," < 30s","asp.netmisconf"],
+                ["wp-login",0,proc_low," < 30s","wpcheck"],
+                ["drupal",0,proc_low," < 30s","drupalcheck"],
+                ["joomla",0,proc_low," < 30s","joomlacheck"],
+                ["[+]",0,proc_low," < 40s","robotscheck"],
+                ["No WAF",0,proc_low," < 45s","wafcheck"],
+                ["tcp open",0,proc_med," <  2m","nmapopen"],
+                ["No emails found",1,proc_med," <  3m","harvester"],
+                ["[+] Zone Transfer was successful!!",0,proc_low," < 20s","dnsreconzt"],
+                ["Whoah, it worked",0,proc_low," < 30s","fiercezt"],
+                ["0 errors",0,proc_low," < 35s","dnswalkzt"],
+                ["Admin Email:",0,proc_low," < 25s","whois"],
+                ["XSS filter is disabled",0,proc_low," < 20s","nmapxssh"],
+                ["vulnerable",0,proc_high," < 45m","nmapdos"],
+                ["Server is vulnerable to Heartbleed",0,proc_low," < 40s","sslyzehb"],
+                ["vulnerable",0,proc_low," < 30s","nmap1"],
+                ["vulnerable",0,proc_low," < 35s","nmap2"],
+                ["vulnerable",0,proc_low," < 35s","nmap3"],
+                ["vulnerable",0,proc_low," < 30s","nmap4"],
+                ["vulnerable",0,proc_low," < 35s","nmap5"],
+                ["ERROR - OCSP response status is not successful",0,proc_low," < 25s","sslyze1"],
+                ["VULNERABLE - Server supports Deflate compression",0,proc_low," < 30s","sslyze2"],
+                ["vulnerable",0,proc_low," < 25s","sslyze3"],
+                ["vulnerable",0,proc_low," < 30s","sslyze4"],
+                ["does NOT use Load-balancing",0,proc_med," <  4m","lbd"],
+                ["No vulnerabilities found",1,proc_low," < 45s","golism1"],
+                ["No vulnerabilities found",1,proc_low," < 40s","golism2"],
+                ["No vulnerabilities found",1,proc_low," < 45s","golism3"],
+                ["No vulnerabilities found",1,proc_low," < 40s","golism4"],
+                ["No vulnerabilities found",1,proc_low," < 45s","golism5"],
+                ["FOUND: 0",1,proc_high," < 35m","dirb"],
+                ["Could not find any vulnerability!",1,proc_med," <  4m","xsser"],
+                ["Occurrence ID",0,proc_low," < 45s","golism6"],
+                ["DNS zone transfer successful",0,proc_low," < 30s","golism7"],
+                ["Nikto found 0 vulnerabilities",1,proc_med," <  4m","golism8"],
+                ["Possible subdomain leak",0,proc_high," < 30m","golism9"],
+                ["AXFR record query failed:",1,proc_low," < 45s","dnsenumzt"],
+                ["Found 1 entries",1,proc_high," < 75m","fierce2"],
+                ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1"],
+                ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2"]
             ]
 
 
@@ -366,6 +325,7 @@ runTest = 1
 arg1 = 0
 arg2 = 1
 arg3 = 2
+arg4 = 3
 
 if len(sys.argv) == 1 :
     helper()
@@ -414,7 +374,7 @@ else:
         print bcolors.ENDC
         
         while(tool < len(tool_names)):    
-            print "["+tool_status[tool][arg3]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+"\n"+bcolors.ENDC
+            print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+"\n"+bcolors.ENDC
             spinner.start()
             temp_file = "temp_"+tool_names[tool][arg1]
             cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
@@ -432,17 +392,15 @@ else:
                 if tool_status[tool][arg1] not in open(temp_file).read():
                     if tool_status[tool][arg2] == 0:
                         clear()
-                        print "\t"+bcolors.OKGREEN + tool_resp[tool][arg1] + bcolors.ENDC
                     else:
                         clear()
-                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg2] + bcolors.ENDC
+                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
                 else:
                     if tool_status[tool][arg2] == 1:
                         clear()
-                        print "\t"+bcolors.OKGREEN + tool_resp[tool][arg1] + bcolors.ENDC
                     else:
                         clear()
-                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg2] + bcolors.ENDC
+                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
             else:
                 clear()
                 print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
