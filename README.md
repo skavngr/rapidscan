@@ -23,7 +23,7 @@
 
 ---
 ### FYI:
-- _program is still under development, **works** and currently supports :four::zero: vulnerability checks._
+- _program is still under development, **works** and currently supports :seven::five: vulnerability checks._
 - _parallel processing is not yet implemented, may be coded as more checks gets introduced._
 
 ## Tests For
@@ -35,6 +35,7 @@
 - :heavy_check_mark: Sub-Domains Brute Forcing.
 - :heavy_check_mark: Open Directory/File Brute Forcing.
 - :heavy_check_mark: Shallow XSS, SQLi and BSQLi Banners.
+- :heavy_check_mark: Slow-Loris DoS Attack, LFI (_Local File Inclusion_), RFI (_Remote File Inclusion_) & RCE (_Remote Code Execution_).
 - & more coming up...
 
 ## Requirements
