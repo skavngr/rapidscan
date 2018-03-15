@@ -31,16 +31,15 @@ intervals = (
     ('s', 1),
     )
 
-def display_time(seconds, granularity=1):
+def display_time(seconds, granularity=3):
     result = []
 
     for name, count in intervals:
         value = seconds // count
-        value = round(value)
         if value:
             seconds -= value * count
-            result.append("...completed in {}{}".format(int(value), name))
-    return ', '.join(result[:granularity])
+            result.append("{}{}".format(value, name))
+    return ' '.join(result[:granularity])
 
 
 # Initializing the color module class
@@ -97,8 +96,8 @@ class Spinner:
     @staticmethod
     def spinning_cursor():
         while 1: 
-            for cursor in '|/\\': yield cursor
-
+            for cursor in '|/\\': yield cursor #←↑↓→
+            #for cursor in '←↑↓→': yield cursor
     def __init__(self, delay=None):
         self.spinner_generator = self.spinning_cursor()
         if delay and float(delay): self.delay = delay
@@ -112,8 +111,8 @@ class Spinner:
                 sys.stdout.write('\b')
                 sys.stdout.flush()
         except (KeyboardInterrupt, SystemExit):
-            clear()
-            print "\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
+            #clear()
+            print "\n\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
 
     def start(self):
@@ -125,8 +124,8 @@ class Spinner:
             self.busy = False
             time.sleep(self.delay)
         except (KeyboardInterrupt, SystemExit):
-            clear()
-            print "\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
+            #clear()
+            print "\n\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
 # End ofloader/spinner class        
 
@@ -398,8 +397,8 @@ tool_status = [
                 ["23/open tcp",0,proc_low," < 15s","nmaptelnet"],
                 ["21/open tcp",0,proc_low," < 15s","nmapftp"],
                 ["445/open tcp",0,proc_low," < 20s","nmapstux"],
-                ["SUCCEED",1,proc_low," < 30s","webdav"],
-                ["No vulnerabilities found.",1,proc_low,"golism10"],
+                ["SUCCEED",0,proc_low," < 30s","webdav"],
+                ["No vulnerabilities found.",1,proc_low," < 15s","golism10"],
                 ["[+]",0,proc_med," <  2m","uniscan2"],
                 ["[+]",0,proc_med," <  5m","uniscan3"],
                 ["[+]",0,proc_med," <  9m","uniscan4"],
@@ -428,6 +427,8 @@ tool_status = [
 scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
 random.shuffle(scan_shuffle)
 tool_names, tool_cmd, tool_resp, tool_status = zip(*scan_shuffle)
+
+tool_checks = (len(tool_names) + len(tool_resp) + len(tool_status)) / 3 # Cross verification incase, breaks.
 
 # Shuffling Scan Order (ends)
 
@@ -478,24 +479,20 @@ else:
         os.system('clear')
         os.system('setterm -cursor off')
         
-        print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" 
-        
+        #print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" 
+        print bcolors.WARNING
         print("""\
                                   __         __
-                                 /__)_   '_/(  _ _
+                                 /__)_  """+bcolors.BADFAIL+" ●"+bcolors.WARNING+"""_/(  _ _
                                 / ( (//)/(/__)( (//)
                                      /
-                                ====================
-                            
+                     """+bcolors.ENDC+"""(The Multi-Tool Web Vulnerability Scanner)                
                             """)
 
         print bcolors.ENDC
-        print "Last Updated: March 14th 2018"
-        print "Version Info: 0.15b"
-        print "-----------------------------\n"
+        print bcolors.LOW_BG+"[ Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
         while(tool < len(tool_names)):    
-            print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+"\n"+bcolors.ENDC
-            #print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC
+            print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
             spinner.start()
             scan_start = time.time()
             temp_file = "temp_"+tool_names[tool][arg1]
@@ -512,28 +509,23 @@ else:
                     spinner.stop()
                     scan_stop = time.time()
                     elapsed = scan_stop - scan_start
-                    #print elapsed
-                    #print "\n"
-                    #print display_time(elapsed)
-                    #sys.exit(1)
+                    print bcolors.OKBLUE+"...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
+                    clear()
                     if tool_status[tool][arg1] not in open(temp_file).read():
-                        if tool_status[tool][arg2] == 0:
-                            clear()
-                        else:
-                            clear()
+                        if tool_status[tool][arg2] == 1:
                             print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
                     else:
-                        if tool_status[tool][arg2] == 1:
-                            clear()
-                        else:
-                            clear()
+                        if tool_status[tool][arg2] == 0:
                             print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
             else:
-                    clear()
-                    print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
                     runTest = 1
                     spinner.stop()
-            
+                    scan_stop = time.time()
+                    elapsed = scan_stop - scan_start
+                    print bcolors.OKBLUE+"\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
+                    clear()
+                    print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
+                        
             tool=tool+1
             
         os.system('setterm -cursor on')
