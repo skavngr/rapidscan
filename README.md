@@ -7,7 +7,7 @@
 
                           
 ## Evolution:
-> Being a pentester for years and as it comes to VAPT engagements, it is quite a fuss to perform _**binge-tool-scanning**_ (_run security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives, collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
+> It is quite a fuss for a pentester to perform _**binge-tool-scanning**_ (_running security scanning tools one after the other_) sans automation. Unless you are a pro at automating stuff, it is a herculean task to perform binge-scan for each and every engagement. The ultimate goal of this program is to solve this problem through automation; viz. **running multiple scanning tools to discover vulnerabilities, effectively judge false-positives, collectively correlate results** and **saves precious time**; all these under one roof.<p>Enter **RapidScan**.
 
 ## Why RapidScan?
 - **one-step installation**.
@@ -23,7 +23,7 @@
 
 ---
 ### FYI:
-- _program is still under development, **works** and currently supports :seven::five: vulnerability checks._
+- _program is still under development, **works** and currently supports :six::six: vulnerability checks._
 - _parallel processing is not yet implemented, may be coded as more checks gets introduced._
 
 ## Tests For
