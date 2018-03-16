@@ -49,12 +49,13 @@
 - `./rapidscan.py example.com`
 
 ## Help
-- `./rapidscan.py --update`: updates the scanner to latest version.
-- `./rapidscan.py --help`:   displays the help context.
+- `./rapidscan.py --update`: updates scanner to latest version.
+- `./rapidscan.py --help`:   displays help context.
 
 ## Output
 
-![output of rapidscan](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan.PNG)
+![rapidscan intro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_intro.PNG)
+![rapidscan outro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_outro.PNG)
 
 ## Contribution
 - https://gist.github.com/MarcDiethelm/7303312
