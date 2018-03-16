@@ -18,10 +18,11 @@ import socket
 import subprocess
 import os
 import time
-import threading
-import collections
 import signal
 import random
+import string
+import threading
+
 
 
 # Scan Time Elapser
@@ -30,10 +31,9 @@ intervals = (
     ('m', 60),
     ('s', 1),
     )
-
 def display_time(seconds, granularity=3):
     result = []
-
+    seconds = seconds + 1
     for name, count in intervals:
         value = seconds // count
         if value:
@@ -105,7 +105,8 @@ class Spinner:
     def spinner_task(self):
         try:
             while self.busy:
-                sys.stdout.write(next(self.spinner_generator))
+                #sys.stdout.write(next(self.spinner_generator))
+                print bcolors.CRIT_BG+next(self.spinner_generator)+bcolors.ENDC,
                 sys.stdout.flush()
                 time.sleep(self.delay)
                 sys.stdout.write('\b')
@@ -131,6 +132,11 @@ class Spinner:
 
 # Instantiating the spinner/loader class
 spinner = Spinner()
+
+# Tool Set
+tools_precheck = [
+					["nmap","host", "wget", "uniscan", "wafw00f", "nmap", "theharvester", "dnsrecon","fierce", "dnswalk", "whois", "sslyze", "lbd", "golismero", "dnsenum","dmitry", "davtest", "nikto", "dnsmap"]
+				 ]
 
 # Scanners that will be used and filename rotation 
 tool_names = [
@@ -423,16 +429,12 @@ tool_status = [
 
 
 # Shuffling Scan Order (starts)
-
 scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
 random.shuffle(scan_shuffle)
 tool_names, tool_cmd, tool_resp, tool_status = zip(*scan_shuffle)
 
 tool_checks = (len(tool_names) + len(tool_resp) + len(tool_status)) / 3 # Cross verification incase, breaks.
-
 # Shuffling Scan Order (ends)
-
-
 
 # Tool Head Pointer: (can be increased but certain tools will be skipped) 
 tool = 0
@@ -445,6 +447,18 @@ arg1 = 0
 arg2 = 1
 arg3 = 2
 arg4 = 3
+
+# Detected Vulnerabilities [will be dynamically populated]
+rs_vul_list = list()
+rs_vul_num = 0
+rs_vul = 0
+
+# Total Time Elapsed
+rs_total_elapsed = 0
+
+# Report File & Clear Existing Report
+os.system('touch RS-Vulnerability-Report')
+os.system('> RS-Vulnerability-Report')
 
 if len(sys.argv) == 1 :
     helper()
@@ -478,8 +492,6 @@ else:
         os.system('rm te*') # Clearing previous scan files
         os.system('clear')
         os.system('setterm -cursor off')
-        
-        #print bcolors.BOLD + "RapidScan | Initiating tools and scanning procedures for " + target+ "...\n" 
         print bcolors.WARNING
         print("""\
                                   __         __
@@ -490,8 +502,9 @@ else:
                             """)
 
         print bcolors.ENDC
-        print bcolors.LOW_BG+"[ Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
-        while(tool < len(tool_names)):    
+        print bcolors.LOW_BG+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
+        while(tool < len(tool_names)):
+        #while(tool < 6):
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
             spinner.start()
             scan_start = time.time()
@@ -509,25 +522,58 @@ else:
                     spinner.stop()
                     scan_stop = time.time()
                     elapsed = scan_stop - scan_start
-                    print bcolors.OKBLUE+"...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
+                    rs_total_elapsed = rs_total_elapsed + elapsed
+                    print bcolors.OKBLUE+"\b...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
                     clear()
                     if tool_status[tool][arg1] not in open(temp_file).read():
                         if tool_status[tool][arg2] == 1:
                             print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                            rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
+                            
                     else:
                         if tool_status[tool][arg2] == 0:
                             print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                            rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
+                        
             else:
                     runTest = 1
                     spinner.stop()
                     scan_stop = time.time()
                     elapsed = scan_stop - scan_start
-                    print bcolors.OKBLUE+"\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
+                    rs_total_elapsed = rs_total_elapsed + elapsed
+                    print bcolors.OKBLUE+"\b\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
                     clear()
                     print "\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC                
                         
             tool=tool+1
-            
+        
+        print bcolors.SAFE_BG+"[ Preliminary Scan Phase Completed. ]"+bcolors.ENDC
+        print "\n"
+        print bcolors.LOW_BG+"[ Report Generation Phase Initiated. ]"+bcolors.ENDC
+        if len(rs_vul_list)==0:
+        	print "No Vulnerabilities Detected."
+        else:
+        	with open("RS-Report", "a") as report:
+        		while(rs_vul < len(rs_vul_list)):
+        			vuln_info = rs_vul_list[rs_vul].split('*')
+	        		report.write(vuln_info[arg2])
+	        		report.write("\n------------------------\n\n")
+	        		temp_report_name = "temp_"+vuln_info[arg1]
+	        		with open(temp_report_name, 'r') as temp_report:
+	    				data = temp_report.read()
+	        			report.write(data)
+	        			report.write("\n\n")
+	       			rs_vul = rs_vul + 1
+
+	       		print "\tTotal Number of Vulnerabilities Detected: "+bcolors.BOLD+str(len(rs_vul_list))+bcolors.ENDC
+        		print "\tTotal Time Elapsed for the Scan: "+bcolors.BOLD+display_time(int(rs_total_elapsed))+bcolors.ENDC
+        		print "\n"
+           		print "\tComplete Vulnerability Report for "+bcolors.OKBLUE+target+bcolors.ENDC+" named "+bcolors.OKGREEN+"`RS-Vulnerability-Report`"+bcolors.ENDC+" is available under the same directory RapidScan resides."
+
+        	report.close()
+        
+        print bcolors.SAFE_BG+"[ Report Generation Phase Completed. ]"+bcolors.ENDC
+
         os.system('setterm -cursor on')
         os.system('rm te*') # Clearing previous scan files
 
