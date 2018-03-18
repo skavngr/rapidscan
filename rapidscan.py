@@ -553,7 +553,7 @@ else:
         if len(rs_vul_list)==0:
         	print "No Vulnerabilities Detected."
         else:
-        	with open("RS-Report", "a") as report:
+        	with open("RS-Vulnerability-Report", "a") as report:
         		while(rs_vul < len(rs_vul_list)):
         			vuln_info = rs_vul_list[rs_vul].split('*')
 	        		report.write(vuln_info[arg2])
