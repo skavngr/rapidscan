@@ -5,9 +5,9 @@
 #                             / ( (//)/(/__)( (//)
 #                                  /
 #
-# Author:      Shankar Damodaran
-# Tool:        RapidScan
-# Usage:       ./rapidscan.py example.com (or) python rapidsan.py example.com
+# Author	 : Shankar Damodaran
+# Tool 		 : RapidScan
+# Usage		 : ./rapidscan.py example.com (or) python rapidsan.py example.com
 # Description: This scanner automates the process of security scanning by using a 
 #              multitude of available linux security tools and some custom scripts. 
 #
@@ -22,7 +22,6 @@ import signal
 import random
 import string
 import threading
-
 
 
 # Scan Time Elapser
@@ -133,82 +132,77 @@ class Spinner:
 # Instantiating the spinner/loader class
 spinner = Spinner()
 
-# Tool Set
-tools_precheck = [
-					["nmap","host", "wget", "uniscan", "wafw00f", "nmap", "theharvester", "dnsrecon","fierce", "dnswalk", "whois", "sslyze", "lbd", "golismero", "dnsenum","dmitry", "davtest", "nikto", "dnsmap"]
-				 ]
 
-# Scanners that will be used and filename rotation 
+
+# Scanners that will be used and filename rotation (default: enabled (1))
 tool_names = [
-                ["host","Host - Checks for existence of IPV6 address."],
-                ["aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration."],
-                ["wp_check","WordPress Checker - Checks for WordPress Installation."],
-                ["drp_check", "Drupal Checker - Checks for Drupal Installation."],
-                ["joom_check", "Joomla Checker - Checks for Joomla Installation."],
-                ["uniscan","Uniscan - Checks for robots.txt & sitemap.xml"],
-                ["wafw00f","Wafw00f - Checks for Application Firewalls."],
-                ["nmap","Nmap - Fast Scan [Only Few Port Checks]"],
-                ["theharvester","The Harvester - Scans for emails using Google's passive search."],
-                ["dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers."],
-                ["fierce","Fierce - Attempts Zone Transfer [No Brute Forcing]"],
-                ["dnswalk","DNSWalk - Attempts Zone Transfer."],
-                ["whois","WHOis - Checks for Administrator's Contact Information."],
-                ["nmap_header","Nmap [XSS Filter Check] - Checks if XSS Protection Header is present."],
-                ["nmap_sloris","Nmap [Slowloris DoS] - Checks for Slowloris Denial of Service Vulnerability."],
-                ["sslyze_hbleed","SSLyze - Checks only for Heartbleed Vulnerability."],
-                ["nmap_hbleed","Nmap [Heartbleed] - Checks only for Heartbleed Vulnerability."],
-                ["nmap_poodle","Nmap [POODLE] - Checks only for Poodle Vulnerability."],
-                ["nmap_ccs","Nmap [OpenSSL CCS Injection] - Checks only for CCS Injection."],
-                ["nmap_freak","Nmap [FREAK] - Checks only for FREAK Vulnerability."],
-                ["nmap_logjam","Nmap [LOGJAM] - Checks for LOGJAM Vulnerability."],
-                ["sslyze_ocsp","SSLyze - Checks for OCSP Stapling."],
-                ["sslyze_zlib","SSLyze - Checks for ZLib Deflate Compression."],
-                ["sslyze_reneg","SSLyze - Checks for Secure Renegotiation Support and Client Renegotiation."],
-                ["sslyze_resum","SSLyze - Checks for Session Resumption Support with [Session IDs/TLS Tickets]."],
-                ["lbd","LBD - Checks for DNS/HTTP Load Balancers."],
-                ["golismero_dns_malware","Golismero - Checks if the domain is spoofed or hijacked."],
-                ["golismero_heartbleed","Golismero - Checks only for Heartbleed Vulnerability."],
-                ["golismero_brute_url_predictables","Golismero - BruteForces for certain files on the Domain."],
-                ["golismero_brute_directories","Golismero - BruteForces for certain directories on the Domain."],
-                ["golismero_sqlmap","Golismero - SQLMap [Retrieves only the DB Banner]"],
-                ["dirb","DirB - Brutes the target for Open Directories."],
-                ["xsser","XSSer - Checks for Cross-Site Scripting [XSS] Attacks."],
-                ["golismero_ssl_scan","Golismero SSL Scans - Performs SSL related Scans."],
-                ["golismero_zone_transfer","Golismero Zone Transfer - Attempts Zone Transfer."],
-                ["golismero_nikto","Golismero Nikto Scans - Uses Nikto Plugin to detect vulnerabilities."],
-                ["golismero_brute_subdomains","Golismero Subdomains Bruter - Brute Forces Subdomain Discovery."],
-                ["dnsenum_zone_transfer","DNSEnum - Attempts Zone Transfer."],
-                ["fierce_brute_subdomains","Fierce Subdomains Bruter - Brute Forces Subdomain Discovery."],
-                ["dmitry_email","DMitry - Passively Harvests Emails from the Domain."],
-                ["dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain."],
-                ["nmap_telnet","Nmap [TELNET] - Checks if TELNET service is running."],
-                ["nmap_ftp","Nmap [FTP] - Checks if FTP service is running."],
-                ["nmap_stuxnet","Nmap [STUXNET] - Checks if the host is affected by STUXNET Worm."],
-                ["webdav","WebDAV - Checks if WEBDAV enabled on Home directory."],
-                ["golismero_finger","Golismero - Does a fingerprint on the Domain."],
-                ["uniscan_filebrute","Uniscan - Brutes for Filenames on the Domain."],
-                ["uniscan_dirbrute", "Uniscan - Brutes Directories on the Domain."],
-                ["uniscan_ministresser", "Uniscan - Stress Tests the Domain."],
-                ["uniscan_rfi","Uniscan - Checks for LFI, RFI and RCE."],#50
-                ["uniscan_xss","Uniscan - Checks for XSS, SQLi, BSQLi & Other Checks."],
-                ["nikto_xss","Nikto - Checks for Apache Expect XSS Header."],
-                ["nikto_subrute","Nikto - Brutes Subdomains."],
-                ["nikto_shellshock","Nikto - Checks for Shellshock Bug."],
-                ["nikto_internalip","Nikto - Checks for Internal IP Leak."],
-                ["nikto_putdel","Nikto - Checks for HTTP PUT DEL."],
-                ["nikto_headers","Nikto - Checks the Domain Headers."],
-                ["nikto_ms01070","Nikto - Checks for MS10-070 Vulnerability."],
-                ["nikto_servermsgs","Nikto - Checks for Server Issues."],
-                ["nikto_outdated","Nikto - Checks if Server is Outdated."],
-                ["nikto_httpoptions","Nikto - Checks for HTTP Options on the Domain."],
-                ["nikto_cgi","Nikto - Enumerates CGI Directories."],
-                ["nikto_ssl","Nikto - Performs SSL Checks."],
-                ["nikto_sitefiles","Nikto - Checks for any interesting files on the Domain."],
-                ["nikto_paths","Nikto - Checks for Injectable Paths."],
-                ["dnsmap_brute","DNSMap - Brutes Subdomains."]
+                ["host","Host - Checks for existence of IPV6 address.","host",1],
+                ["aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration.","wget",1],
+                ["wp_check","WordPress Checker - Checks for WordPress Installation.","wget",1],
+                ["drp_check", "Drupal Checker - Checks for Drupal Installation.","wget",1],
+                ["joom_check", "Joomla Checker - Checks for Joomla Installation.","wget",1],
+                ["uniscan","Uniscan - Checks for robots.txt & sitemap.xml","uniscan",1],
+                ["wafw00f","Wafw00f - Checks for Application Firewalls.","wafw00f",1],
+                ["nmap","Nmap - Fast Scan [Only Few Port Checks]","nmap",1],
+                ["theharvester","The Harvester - Scans for emails using Google's passive search.","theharvester",1],
+                ["dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers.","dnsrecon",1],
+                ["fierce","Fierce - Attempts Zone Transfer [No Brute Forcing]","fierce",1],
+                ["dnswalk","DNSWalk - Attempts Zone Transfer.","dnswalk",1],
+                ["whois","WHOis - Checks for Administrator's Contact Information.","whois",1],
+                ["nmap_header","Nmap [XSS Filter Check] - Checks if XSS Protection Header is present.","nmap",1],
+                ["nmap_sloris","Nmap [Slowloris DoS] - Checks for Slowloris Denial of Service Vulnerability.","nmap",1],
+                ["sslyze_hbleed","SSLyze - Checks only for Heartbleed Vulnerability.","sslyze",1],
+                ["nmap_hbleed","Nmap [Heartbleed] - Checks only for Heartbleed Vulnerability.","nmap",1],
+                ["nmap_poodle","Nmap [POODLE] - Checks only for Poodle Vulnerability.","nmap",1],
+                ["nmap_ccs","Nmap [OpenSSL CCS Injection] - Checks only for CCS Injection.","nmap",1],
+                ["nmap_freak","Nmap [FREAK] - Checks only for FREAK Vulnerability.","nmap",1],
+                ["nmap_logjam","Nmap [LOGJAM] - Checks for LOGJAM Vulnerability.","nmap",1],
+                ["sslyze_ocsp","SSLyze - Checks for OCSP Stapling.","sslyze",1],
+                ["sslyze_zlib","SSLyze - Checks for ZLib Deflate Compression.","sslyze",1],
+                ["sslyze_reneg","SSLyze - Checks for Secure Renegotiation Support and Client Renegotiation.","sslyze",1],
+                ["sslyze_resum","SSLyze - Checks for Session Resumption Support with [Session IDs/TLS Tickets].","sslyze",1],
+                ["lbd","LBD - Checks for DNS/HTTP Load Balancers.","lbd",1],
+                ["golismero_dns_malware","Golismero - Checks if the domain is spoofed or hijacked.","golismero",1],
+                ["golismero_heartbleed","Golismero - Checks only for Heartbleed Vulnerability.","golismero",1],
+                ["golismero_brute_url_predictables","Golismero - BruteForces for certain files on the Domain.","golismero",1],
+                ["golismero_brute_directories","Golismero - BruteForces for certain directories on the Domain.","golismero",1],
+                ["golismero_sqlmap","Golismero - SQLMap [Retrieves only the DB Banner]","golismero",1],
+                ["dirb","DirB - Brutes the target for Open Directories.","dirb",1],
+                ["xsser","XSSer - Checks for Cross-Site Scripting [XSS] Attacks.","xsser",1],
+                ["golismero_ssl_scan","Golismero SSL Scans - Performs SSL related Scans.","golismero",1],
+                ["golismero_zone_transfer","Golismero Zone Transfer - Attempts Zone Transfer.","golismero",1],
+                ["golismero_nikto","Golismero Nikto Scans - Uses Nikto Plugin to detect vulnerabilities.","golismero",1],
+                ["golismero_brute_subdomains","Golismero Subdomains Bruter - Brute Forces Subdomain Discovery.","golismero",1],
+                ["dnsenum_zone_transfer","DNSEnum - Attempts Zone Transfer.","dnsenum",1],
+                ["fierce_brute_subdomains","Fierce Subdomains Bruter - Brute Forces Subdomain Discovery.","fierce",1],
+                ["dmitry_email","DMitry - Passively Harvests Emails from the Domain.","dmitry",1],
+                ["dmitry_subdomains","DMitry - Passively Harvests Subdomains from the Domain.","dmitry",1],
+                ["nmap_telnet","Nmap [TELNET] - Checks if TELNET service is running.","nmap",1],
+                ["nmap_ftp","Nmap [FTP] - Checks if FTP service is running.","nmap",1],
+                ["nmap_stuxnet","Nmap [STUXNET] - Checks if the host is affected by STUXNET Worm.","nmap",1],
+                ["webdav","WebDAV - Checks if WEBDAV enabled on Home directory.","davtest",1],
+                ["golismero_finger","Golismero - Does a fingerprint on the Domain.","golismero",1],
+                ["uniscan_filebrute","Uniscan - Brutes for Filenames on the Domain.","uniscan",1],
+                ["uniscan_dirbrute", "Uniscan - Brutes Directories on the Domain.","uniscan",1],
+                ["uniscan_ministresser", "Uniscan - Stress Tests the Domain.","uniscan",1],
+                ["uniscan_rfi","Uniscan - Checks for LFI, RFI and RCE.","uniscan",1],#50
+                ["uniscan_xss","Uniscan - Checks for XSS, SQLi, BSQLi & Other Checks.","uniscan",1],
+                ["nikto_xss","Nikto - Checks for Apache Expect XSS Header.","nikto",1],
+                ["nikto_subrute","Nikto - Brutes Subdomains.","nikto",1],
+                ["nikto_shellshock","Nikto - Checks for Shellshock Bug.","nikto",1],
+                ["nikto_internalip","Nikto - Checks for Internal IP Leak.","nikto",1],
+                ["nikto_putdel","Nikto - Checks for HTTP PUT DEL.","nikto",1],
+                ["nikto_headers","Nikto - Checks the Domain Headers.","nikto",1],
+                ["nikto_ms01070","Nikto - Checks for MS10-070 Vulnerability.","nikto",1],
+                ["nikto_servermsgs","Nikto - Checks for Server Issues.","nikto",1],
+                ["nikto_outdated","Nikto - Checks if Server is Outdated.","nikto",1],
+                ["nikto_httpoptions","Nikto - Checks for HTTP Options on the Domain.","nikto",1],
+                ["nikto_cgi","Nikto - Enumerates CGI Directories.","nikto",1],
+                ["nikto_ssl","Nikto - Performs SSL Checks.","nikto",1],
+                ["nikto_sitefiles","Nikto - Checks for any interesting files on the Domain.","nikto",1],
+                ["nikto_paths","Nikto - Checks for Injectable Paths.","nikto",1],
+                ["dnsmap_brute","DNSMap - Brutes Subdomains.","dnsmap",1]
             ]
-
-
 
 
 # Command that is used to initiate the tool (with parameters and extra params)
@@ -427,6 +421,10 @@ tool_status = [
                 ["#1",0,proc_high," < 30m","dnsmap_brute"]
             ]
 
+# Tool Set
+tools_precheck = [
+					["w3af"],["nmap"],["golismero"],["w3af"],["nmap"],["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theharvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
+			     ]
 
 # Shuffling Scan Order (starts)
 scan_shuffle = list(zip(tool_names, tool_cmd, tool_resp, tool_status))
@@ -455,6 +453,10 @@ rs_vul = 0
 
 # Total Time Elapsed
 rs_total_elapsed = 0
+
+# Tool Pre Checker
+rs_avail_tools = 0
+
 
 # Report File & Clear Existing Report
 os.system('touch RS-Vulnerability-Report')
@@ -489,7 +491,7 @@ else:
         sys.exit(1)
     else:
     
-        os.system('rm te*') # Clearing previous scan files
+        os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
         os.system('clear')
         os.system('setterm -cursor off')
         print bcolors.WARNING
@@ -500,12 +502,40 @@ else:
                                      /
                      """+bcolors.ENDC+"""(The Multi-Tool Web Vulnerability Scanner)                
                             """)
-
         print bcolors.ENDC
+        print bcolors.LOW_BG+"[ Checking Available Security Scanning Tools Phase... Initiated. ]"+bcolors.ENDC
+        unavail_tools = 0
+        unavail_tools_names = list()
+        while (rs_avail_tools < len(tools_precheck)):
+			precmd = str(tools_precheck[rs_avail_tools][arg1])
+			p = subprocess.Popen([precmd], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
+			output, err = p.communicate()
+			val = output + err
+			if "not found" in val:
+				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
+				for scanner_index, scanner_val in enumerate(tool_names):
+					if scanner_val[2] == tools_precheck[rs_avail_tools][arg1]:
+						scanner_val[3] = 0 # disabling scanner as it's not available.
+						unavail_tools_names.append(tools_precheck[rs_avail_tools][arg1])
+						unavail_tools = unavail_tools + 1
+			else:
+				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.OKGREEN+"...available."+bcolors.ENDC
+			rs_avail_tools = rs_avail_tools + 1
+			clear()		
+        unavail_tools_names = list(set(unavail_tools_names))
+        if unavail_tools == 0:
+        	print "\t"+bcolors.OKGREEN+"All Scanning Tools are available. All vulnerability checks will be performed by RapidScan."+bcolors.ENDC
+        else:
+        	print "\t"+bcolors.WARNING+"Some of these tools "+bcolors.BADFAIL+str(unavail_tools_names)+bcolors.ENDC+bcolors.WARNING+" are unavailable. RapidScan can still perform tests by excluding these tools from the tests. Please install these tools to fully utilize the functionality of RapidScan."+bcolors.ENDC
+        print bcolors.SAFE_BG+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC
+        print "\n"
         print bcolors.LOW_BG+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
         while(tool < len(tool_names)):
-        #while(tool < 6):
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
+            if tool_names[tool][arg4] == 0:
+            	print "\t"+bcolors.WARNING+"Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
+            	tool = tool + 1
+            	continue
             spinner.start()
             scan_start = time.time()
             temp_file = "temp_"+tool_names[tool][arg1]
@@ -551,7 +581,7 @@ else:
         print "\n"
         print bcolors.LOW_BG+"[ Report Generation Phase Initiated. ]"+bcolors.ENDC
         if len(rs_vul_list)==0:
-        	print "No Vulnerabilities Detected."
+        	print "\t"+bcolors.OKGREEN+"No Vulnerabilities Detected."+bcolors.ENDC
         else:
         	with open("RS-Vulnerability-Report", "a") as report:
         		while(rs_vul < len(rs_vul_list)):
@@ -575,7 +605,7 @@ else:
         print bcolors.SAFE_BG+"[ Report Generation Phase Completed. ]"+bcolors.ENDC
 
         os.system('setterm -cursor on')
-        os.system('rm te*') # Clearing previous scan files
+        os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
 
 
             
