@@ -40,7 +40,6 @@
 
 ## Requirements
 - Python 2.7
-- Kali Linux 2.0 or Rolling Distro. (_the latest the distro, the better the tool performs._)
 
 ## Usage
 **Download the script and give executable permissions**
