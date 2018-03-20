@@ -1,4 +1,7 @@
 ### Features
+
+- Nmap MySQL Check: `nmap -p3306 --open <host>` | 3306/open tcp
+- Nmap MS-SQL Server Check: `nmap -p1433 --open <host>` | 1433/open tcp
 - :thumbsup: ~Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp~
 - :thumbsup: ~Nmap FTP Check: `nmap -p21 --open <host>` | 21/open tcp~
 - :thumbsup: ~Nmap STUXNET Check: `nmap --script stuxnet-detect -p 445 <host>` | 445/open tcp~
