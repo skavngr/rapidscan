@@ -65,16 +65,16 @@ proc_low  = bcolors.OKGREEN + "●" + bcolors.ENDC
 
 # RapidScan Help Context
 def helper():
-        print "\n\tInformation:"
+        print "\t"+bcolors.OKBLUE+"Information:"+bcolors.ENDC
         print "\t-------------"
         print "\t./rapidscan.py example.com: Scans the domain example.com"
         print "\t./rapidscan.py --update   : Updates the scanner to the latest version."
         print "\t./rapidscan.py --help     : Displays this help context."
-        print "\n\tInteractive:"
+        print "\t"+bcolors.OKBLUE+"Interactive:"+bcolors.ENDC
         print "\t------------"
         print "\tCtrl+C: Skips current test."
         print "\tCtrl+Z: Quits RapidScan."
-        print "\n\tLegends:"
+        print "\t"+bcolors.OKBLUE+"Legends:"+bcolors.ENDC
         print "\t--------"
         print "\t["+proc_high+"]: Scan process may take longer times (not predictable)."
         print "\t["+proc_med+"]: Scan process may take less than 10 minutes."
@@ -85,7 +85,18 @@ def helper():
 def clear():
         sys.stdout.write("\033[F")
         sys.stdout.write("\033[K") 
- 
+
+# RapidScan Logo 
+def logo():
+	print bcolors.WARNING
+        print("""\
+                                  __         __
+                                 /__)_  """+bcolors.BADFAIL+" ●"+bcolors.WARNING+"""_/(  _ _
+                                / ( (//)/(/__)( (//)
+                                     /
+                     """+bcolors.ENDC+"""(The Multi-Tool Web Vulnerability Scanner)                
+                            """)
+        print bcolors.ENDC
 
 # Initiliazing the idle loader/spinner class
 class Spinner:
@@ -459,16 +470,18 @@ rs_avail_tools = 0
 
 
 # Report File & Clear Existing Report
-os.system('touch RS-Vulnerability-Report')
-os.system('> RS-Vulnerability-Report')
+#os.system('touch RS-Vulnerability-Report')
+#os.system('> RS-Vulnerability-Report')
 
 if len(sys.argv) == 1 :
+    logo()
     helper()
 else:
     target = sys.argv[1].lower()
     
     
     if target == '--update' or target == '-u' or target == '--u':
+    	logo()
         print "RapidScan is updating....Please wait.\n"
         spinner.start()
         cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
@@ -487,6 +500,7 @@ else:
         sys.exit(1)
         
     elif target == '--help' or target == '-h' or target == '--h':
+    	logo()
         helper()
         sys.exit(1)
     else:
@@ -494,23 +508,19 @@ else:
         os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
         os.system('clear')
         os.system('setterm -cursor off')
-        print bcolors.WARNING
-        print("""\
-                                  __         __
-                                 /__)_  """+bcolors.BADFAIL+" ●"+bcolors.WARNING+"""_/(  _ _
-                                / ( (//)/(/__)( (//)
-                                     /
-                     """+bcolors.ENDC+"""(The Multi-Tool Web Vulnerability Scanner)                
-                            """)
-        print bcolors.ENDC
+        logo()
         print bcolors.LOW_BG+"[ Checking Available Security Scanning Tools Phase... Initiated. ]"+bcolors.ENDC
         unavail_tools = 0
         unavail_tools_names = list()
         while (rs_avail_tools < len(tools_precheck)):
 			precmd = str(tools_precheck[rs_avail_tools][arg1])
-			p = subprocess.Popen([precmd], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
-			output, err = p.communicate()
-			val = output + err
+			try:
+				p = subprocess.Popen([precmd], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,shell=True)
+				output, err = p.communicate()
+				val = output + err
+			except:
+				print "\t"+bcolors.CRIT_BG+"RapidScan was terminated abruptly..."+bcolors.ENDC
+				sys.exit(1)
 			if "not found" in val:
 				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
 				for scanner_index, scanner_val in enumerate(tool_names):
@@ -530,10 +540,11 @@ else:
         print bcolors.SAFE_BG+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC
         print "\n"
         print bcolors.LOW_BG+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
+        #while (tool < 5):
         while(tool < len(tool_names)):
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
             if tool_names[tool][arg4] == 0:
-            	print "\t"+bcolors.WARNING+"Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
+            	print bcolors.WARNING+"...Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
             	tool = tool + 1
             	continue
             spinner.start()
@@ -593,6 +604,7 @@ else:
 	    				data = temp_report.read()
 	        			report.write(data)
 	        			report.write("\n\n")
+	        		temp_report.close()
 	       			rs_vul = rs_vul + 1
 
 	       		print "\tTotal Number of Vulnerabilities Detected: "+bcolors.BOLD+str(len(rs_vul_list))+bcolors.ENDC
@@ -601,7 +613,22 @@ else:
            		print "\tComplete Vulnerability Report for "+bcolors.OKBLUE+target+bcolors.ENDC+" named "+bcolors.OKGREEN+"`RS-Vulnerability-Report`"+bcolors.ENDC+" is available under the same directory RapidScan resides."
 
         	report.close()
+        # Writing all scan files output into RS-Debug-ScanLog for debugging purposes.
+        for file_index, file_name in enumerate(tool_names):
+        	with open("RS-Debug-ScanLog", "a") as report:
+        		try:
+	        		with open("temp_"+file_name[arg1], 'r') as temp_report:
+		    				data = temp_report.read()
+		    				report.write(file_name[arg2])
+	        				report.write("\n------------------------\n\n")
+		        			report.write(data)
+		        			report.write("\n\n")
+		        	temp_report.close()
+	        	except:
+	        		break
+	        report.close()
         
+        print "\tFor Debugging Purposes, You can view the complete output generated by all the tools named "+bcolors.OKBLUE+"`RS-Debug-ScanLog`"+bcolors.ENDC+" under the same directory."
         print bcolors.SAFE_BG+"[ Report Generation Phase Completed. ]"+bcolors.ENDC
 
         os.system('setterm -cursor on')
