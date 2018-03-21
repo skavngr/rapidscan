@@ -1,5 +1,15 @@
-### Features
+### Tool Deployment (on various OS flavours)
+**Ubuntu**
+- `apt-key update && apt-get update`
+- `apt-get install whois --force-yes`
 
+### Features
+- Nmap Full UDP Port Scan: `nmap -p1-65535 -sU --open <host>` | /open udp
+- Nmap Full TCP Port Scan: `nmap -p1-65535 --open <host>` | /open tcp
+- Nmap RDP TCP Check: `nmap -p3389 --open -sT <host>` | 3389/open tcp
+- Nmap RDP UDP Check: `nmap -p3389 --open -sU <host>` | 3389/open udp
+- Nmap ORACLE Check: `nmap -p1521 --open <host>` | 1521/open tcp
+- Nmap UDP Check: `nmap -p161 -sU --open <host>` | 161/open udp
 - Nmap MySQL Check: `nmap -p3306 --open <host>` | 3306/open tcp
 - Nmap MS-SQL Server Check: `nmap -p1433 --open <host>` | 1433/open tcp
 - :thumbsup: ~Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp~
