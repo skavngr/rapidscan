@@ -4,6 +4,8 @@
 - `apt-get install whois --force-yes`
 
 ### Features
+- ASP.Net Elmah AXD: `wget -O temp_aspnet_elmah_axd /elmah.axd` | Microsoft SQL Server Error Log 
+- Nmap SNMP Check: `nmap -p161 -sU --open <host>` | 161/open udp
 - Nmap Full UDP Port Scan: `nmap -p1-65535 -sU --open <host>` | /open udp
 - Nmap Full TCP Port Scan: `nmap -p1-65535 --open <host>` | /open tcp
 - Nmap RDP TCP Check: `nmap -p3389 --open -sT <host>` | 3389/open tcp
@@ -73,7 +75,7 @@
 - `dnsenum --enum --noreverse example.com` google blocking your queries. (try somewhere else)
 - `thc-ssl-dos -l 100 192.168.1.208 443 --accept` gets only ips as input. write an alternative | `dig +short example.com | grep -m 1 ""`
 - `wapiti example.com` | does all checks and shows count of each vulnerabilities found in table.
-- `doona -t vinothbabu.com -k -m HTTP` | 23/37   [POST / HTTP/1.0XAXAX] .........................................Problem (3) occured with POST / HTTP/1.0XAXAX (965)
+- `doona -t example.com -k -m HTTP` | 23/37   [POST / HTTP/1.0XAXAX] .........................................Problem (3) occured with POST / HTTP/1.0XAXAX (965)
 
 ### Program Exceptions Checks
 
