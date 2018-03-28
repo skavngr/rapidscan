@@ -22,6 +22,8 @@ import signal
 import random
 import string
 import threading
+import re
+from urlparse import urlsplit
 
 
 # Scan Time Elapser
@@ -40,6 +42,15 @@ def display_time(seconds, granularity=3):
             result.append("{}{}".format(value, name))
     return ' '.join(result[:granularity])
 
+
+def url_maker(url):
+	if not re.match(r'http(s?)\:', url):
+		url = 'http://' + url
+	parsed = urlsplit(url)
+	host = parsed.netloc
+	if host.startswith('www.'):
+		host = host[4:]
+	return host
 
 # Initializing the color module class
 class bcolors:
@@ -504,6 +515,7 @@ else:
         sys.exit(1)
     else:
     
+        target = url_maker(target)
         os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
         os.system('clear')
         os.system('setterm -cursor off')
