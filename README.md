@@ -45,15 +45,10 @@
 **Download the script and give executable permissions**
 - `wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py`
 
-**Run the script**
-- `./rapidscan.py example.com`
-
 ## Help
-- `./rapidscan.py --update`: updates scanner to latest version.
-- `./rapidscan.py --help`:   displays help context.
+![rapidscan help](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_help.PNG)
 
 ## Output
-
 ![rapidscan intro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_intro.PNG)
 ![rapidscan outro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_outro.PNG)
 
