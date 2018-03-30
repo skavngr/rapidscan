@@ -76,17 +76,17 @@ proc_low  = bcolors.OKGREEN + "●" + bcolors.ENDC
 
 # RapidScan Help Context
 def helper():
-        print "\t"+bcolors.OKBLUE+"Information:"+bcolors.ENDC
-        print "\t-------------"
+        print bcolors.OKBLUE+"Information:"+bcolors.ENDC
+        print "------------"
         print "\t./rapidscan.py example.com: Scans the domain example.com"
         print "\t./rapidscan.py --update   : Updates the scanner to the latest version."
         print "\t./rapidscan.py --help     : Displays this help context."
-        print "\t"+bcolors.OKBLUE+"Interactive:"+bcolors.ENDC
-        print "\t------------"
+        print bcolors.OKBLUE+"Interactive:"+bcolors.ENDC
+        print "------------"
         print "\tCtrl+C: Skips current test."
         print "\tCtrl+Z: Quits RapidScan."
-        print "\t"+bcolors.OKBLUE+"Legends:"+bcolors.ENDC
-        print "\t--------"
+        print bcolors.OKBLUE+"Legends:"+bcolors.ENDC
+        print "--------"
         print "\t["+proc_high+"]: Scan process may take longer times (not predictable)."
         print "\t["+proc_med+"]: Scan process may take less than 10 minutes."
         print "\t["+proc_low+"]: Scan process may take less than a minute or two.\n"
@@ -375,72 +375,72 @@ tool_resp   = [
 
 # Tool Status (Reponse Data + Response Code (if status check fails and you still got to push it + Legends)
 tool_status = [
-                ["has IPv6",1,proc_low," < 15s","ipv6"],
-                ["Server Error",0,proc_low," < 30s","asp.netmisconf"],
-                ["wp-login",0,proc_low," < 30s","wpcheck"],
-                ["drupal",0,proc_low," < 30s","drupalcheck"],
-                ["joomla",0,proc_low," < 30s","joomlacheck"],
-                ["[+]",0,proc_low," < 40s","robotscheck"],
-                ["No WAF",0,proc_low," < 45s","wafcheck"],
-                ["tcp open",0,proc_med," <  2m","nmapopen"],
-                ["No emails found",1,proc_med," <  3m","harvester"],
-                ["[+] Zone Transfer was successful!!",0,proc_low," < 20s","dnsreconzt"],
-                ["Whoah, it worked",0,proc_low," < 30s","fiercezt"],
-                ["0 errors",0,proc_low," < 35s","dnswalkzt"],
-                ["Admin Email:",0,proc_low," < 25s","whois"],
-                ["XSS filter is disabled",0,proc_low," < 20s","nmapxssh"],
-                ["vulnerable",0,proc_high," < 45m","nmapdos"],
-                ["Server is vulnerable to Heartbleed",0,proc_low," < 40s","sslyzehb"],
-                ["vulnerable",0,proc_low," < 30s","nmap1"],
-                ["vulnerable",0,proc_low," < 35s","nmap2"],
-                ["vulnerable",0,proc_low," < 35s","nmap3"],
-                ["vulnerable",0,proc_low," < 30s","nmap4"],
-                ["vulnerable",0,proc_low," < 35s","nmap5"],
-                ["ERROR - OCSP response status is not successful",0,proc_low," < 25s","sslyze1"],
-                ["VULNERABLE - Server supports Deflate compression",0,proc_low," < 30s","sslyze2"],
-                ["vulnerable",0,proc_low," < 25s","sslyze3"],
-                ["vulnerable",0,proc_low," < 30s","sslyze4"],
-                ["does NOT use Load-balancing",0,proc_med," <  4m","lbd"],
-                ["No vulnerabilities found",1,proc_low," < 45s","golism1"],
-                ["No vulnerabilities found",1,proc_low," < 40s","golism2"],
-                ["No vulnerabilities found",1,proc_low," < 45s","golism3"],
-                ["No vulnerabilities found",1,proc_low," < 40s","golism4"],
-                ["No vulnerabilities found",1,proc_low," < 45s","golism5"],
-                ["FOUND: 0",1,proc_high," < 35m","dirb"],
-                ["Could not find any vulnerability!",1,proc_med," <  4m","xsser"],
-                ["Occurrence ID",0,proc_low," < 45s","golism6"],
-                ["DNS zone transfer successful",0,proc_low," < 30s","golism7"],
-                ["Nikto found 0 vulnerabilities",1,proc_med," <  4m","golism8"],
-                ["Possible subdomain leak",0,proc_high," < 30m","golism9"],
-                ["AXFR record query failed:",1,proc_low," < 45s","dnsenumzt"],
-                ["Found 1 entries",1,proc_high," < 75m","fierce2"],
-                ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1"],
-                ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2"],
-                ["23/open tcp",0,proc_low," < 15s","nmaptelnet"],
-                ["21/open tcp",0,proc_low," < 15s","nmapftp"],
-                ["445/open tcp",0,proc_low," < 20s","nmapstux"],
-                ["SUCCEED",0,proc_low," < 30s","webdav"],
-                ["No vulnerabilities found.",1,proc_low," < 15s","golism10"],
-                ["[+]",0,proc_med," <  2m","uniscan2"],
-                ["[+]",0,proc_med," <  5m","uniscan3"],
-                ["[+]",0,proc_med," <  9m","uniscan4"],
-                ["[+]",0,proc_med," <  8m","uniscan5"],
-                ["[+]",0,proc_med," <  9m","uniscan6"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto1"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto2"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto3"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto4"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto5"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto6"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto7"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto8"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto9"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto10"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto11"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto12"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto13"],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto14"],
-                ["#1",0,proc_high," < 30m","dnsmap_brute"]
+                ["has IPv6",1,proc_low," < 15s","ipv6","not found"],
+                ["Server Error",0,proc_low," < 30s","asp.netmisconf","unable to resolve host address"],
+                ["wp-login",0,proc_low," < 30s","wpcheck","unable to resolve host address"],
+                ["drupal",0,proc_low," < 30s","drupalcheck","unable to resolve host address"],
+                ["joomla",0,proc_low," < 30s","joomlacheck","unable to resolve host address"],
+                ["[+]",0,proc_low," < 40s","robotscheck","Use of uninitialized value in unpack at"],
+                ["No WAF",0,proc_low," < 45s","wafcheck","appears to be down"],
+                ["tcp open",0,proc_med," <  2m","nmapopen","Failed to resolve"],
+                ["No emails found",1,proc_med," <  3m","harvester","No hosts found"],
+                ["[+] Zone Transfer was successful!!",0,proc_low," < 20s","dnsreconzt","Could not resolve domain"],
+                ["Whoah, it worked",0,proc_low," < 30s","fiercezt","none"],
+                ["0 errors",0,proc_low," < 35s","dnswalkzt","!!!0 failures, 0 warnings, 3 errors."],
+                ["Admin Email:",0,proc_low," < 25s","whois","No match for domain"],
+                ["XSS filter is disabled",0,proc_low," < 20s","nmapxssh","Failed to resolve"],
+                ["vulnerable",0,proc_high," < 45m","nmapdos","Failed to resolve"],
+                ["Server is vulnerable to Heartbleed",0,proc_low," < 40s","sslyzehb","Could not resolve hostname"],
+                ["vulnerable",0,proc_low," < 30s","nmap1","Failed to resolve"],
+                ["vulnerable",0,proc_low," < 35s","nmap2","Failed to resolve"],
+                ["vulnerable",0,proc_low," < 35s","nmap3","Failed to resolve"],
+                ["vulnerable",0,proc_low," < 30s","nmap4","Failed to resolve"],
+                ["vulnerable",0,proc_low," < 35s","nmap5","Failed to resolve"],
+                ["ERROR - OCSP response status is not successful",0,proc_low," < 25s","sslyze1","Could not resolve hostname"],
+                ["VULNERABLE - Server supports Deflate compression",0,proc_low," < 30s","sslyze2","Could not resolve hostname"],
+                ["vulnerable",0,proc_low," < 25s","sslyze3","Could not resolve hostname"],
+                ["vulnerable",0,proc_low," < 30s","sslyze4","Could not resolve hostname"],
+                ["does NOT use Load-balancing",0,proc_med," <  4m","lbd","NOT FOUND"],
+                ["No vulnerabilities found",1,proc_low," < 45s","golism1","Cannot resolve domain name"],
+                ["No vulnerabilities found",1,proc_low," < 40s","golism2","Cannot resolve domain name"],
+                ["No vulnerabilities found",1,proc_low," < 45s","golism3","Cannot resolve domain name"],
+                ["No vulnerabilities found",1,proc_low," < 40s","golism4","Cannot resolve domain name"],
+                ["No vulnerabilities found",1,proc_low," < 45s","golism5","Cannot resolve domain name"],
+                ["FOUND: 0",1,proc_high," < 35m","dirb","COULDNT RESOLVE HOST"],
+                ["Could not find any vulnerability!",1,proc_med," <  4m","xsser","XSSer is not working propertly!"],
+                ["Occurrence ID",0,proc_low," < 45s","golism6","Cannot resolve domain name"],
+                ["DNS zone transfer successful",0,proc_low," < 30s","golism7","Cannot resolve domain name"],
+                ["Nikto found 0 vulnerabilities",1,proc_med," <  4m","golism8","Cannot resolve domain name"],
+                ["Possible subdomain leak",0,proc_high," < 30m","golism9","Cannot resolve domain name"],
+                ["AXFR record query failed:",1,proc_low," < 45s","dnsenumzt","NS record query failed:"],
+                ["Found 0 entries",1,proc_high," < 75m","fierce2","Found 0 entries."],
+                ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1","Unable to locate Host IP addr"],
+                ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2","Unable to locate Host IP addr"],
+                ["23/open tcp",0,proc_low," < 15s","nmaptelnet","Failed to resolve"],
+                ["21/open tcp",0,proc_low," < 15s","nmapftp","Failed to resolve"],
+                ["445/open tcp",0,proc_low," < 20s","nmapstux","Failed to resolve"],
+                ["SUCCEED",0,proc_low," < 30s","webdav","is not DAV enabled or not accessible."],
+                ["No vulnerabilities found.",1,proc_low," < 15s","golism10","Cannot resolve domain name"],
+                ["[+]",0,proc_med," <  2m","uniscan2","Use of uninitialized value in unpack at"],
+                ["[+]",0,proc_med," <  5m","uniscan3","Use of uninitialized value in unpack at"],
+                ["[+]",0,proc_med," <  9m","uniscan4","Use of uninitialized value in unpack at"],
+                ["[+]",0,proc_med," <  8m","uniscan5","Use of uninitialized value in unpack at"],
+                ["[+]",0,proc_med," <  9m","uniscan6","Use of uninitialized value in unpack at"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto1","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto2","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto3","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto4","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto5","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto6","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto7","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto8","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto9","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto10","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto11","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto12","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto13","ERROR: Cannot resolve hostname"],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto14","ERROR: Cannot resolve hostname"],
+                ["#1",0,proc_high," < 30m","dnsmap_brute","[+] 0 (sub)domains and 0 IP address(es) found"]
             ]
 
 # Tool Set
@@ -467,6 +467,8 @@ arg1 = 0
 arg2 = 1
 arg3 = 2
 arg4 = 3
+arg5 = 4
+arg6 = 5
 
 # Detected Vulnerabilities [will be dynamically populated]
 rs_vul_list = list()
@@ -577,14 +579,13 @@ else:
                     rs_total_elapsed = rs_total_elapsed + elapsed
                     print bcolors.OKBLUE+"\b...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n"
                     clear()
-                    if tool_status[tool][arg1] in open(temp_file).read():
-                        if tool_status[tool][arg2] == 0:
-                            print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
-                            rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
-                    else:
-                        if tool_status[tool][arg2] == 1:
-                        	print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
-                        	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
+                    rs_tool_output_file = open(temp_file).read()
+                    if tool_status[tool][arg2] == 0 and tool_status[tool][arg1] in rs_tool_output_file:
+                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                        rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
+                    if tool_status[tool][arg2] == 1 and tool_status[tool][arg6] not in rs_tool_output_file:
+                        print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                        rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
             else:
                     runTest = 1
                     spinner.stop()
