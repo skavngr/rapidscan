@@ -4,9 +4,11 @@
 - `apt-get install whois --force-yes`
 
 ### Features
+- Nmap SMB UDP Check: `nmap -p137,138 --open <host>` | /open
+- Nmap SMB TCP Check: `nmap -p445,137-139 --open <host>` | /open tcp 
 - ASP.Net Elmah AXD: `wget -O temp_aspnet_elmah_axd /elmah.axd` | Microsoft SQL Server Error Log 
 - Nmap SNMP Check: `nmap -p161 -sU --open <host>` | 161/open udp
-- Nmap Full UDP Port Scan: `nmap -p1-65535 -sU --open <host>` | /open udp
+- Nmap Full UDP Port Scan: `nmap -p1-65535 -sU --open <host>` | /open
 - Nmap Full TCP Port Scan: `nmap -p1-65535 --open <host>` | /open tcp
 - Nmap RDP TCP Check: `nmap -p3389 --open -sT <host>` | 3389/open tcp
 - Nmap RDP UDP Check: `nmap -p3389 --open -sU <host>` | 3389/open udp
