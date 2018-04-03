@@ -231,10 +231,10 @@ tool_names = [
 # Command that is used to initiate the tool (with parameters and extra params)
 tool_cmd   = [
                 ["host ",""],
-                ["wget -O temp_aspnet_config_err ","/%7C~.aspx"],
-                ["wget -O temp_wp_check ","/wp-admin"],
-                ["wget -O temp_drp_check ","/user"],
-                ["wget -O temp_joom_check ","/administrator"],
+                ["wget -O temp_aspnet_config_err --tries=1 ","/%7C~.aspx"],
+                ["wget -O temp_wp_check --tries=1 ","/wp-admin"],
+                ["wget -O temp_drp_check --tries=1 ","/user"],
+                ["wget -O temp_joom_check --tries=1 ","/administrator"],
                 ["uniscan -e -u ",""],
                 ["wafw00f ",""],
                 ["nmap -F --open ",""],
@@ -377,10 +377,10 @@ tool_resp   = [
 # Tool Status (Reponse Data + Response Code (if status check fails and you still got to push it + Legends)
 tool_status = [
                 ["has IPv6",1,proc_low," < 15s","ipv6",["not found","has IPv6"]],
-                ["Server Error",0,proc_low," < 30s","asp.netmisconf",["unable to resolve host address"]],
-                ["wp-login",0,proc_low," < 30s","wpcheck",["unable to resolve host address"]],
-                ["drupal",0,proc_low," < 30s","drupalcheck",["unable to resolve host address"]],
-                ["joomla",0,proc_low," < 30s","joomlacheck",["unable to resolve host address"]],
+                ["Server Error",0,proc_low," < 30s","asp.netmisconf",["unable to resolve host address","Connection timed out"]],
+                ["wp-login",0,proc_low," < 30s","wpcheck",["unable to resolve host address","Connection timed out"]],
+                ["drupal",0,proc_low," < 30s","drupalcheck",["unable to resolve host address","Connection timed out"]],
+                ["joomla",0,proc_low," < 30s","joomlacheck",["unable to resolve host address","Connection timed out"]],
                 ["[+]",0,proc_low," < 40s","robotscheck",["Use of uninitialized value in unpack at"]],
                 ["No WAF",0,proc_low," < 45s","wafcheck",["appears to be down"]],
                 ["tcp open",0,proc_med," <  2m","nmapopen",["Failed to resolve"]],
@@ -427,19 +427,19 @@ tool_status = [
                 ["[+]",0,proc_med," <  9m","uniscan4",["Use of uninitialized value in unpack at"]],
                 ["[+]",0,proc_med," <  8m","uniscan5",["Use of uninitialized value in unpack at"]],
                 ["[+]",0,proc_med," <  9m","uniscan6",["Use of uninitialized value in unpack at"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto1",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto2",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto3",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto4",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto5",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto6",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto7",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto8",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto9",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto10",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto11",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto12",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
-                ["0 item(s) reported",1,proc_low," < 35s","nikto13",["ERROR: Cannot resolve hostname","0 item(s) reported"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto1",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto2",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto3",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto4",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto5",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto6",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto7",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto8",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto9",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto10",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto11",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto12",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
+                ["0 item(s) reported",1,proc_low," < 35s","nikto13",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
                 ["0 item(s) reported",1,proc_low," < 35s","nikto14","ERROR: Cannot resolve hostname , 0 item(s) reported"],
                 ["#1",0,proc_high," < 30m","dnsmap_brute",["[+] 0 (sub)domains and 0 IP address(es) found"]]
             ]
@@ -587,7 +587,7 @@ else:
                         	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
                     else:
                     	if any(i in rs_tool_output_file for i in tool_status[tool][arg6]):
-                    		m = 1
+                    		m = 1 # This does nothing.
                     	else:
                         	print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
                         	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
