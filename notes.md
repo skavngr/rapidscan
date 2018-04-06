@@ -4,6 +4,7 @@
 - `apt-get install whois --force-yes`
 
 ### Features
+- Wapiti Checks: `wapiti <host> -f txt -o temp_wapiti` | Host:
 - Nmap SMB UDP Check: `nmap -p137,138 --open <host>` | /open
 - Nmap SMB TCP Check: `nmap -p445,137-139 --open <host>` | /open tcp 
 - ASP.Net Elmah AXD: `wget -O temp_aspnet_elmah_axd /elmah.axd` | Microsoft SQL Server Error Log 
@@ -13,7 +14,6 @@
 - Nmap RDP TCP Check: `nmap -p3389 --open -sT <host>` | 3389/open tcp
 - Nmap RDP UDP Check: `nmap -p3389 --open -sU <host>` | 3389/open udp
 - Nmap ORACLE Check: `nmap -p1521 --open <host>` | 1521/open tcp
-- Nmap UDP Check: `nmap -p161 -sU --open <host>` | 161/open udp
 - Nmap MySQL Check: `nmap -p3306 --open <host>` | 3306/open tcp
 - Nmap MS-SQL Server Check: `nmap -p1433 --open <host>` | 1433/open tcp
 - :thumbsup: ~Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp~
@@ -83,6 +83,3 @@
 
 - :thumbsup: ~Clear process traces and Ctrl+C hold crashes.~
 - :thumbsup: ~Implement Keyboard Interrupts and Instant Quit.~
-- WARNING: Could not connect (timeout); discarding corresponding tasks. | SSLyze
-- [-] Searching in Google:
-HTTPConnectionPool(host='www.google.com', port=80): Max retries exceeded with url: /search?num=100&start=0&hl=en&meta=&q=%40%22example.com%22 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb721708c>: Failed to establish a new connection: [Errno -2] Name or service not known',))
