@@ -4,6 +4,7 @@
 - `apt-get install whois --force-yes`
 
 ### Features
+- Nmap IIS WebDav: `nmap -T4 -p80 --script=http-iis-webdav-vuln <host>` | WebDAV is ENABLED
 - Wapiti Checks: `wapiti <host> -f txt -o temp_wapiti` | Host:
 - Nmap SMB UDP Check: `nmap -p137,138 --open <host>` | /open
 - Nmap SMB TCP Check: `nmap -p445,137-139 --open <host>` | /open tcp 
@@ -76,7 +77,6 @@
 - `dirbuster -u http://example.com -H` looks for a directory wordlist under the same directory.
 - `dnsenum --enum --noreverse example.com` google blocking your queries. (try somewhere else)
 - `thc-ssl-dos -l 100 192.168.1.208 443 --accept` gets only ips as input. write an alternative | `dig +short example.com | grep -m 1 ""`
-- `wapiti example.com` | does all checks and shows count of each vulnerabilities found in table.
 - `doona -t example.com -k -m HTTP` | 23/37   [POST / HTTP/1.0XAXAX] .........................................Problem (3) occured with POST / HTTP/1.0XAXAX (965)
 
 ### Program Exceptions Checks
