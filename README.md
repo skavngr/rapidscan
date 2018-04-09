@@ -16,6 +16,8 @@
 - saves a lot of time, **indeed a lot time!**.
 - **checks for same vulnerabilities with multiple tools** to help you **zero-in on false positives** effectively.
 - **legends** to help you understand which tests may take longer time, so you can `Ctrl+C` to skip if needed. (_~**under development**~_)
+- **association with OWASP Top 10 2017** on the list of vulnerabilities discovered. (_under development_)
+- **critical, high, medium, low and informational** classification of vulnerabilities. (_under development_)
 - **vulnerability definitions** guides you what the vulnerability actually is and the threat it can pose. (_under development_)
 - **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
 - **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development_)
