@@ -63,11 +63,32 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-    CRIT_BG = '\033[41m'
-    SAFE_BG = '\033[42m'
-    MEDIUM_BG = '\033[43m'
-    LOW_BG = '\033[44m'
     
+    BG_ERR_TXT 	= '\033[41m' # For critical errors and crashes
+
+    BG_HEAD_TXT = '\033[100m'
+    BG_ENDL_TXT = '\033[46m'
+
+
+    BG_CRIT_TXT = '\033[45m'
+    BG_HIGH_TXT = '\033[41m'
+    BG_MED_TXT  = '\033[43m'
+    BG_LOW_TXT  = '\033[44m'
+    BG_INFO_TXT = '\033[42m'
+
+
+def vul_info(val):
+	if val == 'c':
+		print bcolors.BG_CRIT_TXT+" critical "+bcolors.ENDC
+	elif val == 'h':
+		print bcolors.BG_HIGH_TXT+" high "+bcolors.ENDC
+	elif val == 'm':
+		print bcolors.BG_MED_TXT+" medium "+bcolors.ENDC
+	elif val == 'l':
+		print bcolors.BG_LOW_TXT+" low "+bcolors.ENDC
+	else:
+		print bcolors.BG_INFO_TXT+" info "+bcolors.ENDC
+
 
 # Legends  
 proc_high = bcolors.BADFAIL + "●" + bcolors.ENDC
@@ -128,14 +149,14 @@ class Spinner:
         try:
             while self.busy:
                 #sys.stdout.write(next(self.spinner_generator))
-                print bcolors.CRIT_BG+next(self.spinner_generator)+bcolors.ENDC,
+                print bcolors.BG_ERR_TXT+next(self.spinner_generator)+bcolors.ENDC,
                 sys.stdout.flush()
                 time.sleep(self.delay)
                 sys.stdout.write('\b')
                 sys.stdout.flush()
         except (KeyboardInterrupt, SystemExit):
             #clear()
-            print "\n\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
+            print "\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
 
     def start(self):
@@ -148,7 +169,7 @@ class Spinner:
             time.sleep(self.delay)
         except (KeyboardInterrupt, SystemExit):
             #clear()
-            print "\n\t"+ bcolors.CRIT_BG+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
+            print "\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
 # End ofloader/spinner class        
 
@@ -504,17 +525,21 @@ tools_fix = [
 							"Input validation and Output Sanitization can completely prevent Cross Site Scripting (XSS) attacks. XSS attacks can be mitigated in future by properly following a secure coding methodology. The following comprehensive resource provides detailed information on fixing this vulnerability. https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet"],
 					[29, "SSL related vulnerabilities breaks the confidentiality factor. An attacker may perform a MiTM attack, intrepret and eavesdrop the communication.",
 							"Proper implementation and upgraded version of SSL and TLS libraries are very critical when it comes to blocking SSL related vulnerabilities."],
-					[30, "Scanner found multiple vulnerabilities that an attacker may try to exploit the target",
-							"Refer to RS-Vulnerability-Report to view the complete information of the vulnerability."],
+					[30, "Particular Scanner found multiple vulnerabilities that an attacker may try to exploit the target.",
+							"Refer to RS-Vulnerability-Report to view the complete information of the vulnerability, once the scan gets completed."],
 					[31, "Attackers may gather more information from subdomains relating to the parent domain. Attackers may even find other services from the subdomains and try to learn the architecture of the target. There are even chances for the attacker to find vulnerabilities as the attack surface gets larger with more subdomains discovered.",
 							"It is sometimes wise to block sub domains like development, staging to he outside world, as it gives more information to the attacker about the tech stack. Complex naming practices also help in reducing the attack surface as attackers find hard to perform subdomain bruteforcing through dictionaries and wordlists."],
 					[32, "Through this deprecated protocol, an attacker may be able to perform MiTM and other complicated attacks.",
-							"It is highly recommended to stop using this service and it is far outdated."],
+							"It is highly recommended to stop using this service and it is far outdated. SSH can be used to replace TELNET. For more information, check this resource https://www.ssh.com/ssh/telnet"],
 					[33, "This protocol does not support secure communication and there are likely high chances for the attacker to eavesdrop the communication. Also, many FTP programs have exploits available in the web such that an attacker can directly crash the application or either get a SHELL access to that target.",
-							"Proper suggested fix is use an SSH protocol instead of FTP. It supports secure communication and chances for MiTM attacks are quite rare."]
-
-
-
+							"Proper suggested fix is use an SSH protocol instead of FTP. It supports secure communication and chances for MiTM attacks are quite rare."],
+					[34, "The StuxNet is level-3 worm that exposes critical information of the target organization. It was a cyber weapon that was designed to thwart the nuclear intelligence of Iran. Seriously wonder how it got here? Hope this isn't a false positive Nmap ;)",
+							"It is highly recommended to perform a complete rootkit scan on the host. For more information refer to this resource. https://www.symantec.com/security_response/writeup.jsp?docid=2010-071400-3123-99&tabid=3"],
+					[35, "WebDAV is supposed to contain multiple vulnerabilities. In some case, an attacker may hide a malicious DLL file in the WebDAV share however, and upon convincing the user to open a perfectly harmless and legitimate file, execute code under the context of that user",
+							"It is recommended to disable WebDAV. Some critical resource regarding disbling WebDAV can be found on this URL. https://www.networkworld.com/article/2202909/network-security/-webdav-is-bad---says-security-researcher.html"],
+					[36, "Attackers always do a fingerprint of any server before they launch an attack. Fingerprinting gives them information about the server type, content- they are serving, last modification times etc, this gives an attacker to learn more information about the target",
+							"A good practice is to obfuscate the information to outside world. Doing so, the attackers will have tough time understanding the server's tech stack and therefore leverage an attack."],
+					[37, ""]
 			]
 
 
@@ -597,7 +622,7 @@ else:
         os.system('clear')
         os.system('setterm -cursor off')
         logo()
-        print bcolors.LOW_BG+"[ Checking Available Security Scanning Tools Phase... Initiated. ]"+bcolors.ENDC
+        print bcolors.BG_HEAD_TXT+"[ Checking Available Security Scanning Tools Phase... Initiated. ]"+bcolors.ENDC
         unavail_tools = 0
         unavail_tools_names = list()
         while (rs_avail_tools < len(tools_precheck)):
@@ -607,7 +632,7 @@ else:
 				output, err = p.communicate()
 				val = output + err
 			except:
-				print "\t"+bcolors.CRIT_BG+"RapidScan was terminated abruptly..."+bcolors.ENDC
+				print "\t"+bcolors.BG_ERR_TXT+"RapidScan was terminated abruptly..."+bcolors.ENDC
 				sys.exit(1)
 			if "not found" in val:
 				print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
@@ -625,9 +650,9 @@ else:
         	print "\t"+bcolors.OKGREEN+"All Scanning Tools are available. All vulnerability checks will be performed by RapidScan."+bcolors.ENDC
         else:
         	print "\t"+bcolors.WARNING+"Some of these tools "+bcolors.BADFAIL+str(unavail_tools_names)+bcolors.ENDC+bcolors.WARNING+" are unavailable. RapidScan can still perform tests by excluding these tools from the tests. Please install these tools to fully utilize the functionality of RapidScan."+bcolors.ENDC
-        print bcolors.SAFE_BG+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC
+        print bcolors.BG_ENDL_TXT+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC
         print "\n"
-        print bcolors.LOW_BG+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
+        print bcolors.BG_HEAD_TXT+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
         #while (tool < 5):
         while(tool < len(tool_names)):
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
@@ -678,11 +703,11 @@ else:
                         
             tool=tool+1
         
-        print bcolors.SAFE_BG+"[ Preliminary Scan Phase Completed. ]"+bcolors.ENDC
+        print bcolors.BG_ENDL_TXT+"[ Preliminary Scan Phase Completed. ]"+bcolors.ENDC
         print "\n"
 
         #################### Report & Documentation Phase ###########################
-        print bcolors.LOW_BG+"[ Report Generation Phase Initiated. ]"+bcolors.ENDC
+        print bcolors.BG_HEAD_TXT+"[ Report Generation Phase Initiated. ]"+bcolors.ENDC
         if len(rs_vul_list)==0:
         	print "\t"+bcolors.OKGREEN+"No Vulnerabilities Detected."+bcolors.ENDC
         else:
@@ -723,7 +748,7 @@ else:
         print "\tTotal Time Elapsed for the Scan             : "+bcolors.BOLD+bcolors.OKBLUE+display_time(int(rs_total_elapsed))+bcolors.ENDC
         print "\n"
         print "\tFor Debugging Purposes, You can view the complete output generated by all the tools named "+bcolors.OKBLUE+"`RS-Debug-ScanLog`"+bcolors.ENDC+" under the same directory."
-        print bcolors.SAFE_BG+"[ Report Generation Phase Completed. ]"+bcolors.ENDC
+        print bcolors.BG_ENDL_TXT+"[ Report Generation Phase Completed. ]"+bcolors.ENDC
 
         os.system('setterm -cursor on')
         os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
