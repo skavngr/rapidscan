@@ -65,11 +65,8 @@ class bcolors:
     UNDERLINE = '\033[4m'
     
     BG_ERR_TXT 	= '\033[41m' # For critical errors and crashes
-
     BG_HEAD_TXT = '\033[100m'
     BG_ENDL_TXT = '\033[46m'
-
-
     BG_CRIT_TXT = '\033[45m'
     BG_HIGH_TXT = '\033[41m'
     BG_MED_TXT  = '\033[43m'
@@ -78,17 +75,18 @@ class bcolors:
 
 
 def vul_info(val):
+	result =''
 	if val == 'c':
-		print bcolors.BG_CRIT_TXT+" critical "+bcolors.ENDC
+		result = bcolors.BG_CRIT_TXT+" critical "+bcolors.ENDC
 	elif val == 'h':
-		print bcolors.BG_HIGH_TXT+" high "+bcolors.ENDC
+		result = bcolors.BG_HIGH_TXT+" high "+bcolors.ENDC
 	elif val == 'm':
-		print bcolors.BG_MED_TXT+" medium "+bcolors.ENDC
+		result = bcolors.BG_MED_TXT+" medium "+bcolors.ENDC
 	elif val == 'l':
-		print bcolors.BG_LOW_TXT+" low "+bcolors.ENDC
+		result = bcolors.BG_LOW_TXT+" low "+bcolors.ENDC
 	else:
-		print bcolors.BG_INFO_TXT+" info "+bcolors.ENDC
-
+		result = bcolors.BG_INFO_TXT+" info "+bcolors.ENDC
+	return result
 
 # Legends  
 proc_high = bcolors.BADFAIL + "●" + bcolors.ENDC
@@ -320,74 +318,74 @@ tool_cmd   = [
             ]
 
 
-# Tool Responses (Begins)
+# Tool Responses (Begins) [Reponses + Severity (c - critical | h - high | m - medium | l - low | i - informational)]
 tool_resp   = [
-                ["[-] Does not have an IPv6 Address. It is good to have one."],
-                ["[-] ASP.Net is misconfigured to throw server stack errors on screen."],
-                ["[-] WordPress Installation Found. Check for vulnerabilities corresponds to that version."],
-                ["[-] Drupal Installation Found. Check for vulnerabilities corresponds to that version."],
-                ["[-] Joomla Installation Found. Check for vulnerabilities corresponds to that version."],
-                ["[-] robots.txt/sitemap.xml found. Check those files for any information."],
-                ["[-] No Web Application Firewall Detected"],
-                ["[-] Some ports are open. Perform a full-scan manually."],
-                ["[-] Email Addresses Found."],
-                ["[-] Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately."],
-                ["[-] Zone Transfer Successful using fierce. Reconfigure DNS immediately."],
-                ["[-] Zone Transfer Successful using dnswalk. Reconfigure DNS immediately."],
-                ["[-] Whois Information Publicly Available."],
-                ["[-] XSS Protection Filter is Disabled."],
-                ["[-] Vulnerable to Slowloris Denial of Service."],
-                ["[-] HEARTBLEED Vulnerability Found with SSLyze."],
-                ["[-] HEARTBLEED Vulnerability Found with Nmap."],
-                ["[-] POODLE Vulnerability Detected."],
-                ["[-] OpenSSL CCS Injection Detected."],
-                ["[-] FREAK Vulnerability Detected."],
-                ["[-] LOGJAM Vulnerability Detected."],
-                ["[-] Unsuccessful OCSP Response."],
-                ["[-] Server supports Deflate Compression."],
-                ["[-] Secure Renegotiation is unsupported."],
-                ["[-] Secure Resumption unsupported with (Sessions IDs/TLS Tickets)."],
-                ["[-] No DNS/HTTP based Load Balancers Found."],
-                ["[-] Domain is spoofed/hijacked."],
-                ["[-] HEARTBLEED Vulnerability Found with Golismero."],
-                ["[-] Open Files Found with Golismero BruteForce."],
-                ["[-] Open Directories Found with Golismero BruteForce."],
-                ["[-] DB Banner retrieved with SQLMap."],
-                ["[-] Open Directories Found with DirB."],
-                ["[-] XSSer found XSS vulnerabilities."],
-                ["[-] Found SSL related vulnerabilities with Golismero."],
-                ["[-] Zone Transfer Successful with Golismero. Reconfigure DNS immediately."],
-                ["[-] Golismero Nikto Plugin found vulnerabilities."],
-                ["[-] Found Subdomains with Golismero."],
-                ["[-] Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately."],
-                ["[-] Found Subdomains with Fierce."],
-                ["[-] Email Addresses discovered with DMitry."],
-                ["[-] Subdomains discovered with DMitry."],
-                ["[-] Telnet Service Detected."],
-                ["[-] FTP Service Detected."],
-                ["[-] Vulnerable to STUXNET."],
-                ["[-] WebdAV Enabled."],
-                ["[-] Found some vulnerabilities."],
-                ["[-] Open Files Found with Uniscan."],
-                ["[-] Open Directories Found with Uniscan."],
-                ["[-] Vulnerable to Stress Tests."],
-                ["[-] Uniscan detected possible LFI, RFI or RCE."],
-                ["[-] Uniscan detected possible XSS, SQLi, BSQLi."],
-                ["[-] Apache Expect XSS Header not present."],
-                ["[-] Found Subdomains with Nikto."],
-                ["[-] Webserver vulnerable to Shellshock Bug."],
-                ["[-] Webserver leaks Internal IP."],
-                ["[-] HTTP PUT DEL Methods Enabled."],
-                ["[-] Some vulnerable headers exposed."],
-                ["[-] Webserver vulnerable to MS10-070."],
-                ["[-] Some issues found on the Webserver."],
-                ["[-] Webserver is Outdated."],
-                ["[-] Some issues found with HTTP Options."],
-                ["[-] CGI Directories Enumerated."],
-                ["[-] Vulnerabilities reported in SSL Scans."],
-                ["[-] Interesting Files Detected."],
-                ["[-] Injectable Paths Detected."],
-                ["[-] Found Subdomains with DNSMap."]
+                ["Does not have an IPv6 Address. It is good to have one.","i"],
+                ["ASP.Net is misconfigured to throw server stack errors on screen.","m"],
+                ["WordPress Installation Found. Check for vulnerabilities corresponds to that version.","l"],
+                ["Drupal Installation Found. Check for vulnerabilities corresponds to that version.","l"],
+                ["Joomla Installation Found. Check for vulnerabilities corresponds to that version.","l"],
+                ["robots.txt/sitemap.xml found. Check those files for any information.","i"],
+                ["No Web Application Firewall Detected","m"],
+                ["Some ports are open. Perform a full-scan manually.","m"],
+                ["Email Addresses Found.","l"],
+                ["Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately.","h"],
+                ["Zone Transfer Successful using fierce. Reconfigure DNS immediately.","h"],
+                ["Zone Transfer Successful using dnswalk. Reconfigure DNS immediately.","h"],
+                ["Whois Information Publicly Available.","i"],
+                ["XSS Protection Filter is Disabled.","m"],
+                ["Vulnerable to Slowloris Denial of Service.","c"],
+                ["HEARTBLEED Vulnerability Found with SSLyze.","h"],
+                ["HEARTBLEED Vulnerability Found with Nmap.","h"],
+                ["POODLE Vulnerability Detected.","h"],
+                ["OpenSSL CCS Injection Detected.","h"],
+                ["FREAK Vulnerability Detected.","h"],
+                ["LOGJAM Vulnerability Detected.","h"],
+                ["Unsuccessful OCSP Response.","m"],
+                ["Server supports Deflate Compression.","m"],
+                ["Secure Renegotiation is unsupported.","m"],
+                ["Secure Resumption unsupported with (Sessions IDs/TLS Tickets).","m"],
+                ["No DNS/HTTP based Load Balancers Found.","m"],
+                ["Domain is spoofed/hijacked.","h"],
+                ["HEARTBLEED Vulnerability Found with Golismero.","h"],
+                ["Open Files Found with Golismero BruteForce.","m"],
+                ["Open Directories Found with Golismero BruteForce.","m"],
+                ["DB Banner retrieved with SQLMap.","m"],
+                ["Open Directories Found with DirB.","m"],
+                ["XSSer found XSS vulnerabilities.","c"],
+                ["Found SSL related vulnerabilities with Golismero.","m"],
+                ["Zone Transfer Successful with Golismero. Reconfigure DNS immediately.","h"],
+                ["Golismero Nikto Plugin found vulnerabilities.","m"],
+                ["Found Subdomains with Golismero.","m"],
+                ["Zone Transfer Successful using DNSEnum. Reconfigure DNS immediately.","h"],
+                ["Found Subdomains with Fierce.","m"],
+                ["Email Addresses discovered with DMitry.","l"],
+                ["Subdomains discovered with DMitry.","m"],
+                ["Telnet Service Detected.","h"],
+                ["FTP Service Detected.","c"],
+                ["Vulnerable to STUXNET.","c"],
+                ["WebdAV Enabled.","h"],
+                ["Found some information through Fingerprinting.","l"],
+                ["Open Files Found with Uniscan.","m"],
+                ["Open Directories Found with Uniscan.","m"],
+                ["Vulnerable to Stress Tests.","h"],
+                ["Uniscan detected possible LFI, RFI or RCE.","h"],
+                ["Uniscan detected possible XSS, SQLi, BSQLi.","h"],
+                ["Apache Expect XSS Header not present.","m"],
+                ["Found Subdomains with Nikto.","m"],
+                ["Webserver vulnerable to Shellshock Bug.","c"],
+                ["Webserver leaks Internal IP.","m"],
+                ["HTTP PUT DEL Methods Enabled.","m"],
+                ["Some vulnerable headers exposed.","m"],
+                ["Webserver vulnerable to MS10-070.","h"],
+                ["Some issues found on the Webserver.","m"],
+                ["Webserver is Outdated.","h"],
+                ["Some issues found with HTTP Options.","l"],
+                ["CGI Directories Enumerated.","l"],
+                ["Vulnerabilities reported in SSL Scans.","m"],
+                ["Interesting Files Detected.","m"],
+                ["Injectable Paths Detected.","m"],
+                ["Found Subdomains with DNSMap.","m"]
                 
             ]
 
@@ -682,13 +680,13 @@ else:
                     rs_tool_output_file = open(temp_file).read()
                     if tool_status[tool][arg2] == 0:
                     	if tool_status[tool][arg1] in rs_tool_output_file:
-                        	print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                        	print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
                         	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
                     else:
                     	if any(i in rs_tool_output_file for i in tool_status[tool][arg6]):
                     		m = 1 # This does nothing.
                     	else:
-                        	print "\t"+bcolors.BADFAIL + tool_resp[tool][arg1] + bcolors.ENDC
+                        	print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
                         	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
             else:
                     runTest = 1
