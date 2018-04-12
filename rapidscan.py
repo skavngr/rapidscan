@@ -109,7 +109,14 @@ def helper():
         print "--------"
         print "\t["+proc_high+"]: Scan process may take longer times (not predictable)."
         print "\t["+proc_med+"]: Scan process may take less than 10 minutes."
-        print "\t["+proc_low+"]: Scan process may take less than a minute or two.\n"
+        print "\t["+proc_low+"]: Scan process may take less than a minute or two."
+        print bcolors.OKBLUE+"Vulnerability Information:"+bcolors.ENDC
+        print "--------------------------"
+        print "\t"+vul_info('c')+": Requires immediate attention as it may lead to compromise."
+        print "\t"+vul_info('h')+"    : May not lead to an immediate compromise, but there are high chances of probability."
+        print "\t"+vul_info('m')+"  : Attacker may correlate multiple vulnerabilities of this type to launch a sophisticated attack."
+        print "\t"+vul_info('l')+"     : Not a serious issue, but it is recommended to attend the finding."
+        print "\t"+vul_info('i')+"    : Not classified as a vulnerability, just a useful informational alert to be considered.\n"
         
 
 # Clears Line
