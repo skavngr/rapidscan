@@ -440,7 +440,7 @@ tool_status = [
                 ["Nikto found 0 vulnerabilities",1,proc_med," <  4m","golism8",["Cannot resolve domain name","Nikto found 0 vulnerabilities"]],
                 ["Possible subdomain leak",0,proc_high," < 30m","golism9",["Cannot resolve domain name"]],
                 ["AXFR record query failed:",1,proc_low," < 45s","dnsenumzt",["NS record query failed:","AXFR record query failed"]],
-                ["Found 0 entries",1,proc_high," < 75m","fierce2",["Found 0 entries"]],
+                ["Found 0 entries",1,proc_high," < 75m","fierce2",["Found 0 entries","is gimp"]],
                 ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1",["Unable to locate Host IP addr","Found 0 E-Mail(s)"]],
                 ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2",["Unable to locate Host IP addr"]],
                 ["23/open tcp",0,proc_low," < 15s","nmaptelnet",["Failed to resolve"]],
