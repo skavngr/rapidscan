@@ -440,7 +440,7 @@ tool_status = [
                 ["Nikto found 0 vulnerabilities",1,proc_med," <  4m","golism8",["Cannot resolve domain name","Nikto found 0 vulnerabilities"]],
                 ["Possible subdomain leak",0,proc_high," < 30m","golism9",["Cannot resolve domain name"]],
                 ["AXFR record query failed:",1,proc_low," < 45s","dnsenumzt",["NS record query failed:","AXFR record query failed","no NS record for"]],
-                ["Found 0 entries",1,proc_high," < 75m","fierce2",["Found 0 entries"]],
+                ["Found 0 entries",1,proc_high," < 75m","fierce2",["Found 0 entries","is gimp"]],
                 ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1",["Unable to locate Host IP addr","Found 0 E-Mail(s)"]],
                 ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2",["Unable to locate Host IP addr","Found 0 possible subdomain(s)"]],
                 ["23/open tcp",0,proc_low," < 15s","nmaptelnet",["Failed to resolve"]],
@@ -663,6 +663,7 @@ else:
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
             if tool_names[tool][arg4] == 0:
             	print bcolors.WARNING+"...Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
+		rs_skipped_checks = rs_skipped_checks + 1
             	tool = tool + 1
             	continue
             spinner.start()

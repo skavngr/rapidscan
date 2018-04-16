@@ -22,11 +22,12 @@
 - **remediations** tells you how to plug/fix the found vulnerability. (_under development_)
 - **executive summary** gives you an overall context of the scan performed with critical, high, low and informational issues discovered. (_under development_)
 - **artificial intelligence** to deploy tools automatically depending upon the issues found. for eg; automates the launch of `wpscan` and `plecost` tools when a wordpress installation is found. (_under development_)
+- **detailed comprehensive report** in a portable document format (*.pdf) with complete details of the scans and tools used. (_under development_)
 
 ---
 ### FYI:
-- _program is still under development, **works** and currently supports **66** vulnerability checks._
-- _parallel processing is not yet implemented, may be coded as more checks gets introduced._
+- _program is still under development, **works** and currently supports **66** vulnerability tests._
+- _parallel processing is not yet implemented, may be coded as more tests gets introduced._
 
 ## Vulnerability Checks
 - :heavy_check_mark: DNS/HTTP Load Balancers & Web Application Firewalls.
@@ -43,6 +44,7 @@
 ## Requirements
 - Python 2.7
 - Kali OS (_**Preferred**, as it is shipped with almost all the tools_)
+<br>For other OS flavours, working on a docker support. Hang on.
 
 ## Usage
 **Download the script and give executable permissions**
