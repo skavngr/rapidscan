@@ -250,7 +250,21 @@ tool_names = [
                 ["nikto_ssl","Nikto - Performs SSL Checks.","nikto",1],
                 ["nikto_sitefiles","Nikto - Checks for any interesting files on the Domain.","nikto",1],
                 ["nikto_paths","Nikto - Checks for Injectable Paths.","nikto",1],
-                ["dnsmap_brute","DNSMap - Brutes Subdomains.","dnsmap",1]
+                ["dnsmap_brute","DNSMap - Brutes Subdomains.","dnsmap",1],
+                ["nmap_sqlserver","Nmap - Checks for MS-SQL Server DB","nmap",1],
+                ["nmap_mysql", "Nmap - Checks for MySQL DB","nmap",1],
+                ["nmap_oracle", "Nmap - Checks for ORACLE DB","nmap",1],
+                ["nmap_rdp_udp","Nmap - Checks for Remote Desktop Service over UDP","nmap",1],
+                ["nmap_rdp_tcp","Nmap - Checks for Remote Desktop Service over TCP","nmap",1],
+                ["nmap_full_ps_tcp","Nmap - Performs a Full TCP Port Scan","nmap",1],
+                ["nmap_full_ps_udp","Nmap - Performs a Full UDP Port Scan","nmap",1],
+                ["nmap_snmp","Nmap - Checks for SNMP Service","nmap",1],
+                ["elmah_check","Checks for ASP.net Elmah Logger","wget",1],
+                ["nmap_tcp_smb","Checks for SMB Service over TCP","nmap",1],
+                ["nmap_udp_smb","Checks for SMB Service over UDP","nmap",1],
+                ["wapiti","Wapiti - Checks for SQLi, RCE, XSS and Other Vulnerabilities","wapiti",1],
+                ["nmap_iis","Nmap - Checks for IIS WebDAV","nmap",1],
+                ["whatweb","WhatWeb - Checks for X-XSS Protection Header","whatweb",1]
             ]
 
 
@@ -321,7 +335,21 @@ tool_cmd   = [
                 ["nikto -Plugins 'ssl' -host ",""],
                 ["nikto -Plugins 'sitefiles' -host ",""],
                 ["nikto -Plugins 'paths' -host ",""],
-                ["dnsmap ",""]
+                ["dnsmap ",""],
+                ["nmap -p1433 --open ",""],
+                ["nmap -p3306 --open ",""],
+                ["nmap -p1521 --open ",""],
+                ["nmap -p3389 --open -sU ",""],
+                ["nmap -p3389 --open -sT ",""],
+                ["nmap -p1-65535 --open ",""],
+                ["nmap -p1-65535 -sU --open ",""],
+                ["nmap -p161 -sU --open ",""],
+                ["wget -O temp_aspnet_elmah_axd --tries=1 ","/elmah.axd"],
+                ["nmap -p445,137-139 --open ",""],
+                ["nmap -p137,138 --open ",""],
+                ["wapiti "," -f txt -o temp_wapiti"],
+                ["nmap -p80 --script=http-iis-webdav-vuln ",""],
+                ["whatweb "," -a 1"]
             ]
 
 
@@ -392,7 +420,23 @@ tool_resp   = [
                 ["Vulnerabilities reported in SSL Scans.","m"],
                 ["Interesting Files Detected.","m"],
                 ["Injectable Paths Detected.","m"],
-                ["Found Subdomains with DNSMap.","m"]
+                ["Found Subdomains with DNSMap.","m"],
+                ["MS-SQL DB Service Detected.","l"],
+                ["MySQL DB Service Detected.","l"],
+                ["ORACLE DB Service Detected.","l"],
+                ["RDP Server Detected over UDP.","h"],
+                ["RDP Server Detected over TCP.","h"],
+                ["TCP Ports are Open","l"],
+                ["UDP Ports are Open","l"],
+                ["SNMP Service Detected.","m"],
+                ["Elmah is Configured.","m"],
+                ["SMB Ports are Open over TCP","m"],
+                ["SMB Ports are Open over UDP","m"],
+                ["Wapiti discovered a range of vulnerabilities","h"],
+                ["IIS WebDAV is Enabled","m"],
+                ["X-XSS Protection is not Present","m"]
+
+
                 
             ]
 
@@ -443,9 +487,9 @@ tool_status = [
                 ["Found 0 entries",1,proc_high," < 75m","fierce2",["Found 0 entries","is gimp"]],
                 ["Found 0 E-Mail(s)",1,proc_low," < 30s","dmitry1",["Unable to locate Host IP addr","Found 0 E-Mail(s)"]],
                 ["Found 0 possible subdomain(s)",1,proc_low," < 35s","dmitry2",["Unable to locate Host IP addr","Found 0 possible subdomain(s)"]],
-                ["23/open tcp",0,proc_low," < 15s","nmaptelnet",["Failed to resolve"]],
-                ["21/open tcp",0,proc_low," < 15s","nmapftp",["Failed to resolve"]],
-                ["445/open tcp",0,proc_low," < 20s","nmapstux",["Failed to resolve"]],
+                ["23/open",0,proc_low," < 15s","nmaptelnet",["Failed to resolve"]],
+                ["21/open",0,proc_low," < 15s","nmapftp",["Failed to resolve"]],
+                ["445/open",0,proc_low," < 20s","nmapstux",["Failed to resolve"]],
                 ["SUCCEED",0,proc_low," < 30s","webdav",["is not DAV enabled or not accessible."]],
                 ["No vulnerabilities found",1,proc_low," < 15s","golism10",["Cannot resolve domain name","No vulnerabilities found"]],
                 ["[+]",0,proc_med," <  2m","uniscan2",["Use of uninitialized value in unpack at"]],
@@ -467,7 +511,24 @@ tool_status = [
                 ["0 item(s) reported",1,proc_low," < 35s","nikto12",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
                 ["0 item(s) reported",1,proc_low," < 35s","nikto13",["ERROR: Cannot resolve hostname","0 item(s) reported","No web server found","0 host(s) tested"]],
                 ["0 item(s) reported",1,proc_low," < 35s","nikto14","ERROR: Cannot resolve hostname , 0 item(s) reported"],
-                ["#1",0,proc_high," < 30m","dnsmap_brute",["[+] 0 (sub)domains and 0 IP address(es) found"]]
+                ["#1",0,proc_high," < 30m","dnsmap_brute",["[+] 0 (sub)domains and 0 IP address(es) found"]],
+                ["1433/open",0,proc_low," < 15s","nmapmssql",["Failed to resolve"]],
+                ["3306/open",0,proc_low," < 15s","nmapmysql",["Failed to resolve"]],
+                ["1521/open",0,proc_low," < 15s","nmaporacle",["Failed to resolve"]],
+                ["3389/open",0,proc_low," < 15s","nmapudprdp",["Failed to resolve"]],
+                ["3389/open",0,proc_low," < 15s","nmaptcprdp",["Failed to resolve"]],
+                ["open",0,proc_high," > 50m","nmapfulltcp",["Failed to resolve"]],
+                ["open",0,proc_high," > 75m","nmapfulludp",["Failed to resolve"]],
+                ["161/open",0,proc_low," < 30s","nmapsnmp",["Failed to resolve"]],
+                ["Microsoft SQL Server Error Log",0,proc_low," < 30s","elmahxd",["unable to resolve host address","Connection timed out"]],
+                ["open",0,proc_low," < 20s","nmaptcpsmb",["Failed to resolve"]],
+                ["open",0,proc_low," < 20s","nmapudpsmb",["Failed to resolve"]],
+                ["Host:",0,proc_med," < 5m","wapiti",["none"]],
+                ["WebDAV is ENABLED",0,proc_low," < 40s","nmapwebdaviis",["Failed to resolve"]],
+                ["X-XSS-Protection[1",1,proc_med," < 3m","whatweb",["Timed out","Socket error","X-XSS-Protection[1"]]
+
+
+
             ]
 
 # Vulnerabilities and Remediation
@@ -551,7 +612,7 @@ tools_fix = [
 
 # Tool Set
 tools_precheck = [
-					["wapiti"], ["w3af"], ["nmap"], ["golismero"], ["skipfish"], ["nmap"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theharvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
+					["wapiti"], ["whatweb"], ["w3af"], ["nmap"], ["golismero"], ["skipfish"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theharvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
 			     ]
 
 # Shuffling Scan Order (starts)
