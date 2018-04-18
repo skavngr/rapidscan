@@ -4,6 +4,7 @@
 - `apt-get install whois --force-yes`
 
 ### Features
+- WhatWeb X-XSS Protection Header Check: `whatweb example.com -a 1` | X-XSS-Protection[1
 - Nmap IIS WebDav: `nmap -T4 -p80 --script=http-iis-webdav-vuln <host>` | WebDAV is ENABLED
 - Wapiti Checks: `wapiti <host> -f txt -o temp_wapiti` | Host:
 - Nmap SMB UDP Check: `nmap -p137,138 --open <host>` | /open
@@ -69,6 +70,7 @@
 - :thumbsup: ~Heartbleed Check with NMap: `nmap -p 443 --script ssl-heartbleed` | check for VULNERABLE~
 
 ### Dig Deeper
+- if snmp found, do `braa`
 - research `dnsmap` log for internal ip leak. [+] 20 (sub)domains and 20 IP address(es) found [+] 4 internal IP address(es) disclosed [+] completion time: 1568 second(s)
 - `amap, xsser, golismero, sslyze, bed, doona, grabber, nikto -HELP,` 
 - Unavailable Tools: `sublist3r, w3af, goofile, crowbar`
