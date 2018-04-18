@@ -26,7 +26,7 @@
 
 ---
 ### FYI:
-- _program is still under development, **works** and currently supports **66** vulnerability tests._
+- _program is still under development, **works** and currently supports **80** vulnerability tests._
 - _parallel processing is not yet implemented, may be coded as more tests gets introduced._
 
 ## Vulnerability Checks
