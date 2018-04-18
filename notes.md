@@ -4,20 +4,20 @@
 - `apt-get install whois --force-yes`
 
 ### Features
-- WhatWeb X-XSS Protection Header Check: `whatweb example.com -a 1` | X-XSS-Protection[1
-- Nmap IIS WebDav: `nmap -T4 -p80 --script=http-iis-webdav-vuln <host>` | WebDAV is ENABLED
-- Wapiti Checks: `wapiti <host> -f txt -o temp_wapiti` | Host:
-- Nmap SMB UDP Check: `nmap -p137,138 --open <host>` | /open
-- Nmap SMB TCP Check: `nmap -p445,137-139 --open <host>` | /open tcp 
-- ASP.Net Elmah AXD: `wget -O temp_aspnet_elmah_axd /elmah.axd` | Microsoft SQL Server Error Log 
-- Nmap SNMP Check: `nmap -p161 -sU --open <host>` | 161/open udp
-- Nmap Full UDP Port Scan: `nmap -p1-65535 -sU --open <host>` | /open
-- Nmap Full TCP Port Scan: `nmap -p1-65535 --open <host>` | /open tcp
-- Nmap RDP TCP Check: `nmap -p3389 --open -sT <host>` | 3389/open tcp
-- Nmap RDP UDP Check: `nmap -p3389 --open -sU <host>` | 3389/open udp
-- Nmap ORACLE Check: `nmap -p1521 --open <host>` | 1521/open tcp
-- Nmap MySQL Check: `nmap -p3306 --open <host>` | 3306/open tcp
-- Nmap MS-SQL Server Check: `nmap -p1433 --open <host>` | 1433/open tcp
+- :thumbsup: ~WhatWeb X-XSS Protection Header Check: `whatweb example.com -a 1` | X-XSS-Protection[1~
+- :thumbsup: ~Nmap IIS WebDav: `nmap -T4 -p80 --script=http-iis-webdav-vuln <host>` | WebDAV is ENABLED~
+- :thumbsup: ~Wapiti Checks: `wapiti <host> -f txt -o temp_wapiti` | Host:~
+- :thumbsup: ~Nmap SMB UDP Check: `nmap -p137,138 --open <host>` | /open~
+- :thumbsup: ~Nmap SMB TCP Check: `nmap -p445,137-139 --open <host>` | /open tcp~
+- :thumbsup: ~ASP.Net Elmah AXD: `wget -O temp_aspnet_elmah_axd /elmah.axd` | Microsoft SQL Server Error Log~
+- :thumbsup: ~Nmap SNMP Check: `nmap -p161 -sU --open <host>` | 161/open udp~
+- :thumbsup: ~Nmap Full UDP Port Scan: `nmap -p1-65535 -sU --open <host>` | /open~
+- :thumbsup: ~Nmap Full TCP Port Scan: `nmap -p1-65535 --open <host>` | /open tcp~
+- :thumbsup: ~Nmap RDP TCP Check: `nmap -p3389 --open -sT <host>` | 3389/open tcp~
+- :thumbsup: ~Nmap RDP UDP Check: `nmap -p3389 --open -sU <host>` | 3389/open udp~
+- :thumbsup: ~Nmap ORACLE Check: `nmap -p1521 --open <host>` | 1521/open tcp~
+- :thumbsup: ~Nmap MySQL Check: `nmap -p3306 --open <host>` | 3306/open tcp~
+- :thumbsup: ~Nmap MS-SQL Server Check: `nmap -p1433 --open <host>` | 1433/open tcp~
 - :thumbsup: ~Nmap TELNET Check: `nmap -p23 --open <host>` | 23/open tcp~
 - :thumbsup: ~Nmap FTP Check: `nmap -p21 --open <host>` | 21/open tcp~
 - :thumbsup: ~Nmap STUXNET Check: `nmap --script stuxnet-detect -p 445 <host>` | 445/open tcp~
