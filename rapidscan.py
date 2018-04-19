@@ -112,11 +112,11 @@ def helper():
         print "\t["+proc_low+"]: Scan process may take less than a minute or two."
         print bcolors.OKBLUE+"Vulnerability Information:"+bcolors.ENDC
         print "--------------------------"
-        print "\t"+vul_info('c')+": Requires immediate attention as it may lead to compromise."
+        print "\t"+vul_info('c')+": Requires immediate attention as it may lead to compromise or service unavailability."
         print "\t"+vul_info('h')+"    : May not lead to an immediate compromise, but there are high chances of probability."
         print "\t"+vul_info('m')+"  : Attacker may correlate multiple vulnerabilities of this type to launch a sophisticated attack."
         print "\t"+vul_info('l')+"     : Not a serious issue, but it is recommended to attend the finding."
-        print "\t"+vul_info('i')+"    : Not classified as a vulnerability, just a useful informational alert to be considered.\n"
+        print "\t"+vul_info('i')+"    : Not classified as a vulnerability, simply an useful informational alert to be considered.\n"
         
 
 # Clears Line
@@ -259,7 +259,7 @@ tool_names = [
                 ["nmap_full_ps_tcp","Nmap - Performs a Full TCP Port Scan","nmap",1],
                 ["nmap_full_ps_udp","Nmap - Performs a Full UDP Port Scan","nmap",1],
                 ["nmap_snmp","Nmap - Checks for SNMP Service","nmap",1],
-                ["elmah_check","Checks for ASP.net Elmah Logger","wget",1],
+                ["aspnet_elmah_axd","Checks for ASP.net Elmah Logger","wget",1],
                 ["nmap_tcp_smb","Checks for SMB Service over TCP","nmap",1],
                 ["nmap_udp_smb","Checks for SMB Service over UDP","nmap",1],
                 ["wapiti","Wapiti - Checks for SQLi, RCE, XSS and Other Vulnerabilities","wapiti",1],
@@ -409,7 +409,7 @@ tool_resp   = [
                 ["Apache Expect XSS Header not present.","m"],
                 ["Found Subdomains with Nikto.","m"],
                 ["Webserver vulnerable to Shellshock Bug.","c"],
-                ["Webserver leaks Internal IP.","m"],
+                ["Webserver leaks Internal IP.","l"],
                 ["HTTP PUT DEL Methods Enabled.","m"],
                 ["Some vulnerable headers exposed.","m"],
                 ["Webserver vulnerable to MS10-070.","h"],
@@ -419,7 +419,7 @@ tool_resp   = [
                 ["CGI Directories Enumerated.","l"],
                 ["Vulnerabilities reported in SSL Scans.","m"],
                 ["Interesting Files Detected.","m"],
-                ["Injectable Paths Detected.","m"],
+                ["Injectable Paths Detected.","l"],
                 ["Found Subdomains with DNSMap.","m"],
                 ["MS-SQL DB Service Detected.","l"],
                 ["MySQL DB Service Detected.","l"],
@@ -460,17 +460,17 @@ tool_status = [
                 ["0 errors",0,proc_low," < 35s","dnswalkzt",["!!!0 failures, 0 warnings, 3 errors."]],
                 ["Admin Email:",0,proc_low," < 25s","whois",["No match for domain"]],
                 ["XSS filter is disabled",0,proc_low," < 20s","nmapxssh",["Failed to resolve"]],
-                ["vulnerable",0,proc_high," < 45m","nmapdos",["Failed to resolve"]],
+                ["VULNERABLE",0,proc_high," < 45m","nmapdos",["Failed to resolve"]],
                 ["Server is vulnerable to Heartbleed",0,proc_low," < 40s","sslyzehb",["Could not resolve hostname"]],
-                ["vulnerable",0,proc_low," < 30s","nmap1",["Failed to resolve"]],
-                ["vulnerable",0,proc_low," < 35s","nmap2",["Failed to resolve"]],
-                ["vulnerable",0,proc_low," < 35s","nmap3",["Failed to resolve"]],
-                ["vulnerable",0,proc_low," < 30s","nmap4",["Failed to resolve"]],
-                ["vulnerable",0,proc_low," < 35s","nmap5",["Failed to resolve"]],
+                ["VULNERABLE",0,proc_low," < 30s","nmap1",["Failed to resolve"]],
+                ["VULNERABLE",0,proc_low," < 35s","nmap2",["Failed to resolve"]],
+                ["VULNERABLE",0,proc_low," < 35s","nmap3",["Failed to resolve"]],
+                ["VULNERABLE",0,proc_low," < 30s","nmap4",["Failed to resolve"]],
+                ["VULNERABLE",0,proc_low," < 35s","nmap5",["Failed to resolve"]],
                 ["ERROR - OCSP response status is not successful",0,proc_low," < 25s","sslyze1",["Could not resolve hostname"]],
-                ["VULNERABLE - Server supports Deflate compression",0,proc_low," < 30s","sslyze2",["Could not resolve hostname"]],
-                ["vulnerable",0,proc_low," < 25s","sslyze3",["Could not resolve hostname"]],
-                ["vulnerable",0,proc_low," < 30s","sslyze4",["Could not resolve hostname"]],
+                ["VULNERABLE",0,proc_low," < 30s","sslyze2",["Could not resolve hostname"]],
+                ["VULNERABLE",0,proc_low," < 25s","sslyze3",["Could not resolve hostname"]],
+                ["VULNERABLE",0,proc_low," < 30s","sslyze4",["Could not resolve hostname"]],
                 ["does NOT use Load-balancing",0,proc_med," <  4m","lbd",["NOT FOUND"]],
                 ["No vulnerabilities found",1,proc_low," < 45s","golism1",["Cannot resolve domain name","No vulnerabilities found"]],
                 ["No vulnerabilities found",1,proc_low," < 40s","golism2",["Cannot resolve domain name","No vulnerabilities found"]],
@@ -586,7 +586,7 @@ tools_fix = [
 					[26, "Attackers may find considerable amount of information from these directories. There are even chances attackers may get access to critical information from these directories.",
 							"It is recommended to block or restrict access to these directories unless necessary."],
 					[27, "May not be SQLi vulnerable. An attacker will be able to know that the host is using a backend for operation.",
-							"Banner Grabbing should be restricted and access to the services from outside would should be minimum."],
+							"Banner Grabbing should be restricted and access to the services from outside would should be made minimum."],
 					[28, "An attacker will be able to steal cookies, deface web application or redirect to any third party address that can serve malware.",
 							"Input validation and Output Sanitization can completely prevent Cross Site Scripting (XSS) attacks. XSS attacks can be mitigated in future by properly following a secure coding methodology. The following comprehensive resource provides detailed information on fixing this vulnerability. https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet"],
 					[29, "SSL related vulnerabilities breaks the confidentiality factor. An attacker may perform a MiTM attack, intrepret and eavesdrop the communication.",
@@ -605,7 +605,25 @@ tools_fix = [
 							"It is recommended to disable WebDAV. Some critical resource regarding disbling WebDAV can be found on this URL. https://www.networkworld.com/article/2202909/network-security/-webdav-is-bad---says-security-researcher.html"],
 					[36, "Attackers always do a fingerprint of any server before they launch an attack. Fingerprinting gives them information about the server type, content- they are serving, last modification times etc, this gives an attacker to learn more information about the target",
 							"A good practice is to obfuscate the information to outside world. Doing so, the attackers will have tough time understanding the server's tech stack and therefore leverage an attack."],
-					[37, ""]
+					[37, "Attackers mostly try to render web applications or service useless by flooding the target, such that blocking access to legitimate users. This may affect the business of a company or organization as well as the reputation",
+							"By ensuring proper load balancers in place, configuring rate limits and multiple connection restrictions, such attacks can be drastically mitigated."],
+					[38, "Intruders will be able to remotely include shell files and will be able to access the core file system or they will be able to read all the files as well. There are even higher chances for the attacker to remote execute code on the file system.",
+							"Secure code practices will mostly prevent LFI, RFI and RCE attacks. The following resource gives a detailed insight on secure coding practices. https://wiki.sei.cmu.edu/confluence/display/seccode/Top+10+Secure+Coding+Practices"],
+					[39, "Hackers will be able to steal data from the backend and also they can authenticate themselves to the website and can impersonate as any user since they have total control over the backend. They can even wipe out the entire database. Attackers can also steal cookie information of an authenticated user and they can even redirect the target to any malicious address or totally deface the application.",
+							"Proper input validation has to be done prior to directly querying the database information. A developer should remember not to trust an end-user's input. By following a secure coding methodology attacks like SQLi, XSS and BSQLi. The following resource guides on how to implement secure coding methodology on application development. https://wiki.sei.cmu.edu/confluence/display/seccode/Top+10+Secure+Coding+Practices"],
+					[40, "Attackers exploit the vulnerability in BASH to perform remote code execution on the target. An experienced attacker can easily take over the target system and access the internal sources of the machine",
+							"This vulnerability can be mitigated by patching the version of BASH. The following resource gives an indepth analysis of the vulnerability and how to mitigate it. https://www.symantec.com/connect/blogs/shellshock-all-you-need-know-about-bash-bug-vulnerability https://www.digitalocean.com/community/tutorials/how-to-protect-your-server-against-the-shellshock-bash-vulnerability"],
+					[41, "Gives attacker an idea on how the address scheming is done internally on the organizational network. Discovering the private addresses used within an organization can help attackers in carrying out network-layer attacks aiming to penetrate the organization's internal infrastructure.",
+							"Restrict the banner information to the outside world from the disclosing service. More information on mitigating this vulnerability can be found here. https://portswigger.net/kb/issues/00600300_private-ip-addresses-disclosed"],
+					[42, "There are chances for an attacker to manipulate files on the webserver.",
+							"It is recommended to disable the HTTP PUT and DEL methods incase if you don't use any REST API Services. Following resources helps you how to disable these methods. http://www.techstacks.com/howto/disable-http-methods-in-tomcat.html https://docs.oracle.com/cd/E19857-01/820-5627/gghwc/index.html https://developer.ibm.com/answers/questions/321629/how-to-disable-http-methods-head-put-delete-option/"],
+					[43, "Attackers try to learn more about the target from the amount of information exposed in the headers. An attacker may know what type of tech stack a web application is emphasizing and many other information.",
+							"Banner Grabbing should be restricted and access to the services from outside would should be made minimum."],
+					[44, "An attacker who successfully exploited this vulnerability could read data, such as the view state, which was encrypted by the server. This vulnerability can also be used for data tampering, which, if successfully exploited, could be used to decrypt and tamper with the data encrypted by the server.",
+							"Microsoft has released a set of patches on their website to mitigate this issue. The information required to fix this vulnerability can be inferred from this resource. https://docs.microsoft.com/en-us/security-updates/securitybulletins/2010/ms10-070"],
+					[45, "Any outdated web server may contain multiple vulnerabilities as their support would've been ended. An attacker may make use of such an opportunity to leverage attacks.",
+							"It is highly recommended to upgrade the web server to the available latest version."],
+					[46, ]
 			]
 
 
