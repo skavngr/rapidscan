@@ -74,6 +74,7 @@ class bcolors:
     BG_INFO_TXT = '\033[42m'
 
 
+# Classifies the Vulnerability's Severity
 def vul_info(val):
 	result =''
 	if val == 'c':
@@ -92,6 +93,15 @@ def vul_info(val):
 proc_high = bcolors.BADFAIL + "●" + bcolors.ENDC
 proc_med  = bcolors.WARNING + "●" + bcolors.ENDC
 proc_low  = bcolors.OKGREEN + "●" + bcolors.ENDC
+
+# Links the vulnerability with threat level and remediation database
+def vul_remed_info(v1,v2,v3):
+	print bcolors.BOLD+"Vulnerability Threat Level"+bcolors.ENDC
+	print "\t"+vul_info(v2)+" "+bcolors.WARNING+str(tool_resp[v1][0])+bcolors.ENDC
+	print bcolors.BOLD+"Vulnerability Definition"+bcolors.ENDC
+	print "\t"+bcolors.BADFAIL+str(tools_fix[v3-1][1])+bcolors.ENDC
+	print bcolors.BOLD+"Vulnerability Remediation"+bcolors.ENDC
+	print "\t"+bcolors.OKGREEN+str(tools_fix[v3-1][2])+bcolors.ENDC
 
 
 # RapidScan Help Context
@@ -533,9 +543,9 @@ tool_status = [
 
 # Vulnerabilities and Remediation
 tools_fix = [
-					[1, "Not a vulnerability, just an informational alert. The host does not have IPv6 support. IPv6 provides more security as IPSec (responsible for CIA - Confidentiality, Integrity and Availablity) is incorporated into this model. So it is good to have IPv6 Support."
+					[1, "Not a vulnerability, just an informational alert. The host does not have IPv6 support. IPv6 provides more security as IPSec (responsible for CIA - Confidentiality, Integrity and Availablity) is incorporated into this model. So it is good to have IPv6 Support.",
 							"It is recommended to implement IPv6. More information on how to implement IPv6 can be found from this resource. https://www.cisco.com/c/en/us/solutions/collateral/enterprise/cisco-on-cisco/IPv6-Implementation_CS.html"],
-					[2, "Sensitive Information Leakage Detected. The ASP.Net application does not filter out illegal characters in the URL. The attacker injects a special character (%7C~.aspx) to make the application spit sensitive information about the server stack."
+					[2, "Sensitive Information Leakage Detected. The ASP.Net application does not filter out illegal characters in the URL. The attacker injects a special character (%7C~.aspx) to make the application spit sensitive information about the server stack.",
 							"It is recommended to filter out special charaters in the URL and set a custom error page on such situations instead of showing default error messages. This resource helps you in setting up a custom error page on a Microsoft .Net Application. https://docs.microsoft.com/en-us/aspnet/web-forms/overview/older-versions-getting-started/deploying-web-site-projects/displaying-a-custom-error-page-cs"],
 					[3, "It is not bad to have a CMS in WordPress. There are chances that the version may contain vulnerabilities or any third party scripts associated with it may possess vulnerabilities",
 							"It is recommended to conceal the version of WordPress. This resource contains more information on how to secure your WordPress Blog. https://codex.wordpress.org/Hardening_WordPress"],
@@ -551,7 +561,7 @@ tools_fix = [
 							"It is recommended to close the ports of unused services and use a firewall to filter the ports wherever necessary. This resource may give more insights. https://security.stackexchange.com/a/145781/6137"],
 					[9, "Chances are very less to compromise a target with email addresses. However, attackers use this as a supporting data to gather information about the target. An attacker may make use of the username on the email address and perform brute-force attacks on not just email servers, but also on other legitimate panels like SSH, CMS, etc with a password list as they have a legitimate name. This is however a shoot in the dark scenario, the attacker may or may not be successful depending on the level of interest",
 							"Since the chances of exploitation is feeble there is no need to take action. Perfect remediation would be choosing different usernames for different services will be more thoughtful."],
-					[10, "Zone Transfer reveals critical topological information about the target. The attacker will be able to query all records and will have more or less complete knowledge about your host."
+					[10, "Zone Transfer reveals critical topological information about the target. The attacker will be able to query all records and will have more or less complete knowledge about your host.",
 							"Good practice is to restrict the Zone Transfer by telling the Master which are the IPs of the slaves that can be given access for the query. This SANS resource  provides more information. https://www.sans.org/reading-room/whitepapers/dns/securing-dns-zone-transfer-868"],
 					[11, "The email address of the administrator and other information (address, phone, etc) is available publicly. An attacker may use these information to leverage an attack. This may not be used to carry out a direct attack as this is not a vulnerability. However, an attacker makes use of these data to build information about the target.",
 							"Some administrators intentionally would have made this information public, in this case it can be ignored. If not, it is recommended to mask the information. This resource provides information on this fix. http://www.name.com/blog/how-tos/tutorial-2/2013/06/protect-your-personal-information-with-whois-privacy/"],
@@ -637,7 +647,8 @@ tools_fix = [
 							"Exposing SMB Service to the outside world is a bad idea, it is recommended to install latest patches for the service in order not to get compromised. The following resource provides a detailed information on SMB Hardening concepts. https://kb.iweb.com/hc/en-us/articles/115000274491-Securing-Windows-SMB-and-NetBios-NetBT-Services"]
 			]
 
-
+#vul_remed_info('c',50)
+#sys.exit(1)
 
 # Tool Set
 tools_precheck = [
@@ -778,13 +789,15 @@ else:
                     rs_tool_output_file = open(temp_file).read()
                     if tool_status[tool][arg2] == 0:
                     	if tool_status[tool][arg1] in rs_tool_output_file:
-                        	print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        	#print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        	vul_remed_info(tool,tool_resp[tool][arg2],tool_resp[tool][arg3])
                         	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
                     else:
                     	if any(i in rs_tool_output_file for i in tool_status[tool][arg6]):
                     		m = 1 # This does nothing.
                     	else:
-                        	print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        	#print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        	vul_remed_info(tool,tool_resp[tool][arg2],tool_resp[tool][arg3])
                         	rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
             else:
                     runTest = 1
