@@ -55,6 +55,7 @@
 
 ## Output
 ![rapidscan intro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_intro.PNG)
+![rapidscan outro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_outro.PNG)
 
 ## Contribution
 - https://gist.github.com/MarcDiethelm/7303312
