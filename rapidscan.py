@@ -53,6 +53,16 @@ def url_maker(url):
 		host = host[4:]
 	return host
 
+def check_internet():
+    os.system('ping -c1 github.com > rs_net 2>&1')
+    if "0% packet loss" in open('rs_net').read():
+        val = 1
+    else:
+        val = 0
+    os.system('rm rs_net > /dev/null 2>&1')
+    return val
+
+
 # Initializing the color module class
 class bcolors:
     HEADER = '\033[95m'
@@ -702,6 +712,12 @@ else:
     	logo()
         print "RapidScan is updating....Please wait.\n"
         spinner.start()
+        # Checking internet connectivity first...
+        rs_internet_availability = check_internet()
+        if rs_internet_availability == 0:
+            print "\t"+ bcolors.BG_ERR_TXT + "There seems to be some problem connecting to the internet. Please try again or later." +bcolors.ENDC
+            spinner.stop()
+            sys.exit(1)
         cmd = 'sha1sum rapidscan.py | grep .... | cut -c 1-40'
         oldversion_hash = subprocess.check_output(cmd, shell=True)
         oldversion_hash = oldversion_hash.strip()
