@@ -213,7 +213,7 @@ tool_names = [
                 ["uniscan","Uniscan - Checks for robots.txt & sitemap.xml","uniscan",1],
                 ["wafw00f","Wafw00f - Checks for Application Firewalls.","wafw00f",1],
                 ["nmap","Nmap - Fast Scan [Only Few Port Checks]","nmap",1],
-                ["theharvester","The Harvester - Scans for emails using Google's passive search.","theharvester",1],
+                ["theHarvester","The Harvester - Scans for emails using Google's passive search.","theHarvester",1],
                 ["dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers.","dnsrecon",1],
                 ["fierce","Fierce - Attempts Zone Transfer [No Brute Forcing]","fierce",1],
                 ["dnswalk","DNSWalk - Attempts Zone Transfer.","dnswalk",1],
@@ -298,7 +298,7 @@ tool_cmd   = [
                 ["uniscan -e -u ",""],
                 ["wafw00f ",""],
                 ["nmap -F --open -Pn ",""],
-                ["theharvester -l 50 -b google -d ",""],
+                ["theHarvester -l 50 -b google -d ",""],
                 ["dnsrecon -d ",""],
                 ["fierce -wordlist xxx -dns ",""],
                 ["dnswalk -d ","."],
@@ -662,7 +662,7 @@ tools_fix = [
 
 # Tool Set
 tools_precheck = [
-					["wapiti"], ["whatweb"], ["nmap"], ["golismero"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theharvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
+					["wapiti"], ["whatweb"], ["nmap"], ["golismero"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theHarvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
 			     ]
 
 # Shuffling Scan Order (starts)
