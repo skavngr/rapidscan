@@ -3,7 +3,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/stargazers)
 [![GitHub license](https://img.shields.io/github/license/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/blob/master/LICENSE)
 
-# :santa: RapidScan - _The Multi-Tool Web Vulnerability Scanner_ :christmas_tree:
+# :santa: RapidScan - _The Multi-Tool Web Vulnerability Scanner_
 
                           
 ## Evolution:
