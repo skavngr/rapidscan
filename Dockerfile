@@ -28,6 +28,5 @@ RUN apt-get install -y \
 
 RUN wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py
 RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
-RUN ln -s /usr/bin/python2.7 /usr/bin/python
 WORKDIR /reports
 ENTRYPOINT ["rapidscan"]
