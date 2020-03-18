@@ -50,6 +50,13 @@
 **Download the script and give executable permissions**
 - `wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py`
 
+### With docker
+To run a scan for `example.com` the command below has to be run. After completion reports can be found in the current path under `reports`. 
+```
+docker run -t --rm -v $(pwd)/reports:/reports kanolato/rapidscan example.com
+```
+> It is also possible to see rapidscan options running: docker run -t --rm kanolato/rapidscan
+
 ## Help
 ![rapidscan help](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_help.PNG)
 
