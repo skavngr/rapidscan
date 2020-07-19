@@ -1,4 +1,5 @@
 FROM kalilinux/kali-rolling
+RUN echo "deb http://old.kali.org/kali sana main non-free contrib" >> ./etc/apt/sources.list
 RUN apt-get update && apt-get -yu dist-upgrade -y
 WORKDIR /rapidscan
 RUN apt-get install -y \
