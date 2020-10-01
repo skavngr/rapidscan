@@ -45,6 +45,7 @@
 - Python 2.7
 - Kali OS (_**Preferred**, as it is shipped with almost all the tools_)
 <br>For other OS flavours, working on a docker support. Hang on.
+- It is now tested with parrot os and ubuntu os 
 
 ## Usage
 **Download the script and give executable permissions**
