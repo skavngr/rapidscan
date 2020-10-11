@@ -5,7 +5,7 @@
 #                             / ( (//)/(/__)( (//)
 #                                  /
 #
-# Author	 : Shankar Damodaran
+# Author	 : Shankar Narayana Damodaran
 # Tool 		 : RapidScan
 # Usage		 : ./rapidscan.py example.com (or) python rapidsan.py example.com
 # Description: This scanner automates the process of security scanning by using a
@@ -284,7 +284,8 @@ tool_names = [
                 ["nmap_udp_smb","Checks for SMB Service over UDP","nmap",1],
                 ["wapiti","Wapiti - Checks for SQLi, RCE, XSS and Other Vulnerabilities","wapiti",1],
                 ["nmap_iis","Nmap - Checks for IIS WebDAV","nmap",1],
-                ["whatweb","WhatWeb - Checks for X-XSS Protection Header","whatweb",1]
+                ["whatweb","WhatWeb - Checks for X-XSS Protection Header","whatweb",1],
+                ["amass","AMass - Brutes Domain for Subdomains","amass",1]
             ]
 
 
@@ -369,7 +370,8 @@ tool_cmd   = [
                 ["nmap -p137,138 --open -Pn ",""],
                 ["wapiti "," -f txt -o temp_wapiti"],
                 ["nmap -p80 --script=http-iis-webdav-vuln -Pn ",""],
-                ["whatweb "," -a 1"]
+                ["whatweb "," -a 1"],
+                ["amass enum -d ",""]
             ]
 
 
@@ -454,7 +456,8 @@ tool_resp   = [
                 ["SMB Ports are Open over UDP","m",51],
                 ["Wapiti discovered a range of vulnerabilities","h",30],
                 ["IIS WebDAV is Enabled","m",35],
-                ["X-XSS Protection is not Present","m",12]
+                ["X-XSS Protection is not Present","m",12],
+                ["Found Subdomains with AMass","m",31]
 
 
 
@@ -545,7 +548,8 @@ tool_status = [
                 ["open",0,proc_low," < 20s","nmapudpsmb",["Failed to resolve"]],
                 ["Host:",0,proc_med," < 5m","wapiti",["none"]],
                 ["WebDAV is ENABLED",0,proc_low," < 40s","nmapwebdaviis",["Failed to resolve"]],
-                ["X-XSS-Protection[1",1,proc_med," < 3m","whatweb",["Timed out","Socket error","X-XSS-Protection[1"]]
+                ["X-XSS-Protection[1",1,proc_med," < 3m","whatweb",["Timed out","Socket error","X-XSS-Protection[1"]],
+                ["No names were discovered",1,proc_med," < 15m","amass",["The system was unable to build the pool of resolvers"]]
 
 
 
@@ -662,7 +666,7 @@ tools_fix = [
 
 # Tool Set
 tools_precheck = [
-					["wapiti"], ["whatweb"], ["nmap"], ["golismero"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theHarvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"]
+					["wapiti"], ["whatweb"], ["nmap"], ["golismero"], ["host"], ["wget"], ["uniscan"], ["wafw00f"], ["dirb"], ["davtest"], ["theHarvester"], ["xsser"], ["dnsrecon"],["fierce"], ["dnswalk"], ["whois"], ["sslyze"], ["lbd"], ["golismero"], ["dnsenum"],["dmitry"], ["davtest"], ["nikto"], ["dnsmap"], ["amass"]
 			     ]
 
 # Shuffling Scan Order (starts)
