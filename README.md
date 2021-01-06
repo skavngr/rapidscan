@@ -1,7 +1,8 @@
-[![GitHub issues](https://img.shields.io/github/issues/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/issues)
-[![GitHub forks](https://img.shields.io/github/forks/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/network)
-[![GitHub stars](https://img.shields.io/github/stars/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/stargazers)
-[![GitHub license](https://img.shields.io/github/license/skavngr/rapidscan.svg)](https://github.com/skavngr/rapidscan/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/skavngr/rapidscan.svg?color=%23ff0000)](https://github.com/skavngr/rapidscan/issues)
+[![GitHub issues](https://img.shields.io/github/issues-closed/skavngr/rapidscan.svg?color=%2300cc00)](https://github.com/skavngr/rapidscan/issues)
+[![GitHub forks](https://img.shields.io/github/forks/skavngr/rapidscan.svg?color=%23ffff00)](https://github.com/skavngr/rapidscan/network)
+[![GitHub stars](https://img.shields.io/github/stars/skavngr/rapidscan.svg?color=%23ff3300)](https://github.com/skavngr/rapidscan/stargazers)
+[![GitHub license](https://img.shields.io/github/license/skavngr/rapidscan.svg?color=%230000ff)](https://github.com/skavngr/rapidscan/blob/master/LICENSE)
 
 # :red_square: RapidScan - _The Multi-Tool Web Vulnerability Scanner_
 
@@ -50,7 +51,7 @@
 **Download the script, allow executable permissions & start the scan immediately**
 - `wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py && ./rapidscan.py example.com`
 
-### With docker
+### With Docker
 To run a scan for `example.com` the command below has to be run. After completion reports can be found in the current path under `reports`.
 ```
 docker run -t --rm -v $(pwd)/reports:/reports kanolato/rapidscan example.com
