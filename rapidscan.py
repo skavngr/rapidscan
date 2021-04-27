@@ -784,7 +784,7 @@ else:
             print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
             if tool_names[tool][arg4] == 0:
             	print bcolors.WARNING+"...Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
-		rs_skipped_checks = rs_skipped_checks + 1
+                rs_skipped_checks = rs_skipped_checks + 1
             	tool = tool + 1
             	continue
             spinner.start()
