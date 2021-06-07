@@ -3,6 +3,7 @@ RUN echo "deb http://old.kali.org/kali sana main non-free contrib" >> ./etc/apt/
 RUN apt-get update && apt-get -yu dist-upgrade -y
 WORKDIR /rapidscan
 RUN apt-get install -y python2.7 python3.9
+RUN apt-get install -y golismero
 RUN apt-get install -y wget
 RUN apt-get install -y dmitry
 RUN apt-get install -y dnsrecon
@@ -11,7 +12,6 @@ RUN apt-get install -y nmap
 RUN apt-get install -y sslyze
 RUN apt-get install -y dnsenum
 RUN apt-get install -y wafw00f
-RUN apt-get install -y golismero
 RUN apt-get install -y dirb
 RUN apt-get install -y host
 RUN apt-get install -y lbd
