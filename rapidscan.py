@@ -757,8 +757,9 @@ elif args_namespace.target:
     os.system('setterm -cursor off')
     logo()
     print bcolors.BG_HEAD_TXT+"[ Checking Available Security Scanning Tools Phase... Initiated. ]"+bcolors.ENDC
-    unavail_tools = 0
+
     unavail_tools_names = list()
+
     while (rs_avail_tools < len(tools_precheck)):
         precmd = str(tools_precheck[rs_avail_tools][arg1])
         try:
@@ -768,23 +769,28 @@ elif args_namespace.target:
         except:
             print "\t"+bcolors.BG_ERR_TXT+"RapidScan was terminated abruptly..."+bcolors.ENDC
             sys.exit(1)
+        
         # If the tool is not found or it's part of the --skip argument(s), disabling it
         if "not found" in val or tools_precheck[rs_avail_tools][arg1] in args_namespace.skip :
-            print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
+            if "not found" in val:
+                print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...unavailable."+bcolors.ENDC
+            elif tools_precheck[rs_avail_tools][arg1] in args_namespace.skip :
+                print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.BADFAIL+"...skipped."+bcolors.ENDC
+            
             for scanner_index, scanner_val in enumerate(tool_names):
                 if scanner_val[2] == tools_precheck[rs_avail_tools][arg1]:
                     scanner_val[3] = 0 # disabling scanner as it's not available.
                     unavail_tools_names.append(tools_precheck[rs_avail_tools][arg1])
-                    unavail_tools = unavail_tools + 1
+
         else:
             print "\t"+bcolors.OKBLUE+tools_precheck[rs_avail_tools][arg1]+bcolors.ENDC+bcolors.OKGREEN+"...available."+bcolors.ENDC
         rs_avail_tools = rs_avail_tools + 1
         clear()
     unavail_tools_names = list(set(unavail_tools_names))
-    if unavail_tools == 0:
+    if len(unavail_tools_names) == 0:
         print "\t"+bcolors.OKGREEN+"All Scanning Tools are available. All vulnerability checks will be performed by RapidScan."+bcolors.ENDC
     else:
-        print "\t"+bcolors.WARNING+"Some of these tools "+bcolors.BADFAIL+str(unavail_tools_names)+bcolors.ENDC+bcolors.WARNING+" are unavailable or marked as skipped. RapidScan can still perform tests by excluding these tools from the tests. Please install these tools to fully utilize the functionality of RapidScan."+bcolors.ENDC
+        print "\t"+bcolors.WARNING+"Some of these tools "+bcolors.BADFAIL+str(unavail_tools_names)+bcolors.ENDC+bcolors.WARNING+" are unavailable or will be skipped. RapidScan will still perform the rest of the tests. Install these tools to fully utilize the functionality of RapidScan."+bcolors.ENDC
     print bcolors.BG_ENDL_TXT+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC
     print "\n"
     print bcolors.BG_HEAD_TXT+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC
@@ -792,7 +798,7 @@ elif args_namespace.target:
     while(tool < len(tool_names)):
         print "["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,
         if tool_names[tool][arg4] == 0:
-            print bcolors.WARNING+"...Scanning Tool Unavailable. Auto-Skipping Test..."+bcolors.ENDC
+            print bcolors.WARNING+"...Scanning Tool Unavailable. Skipping Test..."+bcolors.ENDC
             rs_skipped_checks = rs_skipped_checks + 1
             tool = tool + 1
             continue
