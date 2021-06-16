@@ -720,7 +720,8 @@ if len(sys.argv) == 1:
 
 args_namespace = get_parser().parse_args()
 
-if args_namespace.help:
+if args_namespace.help or (not args_namespace.update \
+    and not args_namespace.target):
     logo()
     helper()
 elif args_namespace.update:
@@ -889,6 +890,4 @@ elif args_namespace.target:
 
     os.system('setterm -cursor on')
     os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
-else:
-    logo()
-    helper()
+
