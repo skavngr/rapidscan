@@ -117,7 +117,8 @@ def helper():
         print bcolors.OKBLUE+"Information:"+bcolors.ENDC
         print "------------"
         print "\t./rapidscan.py example.com: Scans the domain example.com."
-        print "\t./rapidscan.py example.com --skip dmitry --skip theHarvester: Scans the domain example.com, but skip the 'dmitry' and 'theHarvester' tests."
+        print "\t./rapidscan.py example.com --skip dmitry --skip theHarvester: Skip the 'dmitry' and 'theHarvester' tests."
+        print "\t./rapidscan.py example.com --nospinner: Disable the idle loader/spinner."
         print "\t./rapidscan.py --update   : Updates the scanner to the latest version."
         print "\t./rapidscan.py --help     : Displays this help context."
         print bcolors.OKBLUE+"Interactive:"+bcolors.ENDC
@@ -168,16 +169,18 @@ class Spinner:
     def __init__(self, delay=None):
         self.spinner_generator = self.spinning_cursor()
         if delay and float(delay): self.delay = delay
+        self.disabled = False
 
     def spinner_task(self):
         try:
             while self.busy:
-                #sys.stdout.write(next(self.spinner_generator))
-                print bcolors.BG_ERR_TXT+next(self.spinner_generator)+bcolors.ENDC,
-                sys.stdout.flush()
+                if not self.disabled:
+                    print bcolors.BG_ERR_TXT+next(self.spinner_generator)+bcolors.ENDC,
+                    sys.stdout.flush()
                 time.sleep(self.delay)
-                sys.stdout.write('\b')
-                sys.stdout.flush()
+                if not self.disabled:
+                    sys.stdout.write('\b')
+                    sys.stdout.flush()
         except (KeyboardInterrupt, SystemExit):
             #clear()
             print "\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
@@ -195,6 +198,7 @@ class Spinner:
             #clear()
             print "\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC
             sys.exit(1)
+
 # End ofloader/spinner class
 
 # Instantiating the spinner/loader class
@@ -674,6 +678,8 @@ def get_parser():
                         help='Update RapidScan.')
     parser.add_argument('-s', '--skip', action='append', default=[],
                         help='Skip some tools', choices=[t[0] for t in tools_precheck])
+    parser.add_argument('-n', '--nospinner', action='store_true', 
+                        help='Disable the idle loader/spinner.')
     parser.add_argument('target', nargs='?', metavar='URL', help='URL to scan.', default='', type=str)
     return parser
 
@@ -719,6 +725,9 @@ if len(sys.argv) == 1:
     sys.exit(1)
 
 args_namespace = get_parser().parse_args()
+
+if args_namespace.nospinner:
+    spinner.disabled = True
 
 if args_namespace.help or (not args_namespace.update \
     and not args_namespace.target):
