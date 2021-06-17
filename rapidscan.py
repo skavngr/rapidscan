@@ -672,7 +672,7 @@ def get_parser():
                         help='Show help message and exit.')
     parser.add_argument('-u', '--update', action='store_true', 
                         help='Update RapidScan.')
-    parser.add_argument('-s', '--skip', action='append', 
+    parser.add_argument('-s', '--skip', action='append', default=[],
                         help='Skip some tools', choices=[t[0] for t in tools_precheck])
     parser.add_argument('target', nargs='?', metavar='URL', help='URL to scan.', default='', type=str)
     return parser
