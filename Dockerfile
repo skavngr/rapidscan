@@ -1,33 +1,45 @@
-FROM kalilinux/kali-rolling
-RUN echo "deb http://old.kali.org/kali sana main non-free contrib" >> ./etc/apt/sources.list
-RUN apt-get update && apt-get -yu dist-upgrade -y
-WORKDIR /rapidscan
-RUN apt-get install -y \
-  python2.7 \
-  wget \
-  dmitry \
-  dnsrecon \
-  wapiti \
-  nmap \
-  sslyze \
-  dnsenum \
-  wafw00f \
-  golismero \
-  dirb \
-  host \
-  lbd \
-  xsser \
-  dnsmap \
-  dnswalk \
-  fierce \
-  davtest \
-  whatweb \
-  nikto \
-  uniscan \
-  whois \
-  theharvester
+# golismero install has been skipped. 
+# See issue https://github.com/golismero/golismero/issues/59
+# RUN apt-get install -y golismero
+# This fails, so we skip completely for now. See issue https://github.com/kislyuk/argcomplete/issues/348
+# RUN cd /opt && git clone https://github.com/golismero/golismero.git && cd golismero && pip install -r requirements.txt && ln -s /opt./golismero/golismero.py /usr/bin/golismero
 
-RUN wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py
-RUN ln -s /rapidscan/rapidscan.py /usr/local/bin/rapidscan
-WORKDIR /reports
-ENTRYPOINT ["rapidscan"]
+FROM kalilinux/kali-rolling
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && apt-get -yu dist-upgrade -y
+RUN apt-get install -y ca-certificates
+RUN echo "deb https://http.kali.org/kali kali-rolling main contrib non-free" > ./etc/apt/sources.list
+RUN echo "deb http://old.kali.org/kali sana main non-free contrib" >> ./etc/apt/sources.list
+
+RUN apt-get -yq install \
+      python \
+      host \
+      whois \
+      sslyze \
+      wapiti \
+      nmap \
+      dmitry \
+      dnsenum \
+      dnsmap \
+      dnsrecon \
+      dnswalk \
+      dirb \
+      wafw00f \
+      whatweb \
+      nikto \
+      lbd \
+      xsser \
+      fierce \
+      theharvester \
+      davtest \
+      uniscan \
+      amass \
+      wget && \
+    apt-get -yq autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/{apt,dpkg,cache,log}
+RUN cd /usr/local/bin && \
+    wget --no-check-certificate -q -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py &&\
+    chmod +x rapidscan.py
+WORKDIR /app
+ENTRYPOINT ["/usr/local/bin/rapidscan.py"]
