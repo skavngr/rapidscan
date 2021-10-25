@@ -26,6 +26,7 @@ from urllib.parse import urlsplit
 
 
 
+
 # Scan Time Elapser
 intervals = (
     ('h', 3600),
@@ -41,6 +42,11 @@ def display_time(seconds, granularity=3):
             seconds -= value * count
             result.append("{}{}".format(value, name))
     return ' '.join(result[:granularity])
+
+
+def terminal_size():
+    rows, columns = subprocess.check_output(['stty', 'size']).split()
+    return int(columns)
 
 
 def url_maker(url):
@@ -167,7 +173,7 @@ def logo():
 # Initiliazing the idle loader/spinner class
 class Spinner:
     busy = False
-    delay = 0.05 # 0.05
+    delay = 0.005 # 0.05
 
     @staticmethod
     def spinning_cursor():
@@ -189,13 +195,9 @@ class Spinner:
                     x = bcolors.BG_SCAN_TXT_START+next(self.spinner_generator)+bcolors.BG_SCAN_TXT_END
                     inc = inc + 1
                     print(x,end='')
-                    if inc>random.uniform(90,120):
+                    if inc>random.uniform(30,terminal_size()):
                         print(end="\r")
-                        #print("Hello World\n")
-                        #sys.stdout.write("\033[F")
-                        #print ("\033[A\033[A")
                         bcolors.BG_SCAN_TXT_START = '\x1b[6;30;'+str(round(random.uniform(40,47)))+'m'
-                        #sys.exit(1)
                         inc = 0
                     sys.stdout.flush()
                 time.sleep(self.delay)
