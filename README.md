@@ -52,7 +52,7 @@ _**RapidScan has been ported to Python3 i.e. v1.2**. The Python2.7 codebase is a
 ## Usage 
  `python3 rapidscan.py example.com`
  
- [![asciicast](https://asciinema.org/a/mKiZwBXqW6ZOxT4OQtVi4g1Fr.svg)](https://asciinema.org/a/mKiZwBXqW6ZOxT4OQtVi4g1Fr)
+ <img src="https://sh4nx0r.github.io/rapidscan.svg" />
  
 
 ## Output
