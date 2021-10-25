@@ -21,6 +21,7 @@ import time
 import random
 import threading
 import re
+import random
 from urllib.parse import urlsplit
 
 
@@ -80,6 +81,9 @@ class bcolors:
     BG_MED_TXT  = '\033[43m'
     BG_LOW_TXT  = '\033[44m'
     BG_INFO_TXT = '\033[42m'
+
+    BG_SCAN_TXT_START = '\x1b[6;30;42m'
+    BG_SCAN_TXT_END   = '\x1b[0m'
 
 
 # Classifies the Vulnerability's Severity
@@ -156,7 +160,6 @@ def logo():
 
                      Check out our new software, """+bcolors.BG_LOW_TXT+"""NetBot"""+bcolors.ENDC+""" for simulating DDoS attacks - https://github.com/skavngr/netbot
     """
-    #print(bcolors.WARNING+logo_ascii+bcolors.ENDC)
     print(logo_ascii)
     print(bcolors.ENDC)
 
@@ -164,30 +167,42 @@ def logo():
 # Initiliazing the idle loader/spinner class
 class Spinner:
     busy = False
-    delay = 0.05
+    delay = 0.05 # 0.05
 
     @staticmethod
     def spinning_cursor():
         while 1:
-            for cursor in '|/\\': yield cursor #←↑↓→
+            #for cursor in '|/-\\/': yield cursor #←↑↓→
             #for cursor in '←↑↓→': yield cursor
+            #for cursor in '....scanning...please..wait....': yield cursor
+            for cursor in ' ': yield cursor
     def __init__(self, delay=None):
         self.spinner_generator = self.spinning_cursor()
         if delay and float(delay): self.delay = delay
         self.disabled = False
 
     def spinner_task(self):
+        inc = 0
         try:
             while self.busy:
                 if not self.disabled:
-                    print(bcolors.BG_ERR_TXT+next(self.spinner_generator)+bcolors.ENDC,)
+                    x = bcolors.BG_SCAN_TXT_START+next(self.spinner_generator)+bcolors.BG_SCAN_TXT_END
+                    inc = inc + 1
+                    print(x,end='')
+                    if inc>random.uniform(90,120):
+                        print(end="\r")
+                        #print("Hello World\n")
+                        #sys.stdout.write("\033[F")
+                        #print ("\033[A\033[A")
+                        bcolors.BG_SCAN_TXT_START = '\x1b[6;30;'+str(round(random.uniform(40,47)))+'m'
+                        #sys.exit(1)
+                        inc = 0
                     sys.stdout.flush()
                 time.sleep(self.delay)
                 if not self.disabled:
-                    #print("\b")
-                    sys.stdout.write("\033[F")
-                    sys.stdout.write("\033[K")
+                    #print(x, end="\r")
                     sys.stdout.flush()
+
         except (KeyboardInterrupt, SystemExit):
             #clear()
             print("\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC)
@@ -857,7 +872,7 @@ elif args_namespace.target:
                 scan_stop = time.time()
                 elapsed = scan_stop - scan_start
                 rs_total_elapsed = rs_total_elapsed + elapsed
-                print(bcolors.OKBLUE+"\b\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\n")
+                print(bcolors.OKBLUE+"\r\b\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\r\b\b\b\b\n")
                 clear()
                 print("\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC)
                 rs_skipped_checks = rs_skipped_checks + 1
