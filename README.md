@@ -51,14 +51,9 @@ _**RapidScan has been ported to Python3 i.e. v1.2**. The Python2.7 codebase is a
 
 ## Usage 
  `python3 rapidscan.py example.com`
- 
- <img src="https://sh4nx0r.github.io/rapidscan.svg" />
- 
 
-## Output
-![rapidscan intro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_intro.PNG)
-![rapidscan outro](https://github.com/skavngr/rapidscan/blob/master/splashscreen_rapidscan_outro.PNG)
- 
+https://user-images.githubusercontent.com/6489729/138737524-9c4dc567-ec78-40b4-9a7b-8ff52d5dc98b.mp4
+
 
 ### Docker Support
 To run a scan for `example.com` the command below has to be run. After completion reports can be found in the current path under `reports`.
