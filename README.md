@@ -49,9 +49,8 @@ _**RapidScan has been ported to Python3 i.e. v1.2**. The Python2.7 codebase is a
 - Kali OS (_**Preferred**, as it is shipped with almost all the tools_)
 - Tested with Parrot & Ubuntu Operating Systems.
 
-## Usage (One Liner to Initiate the Scan - For Non-Forkers & Non-Cloners)
-**Download the script, allow executable permissions & start the scan immediately**
-- `wget -O rapidscan.py https://raw.githubusercontent.com/skavngr/rapidscan/master/rapidscan.py && chmod +x rapidscan.py && ./rapidscan.py example.com`
+## Usage 
+ `python3 rapidscan.py example.com`
 
 ### With Docker
 To run a scan for `example.com` the command below has to be run. After completion reports can be found in the current path under `reports`.
