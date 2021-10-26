@@ -45,8 +45,12 @@ def display_time(seconds, granularity=3):
 
 
 def terminal_size():
-    rows, columns = subprocess.check_output(['stty', 'size']).split()
-    return int(columns)
+    try:
+        rows, columns = subprocess.check_output(['stty', 'size']).split()
+        return int(columns)
+    except subprocess.CalledProcessError as e:
+        return int(20)
+    
 
 
 def url_maker(url):
@@ -143,16 +147,16 @@ def helper():
         print(bcolors.OKBLUE+"Vulnerability Information:"+bcolors.ENDC)
         print("--------------------------")
         print("\t"+vul_info('c')+": Requires immediate attention as it may lead to compromise or service unavailability.")
-        print("\t"+vul_info('h')+"    : May not lead to an immediate compromise, but there are high chances of probability.")
+        print("\t"+vul_info('h')+"    : May not lead to an immediate compromise, but there are considerable chances for probability.")
         print("\t"+vul_info('m')+"  : Attacker may correlate multiple vulnerabilities of this type to launch a sophisticated attack.")
-        print("\t"+vul_info('l')+"     : Not a serious issue, but it is recommended to attend the finding.")
+        print("\t"+vul_info('l')+"     : Not a serious issue, but it is recommended to tend to the finding.")
         print("\t"+vul_info('i')+"    : Not classified as a vulnerability, simply an useful informational alert to be considered.\n")
 
 
 # Clears Line
 def clear():
         sys.stdout.write("\033[F")
-        sys.stdout.write("\033[K")
+        sys.stdout.write("\033[K") #clears until EOL
 
 # RapidScan Logo
 def logo():
@@ -212,8 +216,11 @@ class Spinner:
 
     def start(self):
         self.busy = True
-        threading.Thread(target=self.spinner_task).start()
-
+        try:
+            threading.Thread(target=self.spinner_task).start()
+        except Exception as e:
+            print("\n")
+        
     def stop(self):
         try:
             self.busy = False
@@ -836,7 +843,10 @@ elif args_namespace.target:
             rs_skipped_checks = rs_skipped_checks + 1
             tool = tool + 1
             continue
-        spinner.start()
+        try:
+            spinner.start()
+        except Exception as e:
+            print("\n")
         scan_start = time.time()
         temp_file = "temp_"+tool_names[tool][arg1]
         cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
@@ -874,9 +884,10 @@ elif args_namespace.target:
                 scan_stop = time.time()
                 elapsed = scan_stop - scan_start
                 rs_total_elapsed = rs_total_elapsed + elapsed
-                print(bcolors.OKBLUE+"\r\b\b\b\b...Interrupted in "+display_time(int(elapsed))+bcolors.ENDC+"\r\b\b\b\b\n")
-                clear()
-                print("\t"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC)
+                #clear() #not here before
+                print(bcolors.OKBLUE+"\nScan Interrupted in "+display_time(int(elapsed))+bcolors.ENDC, end='\r', flush=True)
+                #clear()
+                print("\n"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC)
                 rs_skipped_checks = rs_skipped_checks + 1
 
         tool=tool+1
