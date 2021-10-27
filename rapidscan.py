@@ -25,7 +25,8 @@ import random
 from urllib.parse import urlsplit
 
 
-
+CURSOR_UP_ONE = '\x1b[1A' 
+ERASE_LINE = '\x1b[2K'
 
 # Scan Time Elapser
 intervals = (
@@ -829,17 +830,17 @@ elif args_namespace.target:
         clear()
     unavail_tools_names = list(set(unavail_tools_names))
     if len(unavail_tools_names) == 0:
-        print("\t"+bcolors.OKGREEN+"All Scanning Tools are available. All vulnerability checks will be performed by RapidScan."+bcolors.ENDC)
+        print("\t"+bcolors.OKGREEN+"All Scanning Tools are available. Complete vulnerability checks will be performed by RapidScan."+bcolors.ENDC)
     else:
         print("\t"+bcolors.WARNING+"Some of these tools "+bcolors.BADFAIL+str(unavail_tools_names)+bcolors.ENDC+bcolors.WARNING+" are unavailable or will be skipped. RapidScan will still perform the rest of the tests. Install these tools to fully utilize the functionality of RapidScan."+bcolors.ENDC)
     print(bcolors.BG_ENDL_TXT+"[ Checking Available Security Scanning Tools Phase... Completed. ]"+bcolors.ENDC)
     print("\n")
-    print(bcolors.BG_HEAD_TXT+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks.  ]"+bcolors.ENDC)
+    print(bcolors.BG_HEAD_TXT+"[ Preliminary Scan Phase Initiated... Loaded "+str(tool_checks)+" vulnerability checks. ]"+bcolors.ENDC)
     #while (tool < 1):
     while(tool < len(tool_names)):
         print("["+tool_status[tool][arg3]+tool_status[tool][arg4]+"] Deploying "+str(tool+1)+"/"+str(tool_checks)+" | "+bcolors.OKBLUE+tool_names[tool][arg2]+bcolors.ENDC,)
         if tool_names[tool][arg4] == 0:
-            print(bcolors.WARNING+"...Scanning Tool Unavailable. Skipping Test..."+bcolors.ENDC)
+            print(bcolors.WARNING+"\nScanning Tool Unavailable. Skipping Test...\n"+bcolors.ENDC)
             rs_skipped_checks = rs_skipped_checks + 1
             tool = tool + 1
             continue
@@ -863,8 +864,11 @@ elif args_namespace.target:
                 scan_stop = time.time()
                 elapsed = scan_stop - scan_start
                 rs_total_elapsed = rs_total_elapsed + elapsed
-                print(bcolors.OKBLUE+"\b...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n")
-                clear()
+                #print(bcolors.OKBLUE+"\b...Completed in "+display_time(int(elapsed))+bcolors.ENDC+"\n")
+                sys.stdout.write(ERASE_LINE)
+                print(bcolors.OKBLUE+"\nScan Completed in "+display_time(int(elapsed))+bcolors.ENDC, end='\r', flush=True)
+                print("\n")
+                #clear()
                 rs_tool_output_file = open(temp_file).read()
                 if tool_status[tool][arg2] == 0:
                     if tool_status[tool][arg1].lower() in rs_tool_output_file.lower():
@@ -884,10 +888,11 @@ elif args_namespace.target:
                 scan_stop = time.time()
                 elapsed = scan_stop - scan_start
                 rs_total_elapsed = rs_total_elapsed + elapsed
-                #clear() #not here before
+                #sys.stdout.write(CURSOR_UP_ONE) 
+                sys.stdout.write(ERASE_LINE)
+                #print("-" * terminal_size(), end='\r', flush=True)
                 print(bcolors.OKBLUE+"\nScan Interrupted in "+display_time(int(elapsed))+bcolors.ENDC, end='\r', flush=True)
-                #clear()
-                print("\n"+bcolors.WARNING + "Test Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan." + bcolors.ENDC)
+                print("\n"+bcolors.WARNING + "\tTest Skipped. Performing Next. Press Ctrl+Z to Quit RapidScan.\n" + bcolors.ENDC)
                 rs_skipped_checks = rs_skipped_checks + 1
 
         tool=tool+1
@@ -941,4 +946,3 @@ elif args_namespace.target:
 
     os.system('setterm -cursor on')
     os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
-
