@@ -6,8 +6,8 @@
 #                                  /
 #
 # Author     : Shankar Narayana Damodaran
-# Tool       : RapidScan
-# Usage      : ./rapidscan.py example.com (or) python rapidsan.py example.com
+# Tool       : RapidScan v1.2
+# Usage      : python3 rapidsan.py example.com
 # Description: This scanner automates the process of security scanning by using a
 #              multitude of available linux security tools and some custom scripts.
 #
@@ -200,18 +200,16 @@ class Spinner:
                     x = bcolors.BG_SCAN_TXT_START+next(self.spinner_generator)+bcolors.BG_SCAN_TXT_END
                     inc = inc + 1
                     print(x,end='')
-                    if inc>random.uniform(30,terminal_size()):
+                    if inc>random.uniform(0,terminal_size()): #30 init
                         print(end="\r")
                         bcolors.BG_SCAN_TXT_START = '\x1b[6;30;'+str(round(random.uniform(40,47)))+'m'
                         inc = 0
                     sys.stdout.flush()
                 time.sleep(self.delay)
                 if not self.disabled:
-                    #print(x, end="\r")
                     sys.stdout.flush()
 
         except (KeyboardInterrupt, SystemExit):
-            #clear()
             print("\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC)
             sys.exit(1)
 
@@ -227,7 +225,6 @@ class Spinner:
             self.busy = False
             time.sleep(self.delay)
         except (KeyboardInterrupt, SystemExit):
-            #clear()
             print("\n\t"+ bcolors.BG_ERR_TXT+"RapidScan received a series of Ctrl+C hits. Quitting..." +bcolors.ENDC)
             sys.exit(1)
 
@@ -240,6 +237,7 @@ spinner = Spinner()
 
 # Scanners that will be used and filename rotation (default: enabled (1))
 tool_names = [
+                
                 ["host","Host - Checks for existence of IPV6 address.","host",1],
                 ["aspnet_config_err","ASP.Net Misconfiguration - Checks for ASP.Net Misconfiguration.","wget",1],
                 ["wp_check","WordPress Checker - Checks for WordPress Installation.","wget",1],
@@ -327,10 +325,10 @@ tool_names = [
 # Command that is used to initiate the tool (with parameters and extra params)
 tool_cmd   = [
                 ["host ",""],
-                ["wget -O temp_aspnet_config_err --tries=1 ","/%7C~.aspx"],
-                ["wget -O temp_wp_check --tries=1 ","/wp-admin"],
-                ["wget -O temp_drp_check --tries=1 ","/user"],
-                ["wget -O temp_joom_check --tries=1 ","/administrator"],
+                ["wget -O /tmp/temp_aspnet_config_err --tries=1 ","/%7C~.aspx"],
+                ["wget -O /tmp/temp_wp_check --tries=1 ","/wp-admin"],
+                ["wget -O /tmp/temp_drp_check --tries=1 ","/user"],
+                ["wget -O /tmp/temp_joom_check --tries=1 ","/administrator"],
                 ["uniscan -e -u ",""],
                 ["wafw00f ",""],
                 ["nmap -F --open -Pn ",""],
@@ -400,7 +398,7 @@ tool_cmd   = [
                 ["nmap -p1-65535 --open -Pn ",""],
                 ["nmap -p1-65535 -sU --open -Pn ",""],
                 ["nmap -p161 -sU --open -Pn ",""],
-                ["wget -O temp_aspnet_elmah_axd --tries=1 ","/elmah.axd"],
+                ["wget -O /tmp/temp_aspnet_elmah_axd --tries=1 ","/elmah.axd"],
                 ["nmap -p445,137-139 --open -Pn ",""],
                 ["nmap -p137,138 --open -Pn ",""],
                 ["wapiti "," -f txt -o temp_wapiti"],
@@ -435,7 +433,7 @@ tool_resp   = [
                 ["LOGJAM Vulnerability Detected.","h",18],
                 ["Unsuccessful OCSP Response.","m",19],
                 ["Server supports Deflate Compression.","m",20],
-                ["Secure Renegotiation is unsupported.","m",21],
+                ["Secure Client Initiated Renegotiation is supported.","m",21],
                 ["Secure Resumption unsupported with (Sessions IDs/TLS Tickets).","m",22],
                 ["No DNS/HTTP based Load Balancers Found.","l",23],
                 ["Domain is spoofed/hijacked.","h",24],
@@ -794,7 +792,8 @@ elif args_namespace.update:
 elif args_namespace.target:
 
     target = url_maker(args_namespace.target)
-    os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
+    #target = args_namespace.target
+    os.system('rm /tmp/te* > /dev/null 2>&1') # Clearing previous scan files
     os.system('clear')
     os.system('setterm -cursor off')
     logo()
@@ -849,7 +848,7 @@ elif args_namespace.target:
         except Exception as e:
             print("\n")
         scan_start = time.time()
-        temp_file = "temp_"+tool_names[tool][arg1]
+        temp_file = "/tmp/temp_"+tool_names[tool][arg1]
         cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
 
         try:
@@ -910,7 +909,7 @@ elif args_namespace.target:
                 vuln_info = rs_vul_list[rs_vul].split('*')
                 report.write(vuln_info[arg2])
                 report.write("\n------------------------\n\n")
-                temp_report_name = "temp_"+vuln_info[arg1]
+                temp_report_name = "/tmp/temp_"+vuln_info[arg1]
                 with open(temp_report_name, 'r') as temp_report:
                     data = temp_report.read()
                     report.write(data)
@@ -925,7 +924,7 @@ elif args_namespace.target:
     for file_index, file_name in enumerate(tool_names):
         with open("RS-Debug-ScanLog", "a") as report:
             try:
-                with open("temp_"+file_name[arg1], 'r') as temp_report:
+                with open("/tmp/temp_"+file_name[arg1], 'r') as temp_report:
                         data = temp_report.read()
                         report.write(file_name[arg2])
                         report.write("\n------------------------\n\n")
@@ -945,4 +944,4 @@ elif args_namespace.target:
     print(bcolors.BG_ENDL_TXT+"[ Report Generation Phase Completed. ]"+bcolors.ENDC)
 
     os.system('setterm -cursor on')
-    os.system('rm te* > /dev/null 2>&1') # Clearing previous scan files
+    os.system('rm /tmp/te* > /dev/null 2>&1') # Clearing previous scan files
