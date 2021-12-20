@@ -488,16 +488,16 @@ tool_cmd   = [
                 ["host ",""],
 
                 #2
-                ["wget -O /tmp/temp_aspnet_config_err --tries=1 ","/%7C~.aspx"],
+                ["wget -O /tmp/rapidscan_temp_aspnet_config_err --tries=1 ","/%7C~.aspx"],
 
                 #3
-                ["wget -O /tmp/temp_wp_check --tries=1 ","/wp-admin"],
+                ["wget -O /tmp/rapidscan_temp_wp_check --tries=1 ","/wp-admin"],
 
                 #4
-                ["wget -O /tmp/temp_drp_check --tries=1 ","/user"],
+                ["wget -O /tmp/rapidscan_temp_drp_check --tries=1 ","/user"],
 
                 #5
-                ["wget -O /tmp/temp_joom_check --tries=1 ","/administrator"],
+                ["wget -O /tmp/rapidscan_temp_joom_check --tries=1 ","/administrator"],
 
                 #6
                 ["uniscan -e -u ",""],
@@ -707,7 +707,7 @@ tool_cmd   = [
                 ["nmap -p161 -sU --open -Pn ",""],
 
                 #75
-                ["wget -O /tmp/temp_aspnet_elmah_axd --tries=1 ","/elmah.axd"],
+                ["wget -O /tmp/rapidscan_temp_aspnet_elmah_axd --tries=1 ","/elmah.axd"],
 
                 #76
                 ["nmap -p445,137-139 --open -Pn ",""],
@@ -716,7 +716,7 @@ tool_cmd   = [
                 ["nmap -p137,138 --open -Pn ",""],
 
                 #78
-                ["wapiti "," -f txt -o temp_wapiti"],
+                ["wapiti "," -f txt -o rapidscan_temp_wapiti"],
 
                 #79
                 ["nmap -p80 --script=http-iis-webdav-vuln -Pn ",""],
@@ -1491,7 +1491,7 @@ elif args_namespace.target:
         except Exception as e:
             print("\n")
         scan_start = time.time()
-        temp_file = "/tmp/temp_"+tool_names[tool][arg1]
+        temp_file = "/tmp/rapidscan_temp_"+tool_names[tool][arg1]
         cmd = tool_cmd[tool][arg1]+target+tool_cmd[tool][arg2]+" > "+temp_file+" 2>&1"
 
         try:
@@ -1552,7 +1552,7 @@ elif args_namespace.target:
                 vuln_info = rs_vul_list[rs_vul].split('*')
                 report.write(vuln_info[arg2])
                 report.write("\n------------------------\n\n")
-                temp_report_name = "/tmp/temp_"+vuln_info[arg1]
+                temp_report_name = "/tmp/rapidscan_temp_"+vuln_info[arg1]
                 with open(temp_report_name, 'r') as temp_report:
                     data = temp_report.read()
                     report.write(data)
@@ -1567,7 +1567,7 @@ elif args_namespace.target:
     for file_index, file_name in enumerate(tool_names):
         with open("RS-Debug-ScanLog", "a") as report:
             try:
-                with open("/tmp/temp_"+file_name[arg1], 'r') as temp_report:
+                with open("/tmp/rapidscan_temp_"+file_name[arg1], 'r') as temp_report:
                         data = temp_report.read()
                         report.write(file_name[arg2])
                         report.write("\n------------------------\n\n")
@@ -1587,4 +1587,4 @@ elif args_namespace.target:
     print(bcolors.BG_ENDL_TXT+"[ Report Generation Phase Completed. ]"+bcolors.ENDC)
 
     os.system('setterm -cursor on')
-    os.system('rm /tmp/te* > /dev/null 2>&1') # Clearing previous scan files
+    os.system('rm /tmp/rapidscan_te* > /dev/null 2>&1') # Clearing previous scan files
