@@ -1436,7 +1436,7 @@ elif args_namespace.target:
 
     target = url_maker(args_namespace.target)
     #target = args_namespace.target
-    os.system('rm /tmp/te* > /dev/null 2>&1') # Clearing previous scan files
+    os.system('rm /tmp/rapidscan* > /dev/null 2>&1') # Clearing previous scan files
     os.system('clear')
     os.system('setterm -cursor off')
     logo()
