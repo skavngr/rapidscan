@@ -56,10 +56,10 @@ https://user-images.githubusercontent.com/6489729/138737524-9c4dc567-ec78-40b4-9
 
 
 ### Docker Support
-To run a scan for `example.com` the command below has to be run. After completion reports can be found in the current path under `reports`.
-```
-docker run -t --rm -v $(pwd)/reports:/reports kanolato/rapidscan example.com
-```
+Under development.
 
 ## Contribution
-- https://gist.github.com/MarcDiethelm/7303312
+- Create your feature branch: `git checkout -b my-new-feature`
+- Commit your changes: `git commit -am 'Add some feature'`
+- Push to the branch: `git push origin my-new-feature`
+- Submit a pull request.
