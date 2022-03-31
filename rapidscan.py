@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#                               __         __
-#                              /__)_   '_/(  _ _
-#                             / ( (//)/(/__)( (//)
-#                                  /
+#                               __         
+#                              (  _ _
+#                             __)( (//)
+#                                 
 #
-# Author     : Shankar Narayana Damodaran
-# Tool       : RapidScan v1.2
-# Usage      : python3 rapidsan.py example.com
+# Author     : team 42
+# Tool       : Scan 
+# Usage      : python3 scan.py example.com
 # Description: This scanner automates the process of security scanning by using a
 #              multitude of available linux security tools and some custom scripts.
 #
@@ -127,15 +127,15 @@ def vul_remed_info(v1,v2,v3):
     print("\t"+bcolors.OKGREEN+str(tools_fix[v3-1][2])+bcolors.ENDC)
 
 
-# RapidScan Help Context
+# Scan Help Context
 def helper():
         print(bcolors.OKBLUE+"Information:"+bcolors.ENDC)
         print("------------")
-        print("\t./rapidscan.py example.com: Scans the domain example.com.")
-        print("\t./rapidscan.py example.com --skip dmitry --skip theHarvester: Skip the 'dmitry' and 'theHarvester' tests.")
-        print("\t./rapidscan.py example.com --nospinner: Disable the idle loader/spinner.")
-        print("\t./rapidscan.py --update   : Updates the scanner to the latest version.")
-        print("\t./rapidscan.py --help     : Displays this help context.")
+        print("\t./scan.py example.com: Scans the domain example.com.")
+        print("\t./scan.py example.com --skip dmitry --skip theHarvester: Skip the 'dmitry' and 'theHarvester' tests.")
+        print("\t./scan.py example.com --nospinner: Disable the idle loader/spinner.")
+        print("\t./scan.py --update   : Updates the scanner to the latest version.")
+        print("\t./scan.py --help     : Displays this help context.")
         print(bcolors.OKBLUE+"Interactive:"+bcolors.ENDC)
         print("------------")
         print("\tCtrl+C: Skips current test.")
@@ -159,14 +159,14 @@ def clear():
         sys.stdout.write("\033[F")
         sys.stdout.write("\033[K") #clears until EOL
 
-# RapidScan Logo
+# Scan Logo
 def logo():
     print(bcolors.WARNING)
     logo_ascii = """
-                                  __         __
-                                 /__)_  """+bcolors.BADFAIL+" ●"+bcolors.WARNING+"""_/(  _ _
-                                / ( (//)/(/__)( (//)
-                                     /
+                                   __
+                             """+bcolors.BADFAIL+" ●"+bcolors.WARNING+"""_/(  _ _
+                                __)( (//)
+                                     
                      """+bcolors.ENDC+"""(The Multi-Tool Web Vulnerability Scanner)
 
                      Check out our new software, """+bcolors.BG_LOW_TXT+"""NetBot"""+bcolors.ENDC+""" for simulating DDoS attacks - https://github.com/skavngr/netbot
