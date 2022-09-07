@@ -1543,7 +1543,7 @@ elif args_namespace.target:
     print("\n")
 
     #################### Report & Documentation Phase ###########################
-    date = subprocess.Popen(["date", "+%Y-%m-%d.%s"],stdout=subprocess.PIPE).stdout.read()[:-1].decode("utf-8")
+    date = subprocess.Popen(["date", "+%Y-%m-%d"],stdout=subprocess.PIPE).stdout.read()[:-1].decode("utf-8")
     debuglog = "rs.dbg.%s.%s" % (target, date) 
     vulreport = "rs.vul.%s.%s" % (target, date)
     print(bcolors.BG_HEAD_TXT+"[ Report Generation Phase Initiated. ]"+bcolors.ENDC)
