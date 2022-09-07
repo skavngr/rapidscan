@@ -1543,11 +1543,12 @@ elif args_namespace.target:
     print("\n")
 
     #################### Report & Documentation Phase ###########################
+    date = subprocess.Popen(["date", "+%Y-%m-%d.%s"],stdout=subprocess.PIPE).stdout.read()[:-1].decode("utf-8") debuglog = "rs.dbg.%s.%s" % (target, date) vulreport = "rs.vul.%s.%s" % (target, date)
     print(bcolors.BG_HEAD_TXT+"[ Report Generation Phase Initiated. ]"+bcolors.ENDC)
     if len(rs_vul_list)==0:
         print("\t"+bcolors.OKGREEN+"No Vulnerabilities Detected."+bcolors.ENDC)
     else:
-        with open("RS-Vulnerability-Report", "a") as report:
+        with open(vulreport, "a") as report:
             while(rs_vul < len(rs_vul_list)):
                 vuln_info = rs_vul_list[rs_vul].split('*')
                 report.write(vuln_info[arg2])
