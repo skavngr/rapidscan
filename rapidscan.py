@@ -509,7 +509,7 @@ tool_cmd   = [
                 ["nmap -F --open -Pn ",""],
 
                 #9
-                ["theHarvester -l 50 -b google -d ",""],
+                ["theHarvester -l 50 -b censys -d ",""],
 
                 #10
                 ["dnsrecon -d ",""],
