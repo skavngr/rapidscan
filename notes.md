@@ -79,7 +79,7 @@
 - `dirbuster -u http://example.com -H` looks for a directory wordlist under the same directory.
 - `dnsenum --enum --noreverse example.com` google blocking your queries. (try somewhere else)
 - `thc-ssl-dos -l 100 192.168.1.208 443 --accept` gets only ips as input. write an alternative | `dig +short example.com | grep -m 1 ""`
-- `doona -t example.com -k -m HTTP` | 23/37   [POST / HTTP/1.0XAXAX] .........................................Problem (3) occured with POST / HTTP/1.0XAXAX (965)
+- `doona -t example.com -k -m HTTP` | 23/37   [POST / HTTP/1.0XAXAX] .........................................Problem (3) occurred with POST / HTTP/1.0XAXAX (965)
 
 ### Program Exceptions Checks
 
